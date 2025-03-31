@@ -1,25 +1,59 @@
 // src/components/Footer.jsx
 import React from "react";
-import { Link } from "react-router-dom";
-import logoImage from "/Logo-nobg-sm.png";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative bg-transparent py-8 text-white">
-      <div className="container mx-auto px-4 flex flex-col items-center">
-        <div className="flex items-center mb-4">
-          <img src={logoImage} alt="SCA Constellations Logo" className="w-12 h-12 mr-2" />
-          <h3 className="text-xl font-bold">SCA Constellations</h3>
+    <footer 
+      className="relative py-8 text-white z-10"
+      style={{ 
+        background: 'transparent',
+        backdropFilter: 'none',
+        position: 'relative'
+      }}
+    >
+      {/* Very minimal footer content */}
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="flex flex-col md:flex-row justify-between items-center">
+          {/* Copyright text */}
+          <div className="text-gray-500 text-xs mb-4 md:mb-0">
+            &copy; {currentYear} SCA Constellations - FIRST Team 7598
+          </div>
+          
+          {/* Social links using Font Awesome icons */}
+          <div className="flex flex-wrap justify-center gap-4">
+            <a 
+              href="https://www.instagram.com/scaconstellations/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-gray-400 hover:text-[#d3b840] transition-colors"
+              aria-label="Instagram"
+            >
+              <i className="fab fa-instagram fa-lg"></i>
+            </a>
+            
+            <a 
+              href="https://www.facebook.com/scaconstellations7598" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-gray-400 hover:text-[#d3b840] transition-colors"
+              aria-label="Facebook"
+            >
+              <i className="fab fa-facebook fa-lg"></i>
+            </a>
+            
+            <a 
+              href="https://github.com/SCAconstellations" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-gray-400 hover:text-[#d3b840] transition-colors"
+              aria-label="GitHub"
+            >
+              <i className="fab fa-github fa-lg"></i>
+            </a>
+          </div>
         </div>
-        <div className="flex space-x-4 mb-4">
-          <Link to="/" className="text-gray-300 hover:text-sca-gold transition-colors">Home</Link>
-          <Link to="/team" className="text-gray-300 hover:text-sca-gold transition-colors">Team</Link>
-          <Link to="/sponsors" className="text-gray-300 hover:text-sca-gold transition-colors">Sponsors</Link>
-          <Link to="/contact" className="text-gray-300 hover:text-sca-gold transition-colors">Contact</Link>
-        </div>
-        <p className="text-gray-400 text-sm">&copy; {currentYear} SCA Constellations. All rights reserved.</p>
       </div>
     </footer>
   );

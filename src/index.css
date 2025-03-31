@@ -2,27 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Fix for uneven border issue - specifically targeting top border */
-html, body {
-  padding: 0 !important;
-  margin: 0 !important;
-  border: 0 !important;
-  outline: 0 !important;
-  min-height: 100%;
-  width: 100%;
-  overflow-x: hidden;
-}
-
-/* Reset default styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 @layer base {
   html {
     scroll-behavior: smooth;
+    margin: 0;
+    padding: 0;
   }
 
   body {
@@ -33,6 +17,8 @@ html, body {
     background-color: black;
     color: white;
     @apply bg-dark text-white font-sans antialiased;
+    margin: 0;
+    padding: 0;
   }
 
   /* Remove any default browser padding/margins that might cause uneven borders */
@@ -81,6 +67,29 @@ html, body {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
+}
+
+/* Remove unintended padding/margins on root elements */
+html, 
+body, 
+#root {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Fix the weird padding bug on the entire website edge - all sides */
+#root > div, 
+main.relative,
+main > div,
+section {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Container class should retain its auto margins */
+.container {
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 
 @layer components {

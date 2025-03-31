@@ -61,7 +61,7 @@ function App() {
   }, []);
 
   return (
-    <div className="relative bg-gradient-to-b from-sca-purple-dark via-sca-purple to-sca-purple-dark text-white overflow-x-hidden">
+    <div className="relative bg-gradient-to-b from-sca-purple-dark via-sca-purple to-sca-purple-dark text-white overflow-x-hidden min-h-screen">
       {/* Animated background particles */}
       <ParticleBackground />
       
@@ -82,6 +82,7 @@ function App() {
         </Suspense>
       </main>
 
+      {/* Simplified footer with transparent background */}
       <Footer />
     </div>
   );
