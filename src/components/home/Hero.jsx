@@ -69,17 +69,12 @@ const Hero = () => {
           >
             <HashLink
               smooth
-              to="#about"
-              className="btn-modern w-full sm:w-auto px-6 xs:px-8 sm:px-10 py-3 sm:py-4 text-white"
+              to="https://frc7790.com/event.html?event=2025mitvc"
+              className="btn-modern w-full sm:w-auto px-6 xs:px-8 sm:px-10 py-3 sm:py-4 text-white font-bold transition-all duration-300"
             >
-              <span>About Our Team</span>
-            </HashLink>
-            <HashLink
-              smooth
-              to="robots"
-              className="w-full sm:w-auto px-6 xs:px-8 sm:px-10 py-3 sm:py-4 bg-white/10 border border-[#d3b840]/50 rounded-full text-white font-semibold hover:bg-white/15 hover:border-[#d3b840] transition-all duration-300 mt-3 sm:mt-0 backdrop-blur-sm"
-            >
-              See Our Robots
+              <span className="text-lg sm:text-xl md:text-2xl text-[#d3b840]">
+                2025 Traverse City Event Champions
+              </span>
             </HashLink>
           </div>
         </div>

@@ -167,9 +167,6 @@ const Contact = () => {
                       <a href="mailto:team7598@example.com" className="text-[#d3b840] hover:text-[#e4ce67] transition-colors">
                         team7598@example.com
                       </a>
-                      <p className="text-gray-400 text-sm mt-1">
-                        We'll respond within 48 hours
-                      </p>
                     </div>
                   </div>
                   
@@ -183,8 +180,8 @@ const Contact = () => {
                     <div className="transform hover:-translate-y-1 transition-transform duration-300">
                       <h4 className="text-lg font-medium text-white mb-1">Our Location</h4>
                       <p className="text-gray-300">
-                        SCA High School<br />
-                        123 Space Avenue<br />
+                        St. Catherine of Siena Academy<br />
+                        28200 Napier Road<br />
                         Wixom, MI 48393
                       </p>
                     </div>
@@ -233,28 +230,6 @@ const Contact = () => {
                       </a>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Map/location with modern styling */}
-          <div className="reveal">
-            <div className="modern-card p-0 overflow-hidden rounded-2xl h-80">
-              <div className="h-full w-full bg-gradient-to-br from-[#471a67]/50 to-[#471a67]/20 flex items-center justify-center">
-                <div className="text-center px-6">
-                  <div className="mb-4 w-16 h-16 rounded-full bg-[#471a67]/50 border border-[#d3b840]/30 mx-auto flex items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-[#d3b840]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                  </div>
-                  <p className="text-white text-lg mb-4">
-                    Interactive map would be displayed here.
-                  </p>
-                  <p className="text-gray-300">
-                    Replace with an actual map embed for your team's location.
-                  </p>
                 </div>
               </div>
             </div>
