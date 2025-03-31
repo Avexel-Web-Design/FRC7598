@@ -11,7 +11,6 @@ import ParticleBackground from "./components/ParticleBackground";
 const Home = lazy(() => import("./pages/Home"));
 const Robots = lazy(() => import("./pages/Robots"));
 const Team = lazy(() => import("./pages/Team"));
-const Outreach = lazy(() => import("./pages/Outreach"));
 const Sponsors = lazy(() => import("./pages/Sponsors"));
 
 // Enhanced loading component with animation
@@ -76,7 +75,6 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/robots" element={<Robots />} />
             <Route path="/team" element={<Team />} />
-            <Route path="/outreach" element={<Outreach />} />
             <Route path="/sponsors" element={<Sponsors />} />
           </Routes>
         </Suspense>
