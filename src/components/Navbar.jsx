@@ -19,6 +19,11 @@ const Navbar = () => {
     { name: "Sponsors", path: "/sponsors" },
   ];
 
+  // Scroll to top when location changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   // Check if path is active
   const isActive = (path) => {
     if (path === "/" && location.pathname === "/") return true;
@@ -28,6 +33,12 @@ const Navbar = () => {
   const closeMenu = () => {
     setMenuOpen(false);
     document.body.style.overflow = "";
+  };
+
+  // Function to handle navigation click that scrolls to top
+  const handleNavClick = () => {
+    window.scrollTo(0, 0);
+    closeMenu();
   };
 
   return (
@@ -53,16 +64,17 @@ const Navbar = () => {
               </div>
             </Link>
 
-            {/* Desktop Navigation with modern pill buttons */}
-            <div className="hidden md:flex items-center space-x-2">
+            {/* Desktop Navigation with enhanced modern pill buttons */}
+            <div className="hidden md:flex items-center space-x-3">
               {navLinks.map((link) => (
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                  onClick={handleNavClick}
+                  className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 transform ${
                     isActive(link.path)
-                      ? "bg-gradient-to-r from-sca-gold to-sca-gold-light text-sca-purple-dark shadow-md"
-                      : "text-white hover:bg-white/10 hover:shadow-sm border border-transparent hover:border-sca-gold/30"
+                      ? "bg-gradient-to-r from-sca-gold via-sca-gold-light to-sca-gold text-sca-purple-dark shadow-lg shadow-sca-gold/20 scale-105"
+                      : "text-white hover:bg-white/15 hover:shadow-md hover:shadow-sca-gold/10 hover:scale-105 border border-sca-gold/20 hover:border-sca-gold/50"
                   }`}
                 >
                   {link.name}
@@ -77,8 +89,10 @@ const Navbar = () => {
                   setMenuOpen(!menuOpen);
                   document.body.style.overflow = !menuOpen ? "hidden" : "";
                 }}
-                className={`p-2 text-white rounded-full transition-all duration-300 ${
-                  menuOpen ? "bg-sca-gold text-sca-purple" : "hover:bg-white/10 border border-transparent hover:border-sca-gold/30"
+                className={`p-2.5 text-white rounded-full transition-all duration-300 ${
+                  menuOpen 
+                    ? "bg-gradient-to-r from-sca-gold to-sca-gold-light text-sca-purple shadow-md shadow-sca-gold/30" 
+                    : "hover:bg-white/15 hover:shadow-md border border-sca-gold/20 hover:border-sca-gold/50"
                 }`}
                 aria-label="Toggle mobile menu"
               >

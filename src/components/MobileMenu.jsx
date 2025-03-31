@@ -22,9 +22,9 @@ const MobileMenu = ({ isOpen, closeMenu, links, currentPath }) => {
         onClick={closeMenu}
       ></div>
 
-      {/* Menu content */}
+      {/* Menu content - updated to match Navbar glass-morphism style */}
       <div
-        className={`absolute top-0 right-0 h-full w-full max-w-sm bg-sca-purple shadow-xl transform transition-transform duration-300 ease-out ${
+        className={`absolute top-0 right-0 h-full w-full max-w-sm glass-morphism-nav backdrop-blur-md border-l border-sca-gold/10 shadow-xl transform transition-transform duration-300 ease-out ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -41,7 +41,7 @@ const MobileMenu = ({ isOpen, closeMenu, links, currentPath }) => {
           </div>
           <button
             onClick={closeMenu}
-            className="p-2 text-white/80 hover:text-white"
+            className="p-2.5 rounded-full text-white/80 hover:text-white hover:bg-white/10 hover:shadow-md transition-all duration-200 border border-transparent hover:border-sca-gold/30"
             aria-label="Close menu"
           >
             <svg
@@ -61,34 +61,24 @@ const MobileMenu = ({ isOpen, closeMenu, links, currentPath }) => {
           </button>
         </div>
 
-        {/* Menu items */}
-        <div className="pt-6 pb-12 px-6">
-          <nav className="flex flex-col space-y-1">
+        {/* Menu items with enhanced styling */}
+        <div className="pt-8 pb-12 px-6">
+          <nav className="flex flex-col space-y-2.5">
             {links.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className={`py-3 px-4 rounded-lg transition-all duration-200 ${
+                className={`py-3.5 px-5 rounded-full transition-all duration-300 transform ${
                   isActive(link.path)
-                    ? "bg-sca-gold text-sca-purple font-medium"
-                    : "text-white hover:bg-sca-purple-light"
+                    ? "bg-gradient-to-r from-sca-gold via-sca-gold-light to-sca-gold text-sca-purple-dark font-medium shadow-md shadow-sca-gold/20 scale-[1.02]"
+                    : "text-white hover:bg-white/10 border border-sca-gold/20 hover:border-sca-gold/50 hover:shadow-md hover:shadow-sca-gold/10 hover:translate-x-1"
                 }`}
                 onClick={closeMenu}
               >
-                {link.name}
+                <span className="block">{link.name}</span>
               </Link>
             ))}
           </nav>
-
-          {/* Team info */}
-          <div className="mt-10 pt-6 border-t border-sca-gold/20">
-            <p className="text-white/80 text-sm">
-              All-girls robotics team from St. Catherine of Siena Academy
-            </p>
-            <p className="text-white/60 text-xs mt-2">
-              Wixom, Michigan
-            </p>
-          </div>
         </div>
       </div>
     </div>
