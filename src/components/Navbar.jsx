@@ -2,8 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import MobileMenu from "./MobileMenu";
 // Import the logo images
-import logoImage from "/Logo-nobg-sm.png";
-import scaLogo from "/SCA.png";
+import logoImage from "/Star.png";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -16,6 +15,7 @@ const Navbar = () => {
     { name: "Robots", path: "/robots" },
     { name: "Team", path: "/team" },
     { name: "Sponsors", path: "/sponsors" },
+    { name: "Schedule", path: "/schedule" },
   ];
 
   // Scroll to top when location changes

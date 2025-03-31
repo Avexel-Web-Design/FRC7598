@@ -23,10 +23,6 @@ const Hero = () => {
       aria-label="Robots Hero"
       style={{ margin: 0, padding: 0 }}
     >
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#471a67]/30 via-[#471a67]/20 to-[#471a67]/30 animate-pulse-slow"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(71,26,103,0.25),transparent_50%)]"></div>
-      </div>
       <div className="container mx-auto text-center relative z-10">
         <h1 className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 sm:mb-8 tracking-tight leading-tight">
           <span className="block bg-gradient-to-r from-[#471a67] to-[#d3b840] bg-clip-text text-transparent hero-animate" style={{ transitionDelay: '0.3s' }}>

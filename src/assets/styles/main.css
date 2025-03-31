@@ -253,31 +253,17 @@ section:first-child {
 /* New modern button styles */
 .btn-modern {
   position: relative;
-  overflow: hidden;
-  background: rgba(71, 26, 103, 0.365);
-  border: 2px solid var(--sca-gold);
-  border-radius: 50px;
-  padding: 0.875rem 2rem;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-  transition: all 0.4s ease;
-  box-shadow: 0 0 15px rgba(211, 184, 64, 0.2);
-}
-
-.btn-modern::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.1); /* bg-white/10 */
+  border: 1px solid rgba(211, 184, 64, 0.5); /* border border-[#d3b840]/50 */
+  border-radius: 9999px; /* rounded-full */
+  color: white; /* text-white */
+  padding: 0.75rem 1.5rem;
+  transition: background-color 0.3s ease; /* transition-colors */
 }
 
 .btn-modern:hover {
   box-shadow: 0 0 30px rgba(211, 184, 64, 0.4);
+  background-color: rgba(255, 255, 255, 0.2); /* hover:bg-white/20 */
 }
 
 /* Modern glass panels */

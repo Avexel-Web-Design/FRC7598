@@ -71,6 +71,8 @@ const Hero = () => {
               smooth
               to="https://frc7790.com/event.html?event=2025mitvc"
               className="btn-modern w-full sm:w-auto px-6 xs:px-8 sm:px-10 py-3 sm:py-4 text-white font-bold transition-all duration-300"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <span className="text-lg sm:text-xl md:text-2xl text-[#d3b840]">
                 2025 Traverse City Event Champions
