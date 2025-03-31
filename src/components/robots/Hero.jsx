@@ -28,9 +28,9 @@ const Hero = () => {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(71,26,103,0.25),transparent_50%)]"></div>
       </div>
       <div className="container mx-auto text-center relative z-10">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 hero-animate" style={{ transitionDelay: '0.3s' }}>
-          <span className="bg-gradient-to-r from-[#471a67] to-[#d3b840] bg-clip-text text-transparent">
-            Our Robotics Showcase
+        <h1 className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 sm:mb-8 tracking-tight leading-tight">
+          <span className="block bg-gradient-to-r from-[#471a67] to-[#d3b840] bg-clip-text text-transparent hero-animate" style={{ transitionDelay: '0.3s' }}>
+              Our Robots
           </span>
         </h1>
         <p className="text-lg sm:text-xl md:text-2xl mb-8 hero-animate" style={{ transitionDelay: '0.4s' }}>
