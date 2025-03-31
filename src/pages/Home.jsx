@@ -3,7 +3,7 @@ import Hero from "../components/home/Hero";
 import About from "../components/home/About";
 import Contact from "../components/home/Contact";
 
-const HomePage = () => {
+const Home = () => {
   return (
     <div className="relative w-full overflow-hidden" style={{ margin: 0, padding: 0 }}>
       {/* Hero section */}
@@ -36,4 +36,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default Home;

@@ -8,11 +8,11 @@ import Loader from "./components/Loader";
 import ParticleBackground from "./components/ParticleBackground";
 
 // Lazy load page components for better performance
-const HomePage = lazy(() => import("./pages/HomePage"));
-const RobotsPage = lazy(() => import("./pages/RobotsPage"));
-const TeamPage = lazy(() => import("./pages/TeamPage"));
-const OutreachPage = lazy(() => import("./pages/OutreachPage"));
-const SponsorsPage = lazy(() => import("./pages/SponsorsPage"));
+const Home = lazy(() => import("./pages/Home"));
+const Robots = lazy(() => import("./pages/Robots"));
+const Team = lazy(() => import("./pages/Team"));
+const Outreach = lazy(() => import("./pages/Outreach"));
+const Sponsors = lazy(() => import("./pages/Sponsors"));
 
 // Enhanced loading component with animation
 const PageLoading = () => (
@@ -73,11 +73,11 @@ function App() {
       <main className="relative pt-16">
         <Suspense fallback={<PageLoading />}>
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/robots" element={<RobotsPage />} />
-            <Route path="/team" element={<TeamPage />} />
-            <Route path="/outreach" element={<OutreachPage />} />
-            <Route path="/sponsors" element={<SponsorsPage />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/robots" element={<Robots />} />
+            <Route path="/team" element={<Team />} />
+            <Route path="/outreach" element={<Outreach />} />
+            <Route path="/sponsors" element={<Sponsors />} />
           </Routes>
         </Suspense>
       </main>
