@@ -68,12 +68,12 @@ const ParticleBackground = () => {
             ripple.y,
             ripple.size
           );
-          gradient.addColorStop(0, `rgba(56, 189, 248, 0)`);
+          gradient.addColorStop(0, `rgba(71, 26, 103, 0)`);
           gradient.addColorStop(
             0.5,
-            `rgba(56, 189, 248, ${ripple.opacity * 0.2})`
+            `rgba(71, 26, 103, ${ripple.opacity * 0.2})`
           );
-          gradient.addColorStop(1, `rgba(56, 189, 248, 0)`);
+          gradient.addColorStop(1, `rgba(71, 26, 103, 0)`);
 
           ctx.beginPath();
           ctx.fillStyle = gradient;
@@ -123,7 +123,7 @@ const ParticleBackground = () => {
           glowSize
         );
         gradient.addColorStop(0, baseColor);
-        gradient.addColorStop(1, "rgba(56, 189, 248, 0)");
+        gradient.addColorStop(1, "rgba(71, 26, 103, 0)");
 
         ctx.beginPath();
         ctx.fillStyle = gradient;
@@ -141,7 +141,7 @@ const ParticleBackground = () => {
 
           if (distance < 150) {
             const opacity = (1 - distance / 150) * 0.15;
-            ctx.strokeStyle = `rgba(56, 189, 248, ${opacity})`;
+            ctx.strokeStyle = `rgba(71, 26, 103, ${opacity})`;
             ctx.lineWidth = Math.min(p1.depth, p2.depth);
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
