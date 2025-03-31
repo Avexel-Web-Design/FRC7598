@@ -205,7 +205,14 @@ const ParticleBackground = () => {
     <canvas
       ref={canvasRef}
       className="fixed top-0 left-0 w-full h-full bg-black"
-      style={{ WebkitBackdropFilter: "blur(2px)", backdropFilter: "blur(2px)" }}
+      style={{ 
+        WebkitBackdropFilter: "blur(2px)", 
+        backdropFilter: "blur(2px)",
+        margin: 0,
+        padding: 0,
+        border: "none",
+        outline: "none"
+      }}
     />
   );
 };

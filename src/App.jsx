@@ -1,73 +1,88 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import "./App.css";
 import "./assets/styles/main.css";
+import Footer from "./components/Footer";
+import Loader from "./components/Loader";
+import ParticleBackground from "./components/ParticleBackground";
 
-// Lazy load components for better performance
-const Hero = lazy(() => import("./components/Hero"));
-const Capabilities = lazy(() => import("./components/Capabilities"));
-const About = lazy(() => import("./components/About"));
-const Services = lazy(() => import("./components/Services"));
-const Portfolio = lazy(() => import("./components/Portfolio"));
-const Contact = lazy(() => import("./components/Contact"));
-const Footer = lazy(() => import("./components/Footer"));
+// Lazy load page components for better performance
+const HomePage = lazy(() => import("./pages/HomePage"));
+const RobotsPage = lazy(() => import("./pages/RobotsPage"));
+const TeamPage = lazy(() => import("./pages/TeamPage"));
+const OutreachPage = lazy(() => import("./pages/OutreachPage"));
+const SponsorsPage = lazy(() => import("./pages/SponsorsPage"));
 
-function HomePage() {
-  return (
-    <>
-      <div id="home" className="relative min-h-screen bg-black">
-        {/* Background decorative elements */}
-        <div className="fixed inset-0 overflow-hidden pointer-events-none">
-          {/* Subtle gradient orbs */}
-          <div className="absolute top-0 left-0 w-2/3 h-2/3 bg-gradient-radial from-primary-500/10 to-transparent opacity-40"></div>
-          <div className="absolute bottom-0 right-0 w-2/3 h-2/3 bg-gradient-radial from-secondary-500/10 to-transparent opacity-40"></div>
-
-          {/* Geometric shapes */}
-          <div className="absolute top-1/4 right-1/4 w-96 h-96 border border-white/5 rounded-full animate-spin-slow"></div>
-          <div className="absolute bottom-1/4 left-1/3 w-64 h-64 border border-white/5 rounded-full animate-spin-slow-reverse"></div>
-          <div className="absolute top-1/3 left-1/4 w-32 h-32 border border-white/5 animate-pulse-slow"></div>
-        </div>
-
-        <div className="relative z-10">
-          <Suspense
-            fallback={
-              <div className="min-h-screen flex items-center justify-center">
-                <div className="text-xl text-white/70">Loading Avexel...</div>
-              </div>
-            }
-          >
-            <Hero />
-            <Services />
-            <About />
-            <Capabilities />
-            <Portfolio />
-            <Contact />
-          </Suspense>
-        </div>
-      </div>
-    </>
-  );
-}
+// Enhanced loading component with animation
+const PageLoading = () => (
+  <div className="min-h-screen flex items-center justify-center bg-sca-purple">
+    <Loader />
+  </div>
+);
 
 function App() {
+  // Initialize scroll reveal animations when the page loads
+  useEffect(() => {
+    // Function to reveal elements as they enter the viewport
+    const revealElements = () => {
+      const elements = document.querySelectorAll(".reveal");
+      elements.forEach((element) => {
+        const windowHeight = window.innerHeight;
+        const elementTop = element.getBoundingClientRect().top;
+        const elementVisible = 150;
+        
+        if (elementTop < windowHeight - elementVisible) {
+          element.classList.add("active");
+        }
+      });
+      
+      // Also handle staggered reveals
+      const staggeredElements = document.querySelectorAll(".stagger-reveal");
+      staggeredElements.forEach((element) => {
+        const windowHeight = window.innerHeight;
+        const elementTop = element.getBoundingClientRect().top;
+        const elementVisible = 150;
+        
+        if (elementTop < windowHeight - elementVisible) {
+          element.classList.add("active");
+        }
+      });
+    };
+    
+    // Run once on load
+    revealElements();
+    
+    // Add scroll event listener
+    window.addEventListener("scroll", revealElements);
+    
+    // Clean up the event listener on component unmount
+    return () => window.removeEventListener("scroll", revealElements);
+  }, []);
+
   return (
-    <div className="relative bg-black text-white overflow-x-hidden">
-      <div className="relative z-50">
+    <div className="relative bg-gradient-to-b from-sca-purple-dark via-sca-purple to-sca-purple-dark text-white overflow-x-hidden">
+      {/* Animated background particles */}
+      <ParticleBackground />
+      
+      {/* Modern floating navbar with glass effect */}
+      <div className="sticky top-0 z-50">
         <Navbar />
       </div>
 
-      <main className="relative">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-        </Routes>
+      <main className="relative pt-16">
+        <Suspense fallback={<PageLoading />}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/robots" element={<RobotsPage />} />
+            <Route path="/team" element={<TeamPage />} />
+            <Route path="/outreach" element={<OutreachPage />} />
+            <Route path="/sponsors" element={<SponsorsPage />} />
+          </Routes>
+        </Suspense>
       </main>
 
-      <Suspense fallback={<div className="h-64" />}>
-        <div className="relative z-10">
-          <Footer />
-        </div>
-      </Suspense>
+      <Footer />
     </div>
   );
 }

@@ -1,72 +1,29 @@
 import React, { useState, useEffect, useRef } from "react";
-import { HashLink } from "react-router-hash-link";
+import { Link, useLocation } from "react-router-dom";
 import MobileMenu from "./MobileMenu";
-// Import the logo image
+// Import the logo images
 import logoImage from "/Logo-nobg-sm.png";
+import scaLogo from "/SCA.png";
 
 const Navbar = () => {
-  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState("home");
-  const [hoveredTab, setHoveredTab] = useState(null);
+  const location = useLocation();
   const navRef = useRef(null);
-  const tabRefs = useRef({
-    home: useRef(null),
-    capabilities: useRef(null),
-    about: useRef(null),
-    services: useRef(null),
-    work: useRef(null),
-    contact: useRef(null),
-  });
+  
+  // Navigation links
+  const navLinks = [
+    { name: "Home", path: "/" },
+    { name: "Robots", path: "/robots" },
+    { name: "Team", path: "/team" },
+    { name: "Outreach", path: "/outreach" },
+    { name: "Sponsors", path: "/sponsors" },
+  ];
 
-  // Highlight position state
-  const [highlightStyle, setHighlightStyle] = useState({
-    left: 0,
-    width: 0,
-    opacity: 0,
-  });
-
-  // Update highlight position based on active or hovered tab
-  useEffect(() => {
-    const currentTab = hoveredTab || activeTab;
-    const tabElement = tabRefs.current[currentTab]?.current;
-
-    if (tabElement) {
-      setHighlightStyle({
-        left: tabElement.offsetLeft,
-        width: tabElement.offsetWidth,
-        opacity: 1,
-      });
-    }
-  }, [activeTab, hoveredTab]);
-
-  // Detect active section based on scroll position
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScroll = window.scrollY;
-      setScrolled(currentScroll > 50);
-
-      // Determine active section based on scroll position
-      const sections = [
-        "home",
-        "services",
-        "about",
-        "capabilities",
-        "work",
-        "contact",
-      ];
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = document.getElementById(sections[i]);
-        if (section && window.scrollY >= section.offsetTop - 200) {
-          setActiveTab(sections[i]);
-          break;
-        }
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  // Check if path is active
+  const isActive = (path) => {
+    if (path === "/" && location.pathname === "/") return true;
+    return location.pathname === path;
+  };
 
   const closeMenu = () => {
     setMenuOpen(false);
@@ -76,100 +33,87 @@ const Navbar = () => {
   return (
     <>
       <div
-        className={`fixed top-0 left-0 w-full flex justify-center z-50 transition-all duration-500 ${
-          scrolled ? "pt-4" : "pt-8"
-        }`}
+        className="fixed top-0 left-0 w-full z-50 glass-morphism-nav backdrop-blur-md border-b border-sca-gold/10"
       >
-        <div
-          ref={navRef}
-          className={`relative glass-morphism-nav rounded-full border border-white/10 transition-all duration-500 ${
-            scrolled ? "px-4 py-3 shadow-lg" : "px-6 py-4"
-          }`}
-        >
-          {/* Logo - Always displayed */}
-          <div className="flex items-center justify-between">
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-2">
-              <HashLink
-                smooth
-                to="#"
-                className="flex items-center space-x-3 group"
-                onClick={() => setActiveTab("home")}
-              >
-                <div className="relative w-10 h-10 transition-all duration-500 group-hover:scale-110">
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary-500/30 to-secondary-500/30 animate-pulse-slow"></div>
+        <div className="container mx-auto px-4 lg:px-8">
+          <div
+            ref={navRef}
+            className="flex items-center justify-between py-4"
+          >
+            {/* Logo with modern hover effect */}
+            <Link to="/" className="flex items-center space-x-3 group">
+              <div className="flex items-center">
+                <div className="relative w-20 h-20 transition-all duration-500 group-hover:scale-110 group-hover:drop-shadow-glow">
                   <img
                     src={logoImage}
-                    alt="Avexel"
-                    className="relative w-full h-full drop-shadow-glow"
+                    alt="SCA Constellations"
+                    className="relative w-full h-full drop-shadow-md"
                   />
                 </div>
-              </HashLink>
-
-              <div className="ml-8 flex items-center gap-1 relative">
-                {/* Moving highlight element */}
-                <div
-                  className="absolute top-0 rounded-full bg-gradient-to-r from-primary-500/80 to-secondary-500/80 h-10 shadow-lg transition-all duration-300 ease-out -z-0"
-                  style={{
-                    left: `${highlightStyle.left}px`,
-                    width: `${highlightStyle.width}px`,
-                    opacity: highlightStyle.opacity,
-                  }}
-                />
-
-                {/* Tab links */}
-                {[
-                  "home",
-                  "services",
-                  "about",
-                  "capabilities",
-                  "work",
-                  "contact",
-                ].map((tab) => (
-                  <TabLink
-                    key={tab}
-                    to={tab === "home" ? "#" : `#${tab}`}
-                    label={
-                      tab === "capabilities"
-                        ? "Skills"
-                        : tab === "about"
-                        ? "Team"
-                        : tab.charAt(0).toUpperCase() + tab.slice(1)
-                    }
-                    tabRef={tabRefs.current[tab]}
-                    isActive={activeTab === tab}
-                    onMouseEnter={() => setHoveredTab(tab)}
-                    onMouseLeave={() => setHoveredTab(null)}
-                    onClick={() => setActiveTab(tab)}
-                  />
-                ))}
               </div>
+            </Link>
+
+            {/* Desktop Navigation with modern pill buttons */}
+            <div className="hidden md:flex items-center space-x-2">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                    isActive(link.path)
+                      ? "bg-gradient-to-r from-sca-gold to-sca-gold-light text-sca-purple-dark shadow-md"
+                      : "text-white hover:bg-white/10 hover:shadow-sm border border-transparent hover:border-sca-gold/30"
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              ))}
             </div>
 
-            {/* Mobile Logo and Menu Button */}
-            <div className="md:hidden flex items-center justify-between w-full px-2">
-              <HashLink
-                smooth
-                to="#"
-                className="flex items-center space-x-2 group w-full justify-center"
+            {/* Mobile Menu Button with improved animation */}
+            <div className="md:hidden">
+              <button
                 onClick={() => {
                   setMenuOpen(!menuOpen);
                   document.body.style.overflow = !menuOpen ? "hidden" : "";
                 }}
+                className={`p-2 text-white rounded-full transition-all duration-300 ${
+                  menuOpen ? "bg-sca-gold text-sca-purple" : "hover:bg-white/10 border border-transparent hover:border-sca-gold/30"
+                }`}
+                aria-label="Toggle mobile menu"
               >
-                <div className="relative w-8 h-8 transition-all duration-500 group-hover:scale-110">
-                  <img
-                    src={logoImage}
-                    alt="Avexel"
-                    className="relative w-full h-full drop-shadow-glow"
-                  />
-                </div>
-                <span className="text-lg font-bold bg-gradient-to-r from-primary-400 to-secondary-400 bg-clip-text text-transparent">
-                  Avexel
-                </span>
-              </HashLink>
-
-              {/* Removed hamburger button */}
+                {!menuOpen ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 6h16M4 12h16m-7 6h7"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                )}
+              </button>
             </div>
           </div>
         </div>
@@ -178,36 +122,11 @@ const Navbar = () => {
       <MobileMenu
         isOpen={menuOpen}
         closeMenu={closeMenu}
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        links={navLinks}
+        currentPath={location.pathname}
       />
     </>
   );
 };
-
-// Tab link component with improved design for sliding highlight
-const TabLink = ({
-  to,
-  label,
-  tabRef,
-  isActive,
-  onMouseEnter,
-  onMouseLeave,
-  onClick,
-}) => (
-  <HashLink
-    ref={tabRef}
-    smooth
-    to={to}
-    className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 z-10 ${
-      isActive ? "text-white" : "text-white/70 hover:text-white"
-    }`}
-    onClick={onClick}
-    onMouseEnter={onMouseEnter}
-    onMouseLeave={onMouseLeave}
-  >
-    {label}
-  </HashLink>
-);
 
 export default Navbar;

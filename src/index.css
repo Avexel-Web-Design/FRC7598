@@ -2,12 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: "Inter var";
-  font-weight: 100 900;
-  font-display: swap;
-  font-style: normal;
-  src: url("./fonts/inter-var.woff2") format("woff2");
+/* Fix for uneven border issue - specifically targeting top border */
+html, body {
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  outline: 0 !important;
+  min-height: 100%;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 /* Reset default styles */
@@ -30,8 +33,15 @@
     background-color: black;
     color: white;
     @apply bg-dark text-white font-sans antialiased;
-    margin: 0;
-    overflow-x: hidden;
+  }
+
+  /* Remove any default browser padding/margins that might cause uneven borders */
+  body::before, 
+  body::after,
+  html::before,
+  html::after {
+    display: none;
+    content: none;
   }
 
   #particle-background {
