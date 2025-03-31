@@ -1,5 +1,5 @@
 import React from "react";
-import Outreach from "../components/Outreach";
+import Outreach from "../components/outreach/Outreach";
 
 const RobotsPage = () => {
   return <Outreach />;

@@ -1,5 +1,5 @@
 import React from "react";
-import Sponsors from "../components/Sponsors";
+import Sponsors from "../components/sponsors/Sponsors";
 
 const RobotsPage = () => {
   return <Sponsors />;

@@ -43,7 +43,7 @@ const Navbar = () => {
             {/* Logo with modern hover effect */}
             <Link to="/" className="flex items-center space-x-3 group">
               <div className="flex items-center">
-                <div className="relative w-20 h-20 transition-all duration-500 group-hover:scale-110 group-hover:drop-shadow-glow">
+                <div className="relative w-16 h-16 transition-all duration-500 group-hover:scale-110 group-hover:drop-shadow-glow">
                   <img
                     src={logoImage}
                     alt="SCA Constellations"

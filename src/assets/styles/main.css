@@ -49,13 +49,11 @@ body {
 /* Hero animation styles for smooth transition without flickering */
 .hero-animate {
     opacity: 0;
-    transform: translateY(20px) translateZ(0);
-    will-change: opacity, transform;
+    transition: opacity 0.8s ease-out;
 }
 
 .hero-animate.animation-ready {
-    opacity: 1 !important;
-    transform: translateY(0) translateZ(0) !important;
+    opacity: 1;
 }
 
 /* Section styling and spacing */
@@ -83,21 +81,11 @@ section:first-child {
 
 /* Modern 3D card effect */
 .modern-card {
-  background: linear-gradient(to bottom right, rgba(71, 26, 103, 0.8), rgba(53, 19, 77, 0.9));
+  background: rgba(0, 0, 0, 0.5); /* dark and transparent */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-radius: 16px;
-  box-shadow: 
-    0 4px 20px rgba(0, 0, 0, 0.3),
-    0 0 30px rgba(71, 26, 103, 0.3) inset;
-  backdrop-filter: blur(10px);
-  transform-style: preserve-3d;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-
-.modern-card:hover {
-  transform: translateY(-5px) rotateX(2deg);
-  box-shadow: 
-    0 8px 30px rgba(0, 0, 0, 0.4),
-    0 0 30px rgba(211, 184, 64, 0.2) inset;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
 /* Performance optimized animations */
