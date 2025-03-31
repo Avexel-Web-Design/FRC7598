@@ -6,13 +6,8 @@ import Contact from "../components/home/Contact";
 const Home = () => {
   return (
     <div className="relative w-full overflow-hidden" style={{ margin: 0, padding: 0 }}>
-      {/* Hero section */}
       <Hero />
-      
-      {/* About section */}
       <About />
-      
-      {/* Contact section */}
       <Contact />
     </div>
   );
