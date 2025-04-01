@@ -1,5 +1,5 @@
 {
-    "name": "avexel-website",
+    "name": "frc-7598",
     "version": "0.1.0",
     "private": true,
     "dependencies": {
@@ -40,9 +40,9 @@
             "last 1 safari version"
         ]
     },
-    "homepage": "https://avexel.co",
+    "homepage": "https://avexel-web-design.github.io/FRC7598",
     "repository": {
         "type": "git",
-        "url": "https://github.com/avexel-web-design/Portfolio.git"
+        "url": "https://github.com/avexel-web-design/FRC7598.git"
     }
 }
