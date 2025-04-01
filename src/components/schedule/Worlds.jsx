@@ -118,7 +118,13 @@ const Worlds = () => {
               <p className="text-gray-300">{error}</p>
             </div>
           ) : eventData ? (
-            <div className="modern-card p-8 reveal-bottom">              
+            <div className="modern-card p-8 reveal-bottom">
+              <div className="p-3 rounded-full mb-6 border border-[#d3b840]/30">
+                <p className="text-center text-gray-200 font-medium">
+                  <span className="text-sca-gold">⚠</span> Qualification Dependent
+                </p>
+              </div>
+              
               <div className="grid md:grid-cols-2 gap-6 mb-6">
                 <div>
                   <h3 className="text-xl font-bold text-white mb-4">Championship Details</h3>
@@ -172,6 +178,13 @@ const Worlds = () => {
             </div>
           ) : (
             <div className="modern-card p-8 reveal-bottom">
+              {/* Qualification dependent notice */}
+              <div className="bg-gradient-to-r from-[#d3b840]/20 to-[#471a67]/20 p-3 rounded-lg mb-6 border border-[#d3b840]/30">
+                <p className="text-center text-gray-200 font-medium">
+                  <span className="text-sca-gold">⚠</span> Qualification Dependent
+                </p>
+              </div>
+              
               <h3 className="text-xl font-bold text-white mb-4">Championship Details</h3>
               <p className="text-gray-300 mb-6">
                 The FIRST Championship is the culmination of the season, bringing together teams from around the world. 

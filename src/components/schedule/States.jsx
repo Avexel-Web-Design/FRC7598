@@ -164,7 +164,13 @@ const States = () => {
               <p className="text-gray-300">{error}</p>
             </div>
           ) : eventData ? (
-            <div className="modern-card p-8">              
+            <div className="modern-card p-8">
+              <div className="p-3 rounded-full mb-6 border border-[#d3b840]/30">
+                <p className="text-center text-gray-200 font-medium">
+                  <span className="text-sca-gold">⚠</span> Qualification Dependent
+                </p>
+              </div>
+              
               <div className="grid md:grid-cols-2 gap-6 mb-6">
                 <div>
                   <h3 className="text-xl font-bold text-white mb-4">Event Details</h3>
