@@ -145,8 +145,8 @@ const Worlds = () => {
                 <div>
                   <h3 className="text-xl font-bold text-white mb-4">Watch Live</h3>
                   <ul className="space-y-3 text-gray-300">
-                    <li className="flex items-center">
-                      <div className="h-8 w-8 rounded-full bg-gradient-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon mr-3">
+                    <li className="flex items-center group">
+                      <div className="h-8 w-8 rounded-full bg-gradient-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon mr-3 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12">
                         <i className="fas fa-gamepad text-sca-gold"></i>
                       </div>
                       <div>
@@ -207,8 +207,8 @@ const Worlds = () => {
               <div className="mt-6">
                 <h3 className="text-xl font-bold text-white mb-4">Watch Live</h3>
                 <ul className="space-y-3 text-gray-300">
-                  <li className="flex items-center">
-                    <div className="h-8 w-8 rounded-full bg-gradient-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon mr-3">
+                  <li className="flex items-center group">
+                    <div className="h-8 w-8 rounded-full bg-gradient-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon mr-3 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12">
                       <i className="fas fa-gamepad text-sca-gold"></i>
                     </div>
                     <div>
