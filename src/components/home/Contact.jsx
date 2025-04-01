@@ -97,7 +97,7 @@ const Contact = () => {
                           value={formData.name}
                           onChange={handleChange}
                           required
-                          className="w-full bg-[#471a67]/10 border border-[#d3b840]/20 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:outline-none focus:border-[#d3b840]/60 focus:bg-[#471a67]/20 transition-colors"
+                          className="w-full bg-[#471a67]/10 border border-[#d3b840]/20 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-[#d3b840]/60 focus:bg-[#471a67]/20 transition-colors"
                           placeholder="John Doe"
                         />
                       </div>
@@ -112,7 +112,7 @@ const Contact = () => {
                           value={formData.email}
                           onChange={handleChange}
                           required
-                          className="w-full bg-[#471a67]/10 border border-[#d3b840]/20 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:outline-none focus:border-[#d3b840]/60 focus:bg-[#471a67]/20 transition-colors"
+                          className="w-full bg-[#471a67]/10 border border-[#d3b840]/20 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-[#d3b840]/60 focus:bg-[#471a67]/20 transition-colors"
                           placeholder="john@example.com"
                         />
                       </div>
@@ -129,7 +129,7 @@ const Contact = () => {
                         value={formData.subject}
                         onChange={handleChange}
                         required
-                        className="w-full bg-[#471a67]/10 border border-[#d3b840]/20 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:outline-none focus:border-[#d3b840]/60 focus:bg-[#471a67]/20 transition-colors"
+                        className="w-full bg-[#471a67]/10 border border-[#d3b840]/20 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-[#d3b840]/60 focus:bg-[#471a67]/20 transition-colors"
                         placeholder="How can we help?"
                       />
                     </div>
@@ -145,7 +145,7 @@ const Contact = () => {
                         onChange={handleChange}
                         required
                         rows="5"
-                        className="w-full bg-[#471a67]/10 border border-[#d3b840]/20 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:outline-none focus:border-[#d3b840]/60 focus:bg-[#471a67]/20 transition-colors"
+                        className="w-full bg-[#471a67]/10 border border-[#d3b840]/20 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-[#d3b840]/60 focus:bg-[#471a67]/20 transition-colors"
                         placeholder="Tell us about your inquiry..."
                       ></textarea>
                     </div>
