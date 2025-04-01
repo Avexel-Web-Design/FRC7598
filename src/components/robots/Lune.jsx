@@ -70,7 +70,7 @@ const Lune = () => {
                   </div>
                   <div className="bg-white/5 backdrop-blur-sm p-4 rounded-lg border border-white/10 hover:bg-white/10 hover:border-sca-gold/30 hover:-translate-y-1 transition-all duration-300">
                     <h4 className="text-sca-gold font-medium mb-2">Weight</h4>
-                    <p className="text-sm text-gray-400">115 lbs</p>
+                    <p className="text-sm text-gray-400">110 lbs</p>
                   </div>
                 </div>
               </div>
@@ -83,41 +83,41 @@ const Lune = () => {
                 <ul className="space-y-2 text-gray-300">
                   <li className="flex items-start">
                     <span className="text-sca-gold mr-2">•</span>
-                    <span>Custom swerve drive system</span>
+                    <span>MK4i Swerve Drive</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-sca-gold mr-2">•</span>
-                    <span>Dual-motor per module configuration</span>
+                    <span>L2 Gearing</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-sca-gold mr-2">•</span>
-                    <span>Integrated absolute encoders</span>
+                    <span>WCP Kraken X60 Drive Motors</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-sca-gold mr-2">•</span>
-                    <span>Maximum speed: 14 ft/s</span>
+                    <span>Maximum speed: 15 ft/s</span>
                   </li>
                 </ul>
               </div>
 
               <div className="p-4 rounded-lg hover:bg-white/5 hover:shadow-md transition-all duration-300">
-                <h4 className="text-xl font-bold text-white mb-4">Reef Collection</h4>
+                <h4 className="text-xl font-bold text-white mb-4">Game Piece Manipulation</h4>
                 <ul className="space-y-2 text-gray-300">
                   <li className="flex items-start">
                     <span className="text-sca-gold mr-2">•</span>
-                    <span>Dual-stage telescoping arm</span>
+                    <span>Dual-Stage Carbon Fiber Elevator</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-sca-gold mr-2">•</span>
-                    <span>Pneumatic gripper with compliance</span>
+                    <span>Single-wheel Coral Intake</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-sca-gold mr-2">•</span>
-                    <span>Multi-axis wrist mechanism</span>
+                    <span>Elevating Algae Collection</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-sca-gold mr-2">•</span>
-                    <span>Integrated reef detection sensors</span>
+                    <span>L1, L2 and Processor Scoring</span>
                   </li>
                 </ul>
               </div>
@@ -150,7 +150,7 @@ const Lune = () => {
               <div className="bg-gradient-to-r from-sca-purple/20 to-sca-gold/20 backdrop-blur-sm p-6 rounded-xl border border-white/10 text-center max-w-2xl hover:from-sca-purple/30 hover:to-sca-gold/30 hover:border-white/20 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
                 <h4 className="text-xl font-bold text-white mb-2">2025 Season Achievements</h4>
                 <p className="text-gray-300 mb-4">
-                  Lune led our team to the Championship at the Traverse City District Event, demonstrating exceptional performance throughout qualification and playoff matches.
+                  Lune led our team to the Championship at the Traverse City District Event, primarily with exceptional defense throughout qualification and playoff matches.
                 </p>
                 <div className="inline-flex items-center justify-center gap-2 text-sca-gold">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
