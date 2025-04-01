@@ -34,7 +34,7 @@ const Footer = () => {
             </a>
             
             <a 
-              href="https://www.facebook.com/scaconstellations7598" 
+              href="https://www.facebook.com/scaconstellations7598"
               target="_blank" 
               rel="noopener noreferrer" 
               className="text-gray-400 hover:text-[#d3b840] transition-colors"
@@ -44,7 +44,7 @@ const Footer = () => {
             </a>
             
             <a 
-              href="https://github.com/SCAconstellations" 
+              href="https://github.com/SCAconstellations"
               target="_blank" 
               rel="noopener noreferrer" 
               className="text-gray-400 hover:text-[#d3b840] transition-colors"
