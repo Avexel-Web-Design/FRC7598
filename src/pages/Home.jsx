@@ -8,6 +8,7 @@ const Home = () => {
     <div className="relative w-full overflow-hidden" style={{ margin: 0, padding: 0 }}>
       <Hero />
       <About />
+      <div className="h-20"></div>
       <Contact />
     </div>
   );

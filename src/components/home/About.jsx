@@ -32,15 +32,16 @@ const About = () => {
                 <h3 className="text-2xl font-bold mb-4 text-gradient">Our Mission</h3>
                 
                 <p className="mb-4 text-gray-300">
-                  The SCA Constellations aims to inspire students in science, technology, 
-                  engineering, and mathematics while building essential skills like 
+                  The SCA Constellations aim to inspire students in science, technology, 
+                  engineering, art, and mathematics while building essential skills like 
                   teamwork, leadership, and problem-solving.
                 </p>
                 
                 <p className="text-gray-300">
-                  Through participation in FIRST Robotics Competition, we provide hands-on 
-                  experience in designing, building, and programming robots, preparing 
-                  students for future careers in STEM fields.
+                  Through active participation in FIRST Robotics Competition, we provide hands-on 
+                  experience in designing, building, and programming sophisticated robots. Our team 
+                  members gain practical skills in mechanical engineering, electrical systems, 
+                  computer programming, project management, and effective communication.
                 </p>
               </div>
             </div>
@@ -56,7 +57,7 @@ const About = () => {
                   
                   <div className="flex">
                     <div className="flex-shrink-0 h-12 w-12 rounded-full bg-gradient-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10">
-                      <span className="font-bold text-[#d3b840]">2019</span>
+                      <span className="font-bold text-[#d3b840]">2018</span>
                     </div>
                     <div className="ml-6 transform hover:-translate-y-1 transition-transform duration-300">
                       <h4 className="text-lg font-medium text-white">Team Founding</h4>
@@ -66,21 +67,21 @@ const About = () => {
 
                   <div className="flex">
                     <div className="flex-shrink-0 h-12 w-12 rounded-full bg-gradient-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10">
-                      <span className="font-bold text-[#d3b840]">2020</span>
+                      <span className="font-bold text-[#d3b840]">2019</span>
                     </div>
                     <div className="ml-6 transform hover:-translate-y-1 transition-transform duration-300">
                       <h4 className="text-lg font-medium text-white">Rookie Season</h4>
-                      <p className="text-sm text-gray-400">Completed our first competition robot</p>
+                      <p className="text-sm text-gray-400">Went to the World Championship in our first season</p>
                     </div>
                   </div>
 
                   <div className="flex">
                     <div className="flex-shrink-0 h-12 w-12 rounded-full bg-gradient-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10">
-                      <span className="font-bold text-[#d3b840]">2023</span>
+                      <span className="font-bold text-[#d3b840]">2024</span>
                     </div>
                     <div className="ml-6 transform hover:-translate-y-1 transition-transform duration-300">
-                      <h4 className="text-lg font-medium text-white">Regional Competitors</h4>
-                      <p className="text-sm text-gray-400">Advanced to the regional championship</p>
+                      <h4 className="text-lg font-medium text-white">Community Inspiration</h4>
+                      <p className="text-sm text-gray-400">Won our first Engineering Inspiration Award</p>
                     </div>
                   </div>
 
@@ -89,8 +90,8 @@ const About = () => {
                       <span className="font-bold text-[#d3b840]">2025</span>
                     </div>
                     <div className="ml-6 transform hover:-translate-y-1 transition-transform duration-300">
-                      <h4 className="text-lg font-medium text-white">New Horizons</h4>
-                      <p className="text-sm text-gray-400">Expanding our team and reaching for the stars</p>
+                      <h4 className="text-lg font-medium text-white">First Blue Banner</h4>
+                      <p className="text-sm text-gray-400">Won a competition for the first time</p>
                     </div>
                   </div>
                 </div>

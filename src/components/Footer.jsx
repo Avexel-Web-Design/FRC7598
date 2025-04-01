@@ -18,7 +18,7 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center">
           {/* Copyright text */}
           <div className="text-gray-500 text-xs mb-4 md:mb-0">
-            &copy; {currentYear} SCA Constellations - FIRST Team 7598
+            &copy; {currentYear} SCA Constellations - FRC Team 7598
           </div>
           
           {/* Social links using Font Awesome icons */}
