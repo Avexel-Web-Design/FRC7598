@@ -152,7 +152,7 @@ const Contact = () => {
                     
                     <button
                       type="submit"
-                      className="btn-modern w-full py-3 px-6 text-white font-semibold"
+                      className="btn-modern w-full py-3 px-6 text-white font-semibold transition-all duration-300"
                     >
                       <span>Send Message</span>
                     </button>

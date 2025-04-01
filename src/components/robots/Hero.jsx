@@ -33,7 +33,7 @@ const Hero = () => {
           Experience the fusion of technology and design with our outstanding robots.
         </p>
         <div className="flex justify-center gap-4 hero-animate" style={{ transitionDelay: '0.5s' }}>
-          <HashLink smooth to="#lune" className="btn-modern px-6 py-3 bg-white/10 border border-[#d3b840]/50 rounded-full text-white">
+          <HashLink smooth to="#lune" className="btn-modern px-7 py-4 transition-all duration-300 rounded-full text-white font-semibold">
             Discover Lune
           </HashLink>
         </div>
