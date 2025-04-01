@@ -23,18 +23,12 @@ const Lune = () => {
       className="relative min-h-screen flex items-center justify-center py-20 md:py-28 overflow-hidden"
       aria-label="Lune Robot Section"
     >
-      {/* Decorative background elements */}
-      <div className="absolute inset-0 bg-transparent">
-        <div className="absolute top-0 left-0 right-0 h-64 bg-sca-purple/10 blur-3xl -z-10"></div>
-        <div className="absolute bottom-0 right-0 left-0 h-64 bg-sca-gold/5 blur-3xl -z-10"></div>
-      </div>
-
-      <div className="container mx-auto px-4 md:px-8 relative z-10">
+      <div className="container mx-auto px-4 md:px-8 relative z-10 mb-16">
         <div className="max-w-6xl mx-auto">
           {/* Section header */}
           <div className="text-center mb-16 lune-animate">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-              <span className="bg-gradient-to-r from-sca-purple to-sca-gold bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[hsl(49,70%,20%)] to-[hsl(49,70%,70%)] bg-clip-text text-transparent">
                 Lune: Our 2025 Robot
               </span>
             </h2>
@@ -44,21 +38,19 @@ const Lune = () => {
           </div>
 
           {/* Robot showcase with modern card style */}
-          <div className="modern-card p-8 md:p-12 backdrop-blur-sm lune-animate" style={{ transitionDelay: '0.2s' }}>
+          <div className="modern-card p-8 md:p-12 backdrop-blur-sm lune-animate">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               {/* Robot image */}
               <div className="relative">
-                <div className="aspect-square rounded-xl overflow-hidden border border-sca-gold/20 shadow-neon relative">
+                <div className="aspect-square rounded-xl overflow-hidden border border-sca-gold/20 shadow-neon relative hover:scale-[1.02] transition-all duration-300">
                   {/* Placeholder for robot image - replace with actual image when available */}
                   <img 
                     src="/baywatchLogo.png" 
                     alt="Lune - 2025 REEFSCAPE Robot"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                 </div>
-                <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-gradient-radial from-sca-gold/20 to-transparent rounded-full blur-xl"></div>
-                <div className="absolute -top-4 -left-4 w-32 h-32 bg-gradient-radial from-sca-purple/20 to-transparent rounded-full blur-xl"></div>
               </div>
 
               {/* Robot description */}
@@ -72,11 +64,11 @@ const Lune = () => {
                 </p>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-white/5 backdrop-blur-sm p-4 rounded-lg border border-white/10">
+                  <div className="bg-white/5 backdrop-blur-sm p-4 rounded-lg border border-white/10 hover:bg-white/10 hover:border-sca-gold/30 hover:-translate-y-1 transition-all duration-300">
                     <h4 className="text-sca-gold font-medium mb-2">Dimensions</h4>
                     <p className="text-sm text-gray-400">27" × 25" × 31"</p>
                   </div>
-                  <div className="bg-white/5 backdrop-blur-sm p-4 rounded-lg border border-white/10">
+                  <div className="bg-white/5 backdrop-blur-sm p-4 rounded-lg border border-white/10 hover:bg-white/10 hover:border-sca-gold/30 hover:-translate-y-1 transition-all duration-300">
                     <h4 className="text-sca-gold font-medium mb-2">Weight</h4>
                     <p className="text-sm text-gray-400">115 lbs</p>
                   </div>
@@ -86,7 +78,7 @@ const Lune = () => {
 
             {/* Technical details */}
             <div className="mt-12 pt-8 border-t border-white/10 grid md:grid-cols-3 gap-6 lune-animate" style={{ transitionDelay: '0.4s' }}>
-              <div>
+              <div className="p-4 rounded-lg hover:bg-white/5 hover:shadow-md transition-all duration-300">
                 <h4 className="text-xl font-bold text-white mb-4">Drivetrain</h4>
                 <ul className="space-y-2 text-gray-300">
                   <li className="flex items-start">
@@ -108,7 +100,7 @@ const Lune = () => {
                 </ul>
               </div>
 
-              <div>
+              <div className="p-4 rounded-lg hover:bg-white/5 hover:shadow-md transition-all duration-300">
                 <h4 className="text-xl font-bold text-white mb-4">Reef Collection</h4>
                 <ul className="space-y-2 text-gray-300">
                   <li className="flex items-start">
@@ -130,7 +122,7 @@ const Lune = () => {
                 </ul>
               </div>
 
-              <div>
+              <div className="p-4 rounded-lg hover:bg-white/5 hover:shadow-md transition-all duration-300">
                 <h4 className="text-xl font-bold text-white mb-4">Electronics & Control</h4>
                 <ul className="space-y-2 text-gray-300">
                   <li className="flex items-start">
@@ -155,7 +147,7 @@ const Lune = () => {
 
             {/* Competition performance */}
             <div className="mt-12 flex justify-center lune-animate" style={{ transitionDelay: '0.8s' }}>
-              <div className="bg-gradient-to-r from-sca-purple/20 to-sca-gold/20 backdrop-blur-sm p-6 rounded-xl border border-white/10 text-center max-w-2xl">
+              <div className="bg-gradient-to-r from-sca-purple/20 to-sca-gold/20 backdrop-blur-sm p-6 rounded-xl border border-white/10 text-center max-w-2xl hover:from-sca-purple/30 hover:to-sca-gold/30 hover:border-white/20 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
                 <h4 className="text-xl font-bold text-white mb-2">2025 Season Achievements</h4>
                 <p className="text-gray-300 mb-4">
                   Lune led our team to the Championship at the Traverse City District Event, demonstrating exceptional performance throughout qualification and playoff matches.

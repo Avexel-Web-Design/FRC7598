@@ -95,7 +95,7 @@ const Worlds = () => {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-10 reveal-bottom">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-[#471a67] to-[#d3b840] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[hsl(275,60%,20%)] to-[hsl(275,60%,80%)] bg-clip-text text-transparent">
                 {eventData ? eventData.name : "FIRST Championship"}
               </span>
             </h2>

@@ -294,8 +294,8 @@ section:first-child {
 /* Custom shadow effects */
 .shadow-neon {
   box-shadow: 
-    0 0 15px rgba(56, 189, 248, 0.2),
-    0 0 30px rgba(56, 189, 248, 0.1);
+    0 0 15px rgba(211, 184, 64, 0.2),
+    0 0 30px rgba(211, 184, 64, 0.1);
 }
 
 /* Gradient border */

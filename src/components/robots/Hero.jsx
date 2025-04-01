@@ -25,7 +25,7 @@ const Hero = () => {
     >
       <div className="container mx-auto text-center relative z-10">
         <h1 className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 sm:mb-8 tracking-tight leading-tight">
-          <span className="block bg-gradient-to-r from-[#471a67] to-[#d3b840] bg-clip-text text-transparent hero-animate" style={{ transitionDelay: '0.3s' }}>
+          <span className="block bg-gradient-to-r from-[hsl(275,60%,20%)] to-[hsl(275,60%,80%)] bg-clip-text text-transparent hero-animate" style={{ transitionDelay: '0.3s' }}>
               Our Robots
           </span>
         </h1>
