@@ -1,8 +1,13 @@
 import React from "react";
 import useScrollReveal from "../../hooks/useScrollReveal";
 
+// Function to get correct asset path
+const getAssetPath = (path) => {
+  return new URL(`/public/${path}`, import.meta.url).href;
+};
+
 // Placeholder image for team members - replace with actual team photos
-const placeholderImage = "/Logo-nobg-sm.png";
+const placeholderImage = getAssetPath("Logo-nobg-sm.png");
 
 const Team = () => {
   useScrollReveal();

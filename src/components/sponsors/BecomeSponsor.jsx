@@ -2,25 +2,30 @@ import React from "react";
 import { HashLink } from "react-router-hash-link";
 import useScrollReveal from "../../hooks/useScrollReveal";
 
+// Function to get correct asset path
+const getAssetPath = (path) => {
+  return new URL(`/public/${path}`, import.meta.url).href;
+};
+
 // Placeholder image for sponsor logos - replace with actual sponsor logos
-const placeholderImage = "/Logo-nobg-sm.png";
+const placeholderImage = getAssetPath("Logo-nobg-sm.png");
 
 const Sponsors = () => {
   useScrollReveal();
 
   // Define sponsors as a flat list
   const sponsors = [
-    { name: "Superb Fabricating LLC", logo: "/SuperbFabricating.png" },
-    { name: "Special T's Packaging", logo: "/SpecialTs.png" },
-    { name: "SW Machines North America", logo: "/SW.png" },
-    { name: "FIRST in Michigan", logo: "/FIRST.png" },
-    { name: "Gene Haas Foundation", logo: "/HAAS.png" },
-    { name: "Autodesk", logo: "/Autodesk.png" },
-    { name: "Toyota4Good", logo: "/Toyota.png" },
-    { name: "Pratt and Miller", logo: "/PrattMiller.png" },
-    { name: "Michigan Council of Women in Technology Foundation", logo: "/MCWT.png" },
-    { name: "Kettering/GMI Alumni Association", logo: "/Kettering.png" },
-    { name: "Avexel", logo: "/Avexel.png" }
+    { name: "Superb Fabricating LLC", logo: getAssetPath("SuperbFabricating.png") },
+    { name: "Special T's Packaging", logo: getAssetPath("SpecialTs.png") },
+    { name: "SW Machines North America", logo: getAssetPath("SW.png") },
+    { name: "FIRST in Michigan", logo: getAssetPath("FIRST.png") },
+    { name: "Gene Haas Foundation", logo: getAssetPath("HAAS.png") },
+    { name: "Autodesk", logo: getAssetPath("Autodesk.png") },
+    { name: "Toyota4Good", logo: getAssetPath("Toyota.png") },
+    { name: "Pratt and Miller", logo: getAssetPath("PrattMiller.png") },
+    { name: "Michigan Council of Women in Technology Foundation", logo: getAssetPath("MCWT.png") },
+    { name: "Kettering/GMI Alumni Association", logo: getAssetPath("Kettering.png") },
+    { name: "Avexel", logo: getAssetPath("Avexel.png") }
   ];
 
   return (
