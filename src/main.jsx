@@ -1,16 +1,17 @@
 // src/main.jsx
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { HashRouter } from "react-router-dom";
-import App from "./App";
-import "./index.css";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter as Router } from 'react-router-dom';
+import App from './App';
+import './index.css';
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+// Get the base URL from Vite environment
+const basename = import.meta.env.BASE_URL;
+
+ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <HashRouter
-      future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
-    >
+    <Router basename={basename}>
       <App />
-    </HashRouter>
+    </Router>
   </React.StrictMode>
 );
