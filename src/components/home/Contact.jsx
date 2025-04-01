@@ -167,9 +167,9 @@ const Contact = () => {
                 <h3 className="text-2xl font-bold text-gradient mb-6">Team Information</h3>
                 
                 <div className="space-y-8">
-                  <div className="flex items-start">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-[#471a67] to-[#471a67]/70 flex items-center justify-center border border-[#d3b840]/20 shadow-neon mr-4 mt-1">
-                      <i className="fas fa-envelope text-[#d3b840]"></i>
+                  <div className="flex items-start group">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12 mr-4 mt-1">
+                      <i className="fas fa-envelope text-[#d3b840] transition-colors duration-300"></i>
                     </div>
                     <div className="transform hover:-translate-y-1 transition-transform duration-300">
                       <h4 className="text-lg font-medium text-white mb-1">Email Us</h4>
@@ -184,9 +184,9 @@ const Contact = () => {
                     </div>
                   </div>
                   
-                  <div className="flex items-start">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-[#471a67] to-[#471a67]/70 flex items-center justify-center border border-[#d3b840]/20 shadow-neon mr-4 mt-1">
-                      <i className="fas fa-location-dot text-[#d3b840]"></i>
+                  <div className="flex items-start group">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12 mr-4 mt-1">
+                      <i className="fas fa-location-dot text-[#d3b840] transition-colors duration-300"></i>
                     </div>
                     <div className="transform hover:-translate-y-1 transition-transform duration-300">
                       <h4 className="text-lg font-medium text-white mb-1">Our Location</h4>
@@ -203,9 +203,9 @@ const Contact = () => {
                     </div>
                   </div>
                   
-                  <div className="flex items-start">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-[#471a67] to-[#471a67]/70 flex items-center justify-center border border-[#d3b840]/20 shadow-neon mr-4 mt-1">
-                      <i className="fas fa-calendar-days text-[#d3b840]"></i>
+                  <div className="flex items-start group">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12 mr-4 mt-1">
+                      <i className="fas fa-calendar-days text-[#d3b840] transition-colors duration-300"></i>
                     </div>
                     <div className="transform hover:-translate-y-1 transition-transform duration-300">
                       <h4 className="text-lg font-medium text-white mb-1">Meeting Times</h4>
@@ -243,7 +243,7 @@ const Contact = () => {
       {/* Modern decorative elements */}
       <div 
         className="absolute top-1/4 left-0 w-64 h-64 bg-gradient-radial from-[#471a67]/20 to-transparent rounded-full filter blur-3xl animate-pulse-slow" 
-        aria-hidden="true"
+        aria-hidden="true"i
       ></div>
       <div 
         className="absolute bottom-1/4 right-0 w-96 h-96 bg-gradient-radial from-[#d3b840]/10 to-transparent rounded-full filter blur-3xl animate-pulse-slow" 

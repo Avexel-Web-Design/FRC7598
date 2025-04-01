@@ -55,9 +55,9 @@ const About = () => {
                   {/* Timeline connecting line */}
                   <div className="absolute left-6 top-6 bottom-6 w-0.5 bg-gradient-to-b from-[#d3b840] via-[#d3b840]/50 to-[#d3b840]/20"></div>
                   
-                  <div className="flex">
-                    <div className="flex-shrink-0 h-12 w-12 rounded-full bg-gradient-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10">
-                      <span className="font-bold text-[#d3b840]">2018</span>
+                  <div className="flex group">
+                    <div className="flex-shrink-0 h-12 w-12 rounded-full bg-gradient-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12">
+                      <span className="font-bold text-[#d3b840] transition-colors duration-300">2018</span>
                     </div>
                     <div className="ml-6 transform hover:-translate-y-1 transition-transform duration-300">
                       <h4 className="text-lg font-medium text-white">Team Founding</h4>
@@ -65,9 +65,9 @@ const About = () => {
                     </div>
                   </div>
 
-                  <div className="flex">
-                    <div className="flex-shrink-0 h-12 w-12 rounded-full bg-gradient-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10">
-                      <span className="font-bold text-[#d3b840]">2019</span>
+                  <div className="flex group">
+                    <div className="flex-shrink-0 h-12 w-12 rounded-full bg-gradient-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12">
+                      <span className="font-bold text-[#d3b840] transition-colors duration-300">2019</span>
                     </div>
                     <div className="ml-6 transform hover:-translate-y-1 transition-transform duration-300">
                       <h4 className="text-lg font-medium text-white">Rookie Season</h4>
@@ -75,9 +75,9 @@ const About = () => {
                     </div>
                   </div>
 
-                  <div className="flex">
-                    <div className="flex-shrink-0 h-12 w-12 rounded-full bg-gradient-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10">
-                      <span className="font-bold text-[#d3b840]">2024</span>
+                  <div className="flex group">
+                    <div className="flex-shrink-0 h-12 w-12 rounded-full bg-gradient-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12">
+                      <span className="font-bold text-[#d3b840] transition-colors duration-300">2024</span>
                     </div>
                     <div className="ml-6 transform hover:-translate-y-1 transition-transform duration-300">
                       <h4 className="text-lg font-medium text-white">Community Inspiration</h4>
@@ -85,9 +85,9 @@ const About = () => {
                     </div>
                   </div>
 
-                  <div className="flex">
-                    <div className="flex-shrink-0 h-12 w-12 rounded-full bg-gradient-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10">
-                      <span className="font-bold text-[#d3b840]">2025</span>
+                  <div className="flex group">
+                    <div className="flex-shrink-0 h-12 w-12 rounded-full bg-gradient-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12">
+                      <span className="font-bold text-[#d3b840] transition-colors duration-300">2025</span>
                     </div>
                     <div className="ml-6 transform hover:-translate-y-1 transition-transform duration-300">
                       <h4 className="text-lg font-medium text-white">First Blue Banner</h4>
