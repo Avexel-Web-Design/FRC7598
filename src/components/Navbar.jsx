@@ -16,6 +16,7 @@ const Navbar = () => {
     { name: "Team", path: "/team" },
     { name: "Sponsors", path: "/sponsors" },
     { name: "Schedule", path: "/schedule" },
+    { name: "Photos", path: "/photos" },
   ];
 
   // Scroll to top when location changes

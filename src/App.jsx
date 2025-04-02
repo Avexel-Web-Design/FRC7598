@@ -13,6 +13,7 @@ const Robots = lazy(() => import("./pages/Robots"));
 const Team = lazy(() => import("./pages/Team"));
 const Sponsors = lazy(() => import("./pages/Sponsors"));
 const Schedule = lazy(() => import("./pages/Schedule"));
+const Photos = lazy(() => import("./pages/Photos"));
 
 // Enhanced loading component with animation
 const PageLoading = () => (
@@ -78,6 +79,7 @@ function App() {
             <Route path="/team" element={<Team />} />
             <Route path="/sponsors" element={<Sponsors />} />
             <Route path="/schedule" element={<Schedule />} />
+            <Route path="/photos" element={<Photos />} />
           </Routes>
         </Suspense>
       </main>

@@ -46,6 +46,18 @@ module.exports = {
         'spin-slow-reverse': 'spin 15s linear infinite reverse',
         'pulse-slow': 'pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'bounce-slow': 'bounce 2s infinite',
+        'fade-in': 'fadeIn 0.7s ease-in forwards',
+        'scale-in': 'scaleIn 0.4s ease-out'
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' }
+        },
+        scaleIn: {
+          '0%': { transform: 'scale(0.9)' },
+          '100%': { transform: 'scale(1)' }
+        }
       },
       screens: {
         'xs': '480px',

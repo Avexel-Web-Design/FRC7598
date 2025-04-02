@@ -134,6 +134,20 @@ section {
   animation-delay: 2s;
 }
 
+/* Add animation-ready class for hero and gallery animations */
+.hero-animate,
+.gallery-animate {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.hero-animate.animation-ready,
+.gallery-animate.animation-ready {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* Text animations */
 @keyframes slideUp {
   from {
