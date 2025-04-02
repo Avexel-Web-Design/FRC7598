@@ -7,7 +7,7 @@ const AtHome = () => {
   return (
     <Gallery 
       id="athome"
-      title="At Home Challenges"
+      title="Infinite Recharge: At Home"
       subtitle="Virtual Learning"
       year="2020"
       description="Photos from our 2020 season participating in virtual at-home challenges during the pandemic."

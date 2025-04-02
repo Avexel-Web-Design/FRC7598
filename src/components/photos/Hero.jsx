@@ -33,26 +33,26 @@ const Hero = () => {
           Capturing our team's memories, achievements, and robot builds throughout the seasons.
         </p>
         <div className="flex justify-center gap-4 flex-wrap hero-animate" style={{ transitionDelay: '0.5s' }}>
-          <HashLink smooth to="#deepspace" className="btn-modern px-5 py-3 transition-all duration-300 rounded-full text-white font-semibold">
-            Destination: Deep Space (2019)
-          </HashLink>
-          <HashLink smooth to="#infiniterecharge" className="btn-modern px-5 py-3 transition-all duration-300 rounded-full text-white font-semibold">
-            Infinite Recharge (2020)
-          </HashLink>
-          <HashLink smooth to="#athome" className="btn-modern px-5 py-3 transition-all duration-300 rounded-full text-white font-semibold">
-            Infinite Recharge: At Home (2021)
-          </HashLink>
-          <HashLink smooth to="#rapidreact" className="btn-modern px-5 py-3 transition-all duration-300 rounded-full text-white font-semibold">
-            Rapid React (2022)
-          </HashLink>
-          <HashLink smooth to="#chargedup" className="btn-modern px-5 py-3 transition-all duration-300 rounded-full text-white font-semibold">
-            Charged Up (2023)
+          <HashLink smooth to="#reefscape" className="btn-modern px-5 py-3 transition-all duration-300 rounded-full text-white font-semibold">
+            Reefscape (2025)
           </HashLink>
           <HashLink smooth to="#crescendo" className="btn-modern px-5 py-3 transition-all duration-300 rounded-full text-white font-semibold">
             Crescendo (2024)
           </HashLink>
-          <HashLink smooth to="#reefscape" className="btn-modern px-5 py-3 transition-all duration-300 rounded-full text-white font-semibold">
-            Reefscape (2025)
+          <HashLink smooth to="#chargedup" className="btn-modern px-5 py-3 transition-all duration-300 rounded-full text-white font-semibold">
+            Charged Up (2023)
+          </HashLink>
+          <HashLink smooth to="#rapidreact" className="btn-modern px-5 py-3 transition-all duration-300 rounded-full text-white font-semibold">
+            Rapid React (2022)
+          </HashLink>
+          <HashLink smooth to="#athome" className="btn-modern px-5 py-3 transition-all duration-300 rounded-full text-white font-semibold">
+            Infinite Recharge: At Home (2021)
+          </HashLink>
+          <HashLink smooth to="#infiniterecharge" className="btn-modern px-5 py-3 transition-all duration-300 rounded-full text-white font-semibold">
+            Infinite Recharge (2020)
+          </HashLink>
+          <HashLink smooth to="#deepspace" className="btn-modern px-5 py-3 transition-all duration-300 rounded-full text-white font-semibold">
+            Destination: Deep Space (2019)
           </HashLink>
         </div>
       </div>

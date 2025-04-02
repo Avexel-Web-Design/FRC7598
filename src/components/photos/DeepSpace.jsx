@@ -7,7 +7,7 @@ const DeepSpace = () => {
   return (
     <Gallery 
       id="deepspace"
-      title="Deep Space"
+      title="Destination: Deep Space"
       subtitle="Our Founding Year"
       year="2019"
       description="Photos from our founding year competing in the Deep Space challenge."
