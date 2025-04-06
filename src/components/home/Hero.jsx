@@ -65,7 +65,7 @@ const Hero = () => {
           </p>
 
           <div 
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 hero-animate" 
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 hero-animate hover-pointer" 
             style={{ transitionDelay: '0.5s' }}
           >
             <HashLink
