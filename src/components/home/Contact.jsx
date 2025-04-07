@@ -210,11 +210,12 @@ const Contact = () => {
                     <div className="transform hover:-translate-y-1 transition-transform duration-300">
                       <h4 className="text-lg font-medium text-white mb-1">Meeting Times</h4>
                       <p className="text-gray-300">
-                        Monday - Thursday<br />
-                        3:30 PM - 6:00 PM
+                        Tuesday, Thursday<br />
+                        4:30 PM - 8:30 PM
                       </p>
-                      <p className="text-gray-400 text-sm mt-1">
-                        Additional weekend meetings during build season
+                      <p className="text-gray-300">
+                        Saturday<br />
+                        10:00 AM - 4:00 PM
                       </p>
                     </div>
                   </div>
