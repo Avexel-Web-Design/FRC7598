@@ -50,7 +50,7 @@ const Team = () => {
             <h3 className="text-2xl font-bold mb-10 text-center text-white reveal-bottom">
               Mentors
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {teamMembers.mentors.map((mentor, index) => (
                 <TeamMemberCard
                   key={index}
