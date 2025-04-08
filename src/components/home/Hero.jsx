@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { HashLink } from "react-router-hash-link";
 import useScrollReveal from "../../hooks/useScrollReveal";
-import { getAssetPath } from "../../utils/assetUtils";
+// Import logo directly
+import logoImage from "../../assets/images/Logo-nobg-sm.png";
 
 const Hero = () => {
   useScrollReveal();
@@ -42,7 +43,7 @@ const Hero = () => {
             <div className="relative">
               <div className="absolute -inset-6 bg-gradient-to-r from-[#471a67]/40 to-[#d3b840]/40 rounded-full blur-xl opacity-70 animate-pulse-slow"></div>
               <img 
-                src={getAssetPath("Logo-nobg-sm.png")} 
+                src={logoImage} 
                 alt="SCA Constellations Logo" 
                 className="h-24 md:h-32 w-auto relative drop-shadow-glow-lg"
               />
