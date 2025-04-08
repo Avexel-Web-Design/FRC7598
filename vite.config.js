@@ -11,9 +11,25 @@ export default defineConfig({
       '@': resolve(__dirname, 'src'),
     },
   },
+  publicDir: 'public',
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
     assetsInlineLimit: 4096,
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, 'index.html'),
+      },
+    },
+  },
+  server: {
+    fs: {
+      strict: false, // Allow serving files from outside the project root
+      allow: ['..'], // Allow serving files from parent directory
+    },
+  },
+  // Add optimizeDeps configuration
+  optimizeDeps: {
+    include: ['@/assets/**/*'],
   },
 });
