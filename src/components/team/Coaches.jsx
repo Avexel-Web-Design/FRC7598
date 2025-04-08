@@ -16,13 +16,13 @@ const Team = () => {
     coaches: [
       {
         name: "Katie B",
-        role: "Lead Mentor / Engineering",
+        role: "Head Coach/Business Mentor",
         image: placeholderImage,
         bio: "Mechanical engineer with 15 years of industry experience. Passionate about inspiring the next generation of innovators."
       },
       {
         name: "Andrew G",
-        role: "Programming Mentor",
+        role: "Hean Coach/Mechanical Mentor",
         image: placeholderImage,
         bio: "Software developer and FIRST alumnus who guides our team in robot programming and control systems."
       },

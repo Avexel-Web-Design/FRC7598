@@ -16,20 +16,20 @@ const Team = () => {
     mentors: [
       {
         name: "Brianna F",
-        role: "Lead Mentor / Engineering",
+        role: "Mechanical and CAD Mentor",
         image: placeholderImage,
         bio: "Mechanical engineer with 15 years of industry experience. Passionate about inspiring the next generation of innovators."
       },
       
       {
         name: "Greg N",
-        role: "Business/Outreach Mentor",
+        role: "Mechanical Mentor",
         image: placeholderImage,
         bio: "Marketing executive who helps our team with community engagement and sponsorship development."
       },
       {
         name: "Ryan W",
-        role: "Business/Outreach Mentor",
+        role: "Controls ",
         image: placeholderImage,
         bio: "Marketing executive who helps our team with community engagement and sponsorship development."
       }
