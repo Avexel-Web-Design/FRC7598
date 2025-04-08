@@ -36,8 +36,8 @@ const Sponsors = () => {
       <div className="container mx-auto px-4 md:px-8 relative z-10">
         <div className="max-w-6xl mx-auto">
           {/* Become a sponsor CTA */}
-          <div className="mt-24 reveal-bottom">
-            <div className="bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-8 md:p-12">
+          <div className="mt-24 mb-8 reveal-bottom">
+            <div className="modern-card rounded-xl p-8 md:p-12">
               <div className="text-center mb-8">
                 <h3 className="text-2xl font-bold text-white mb-4">Become a Sponsor</h3>
                 <p className="text-gray-300 max-w-3xl mx-auto">
@@ -93,7 +93,11 @@ const Sponsors = () => {
 };
 
 const SponsorshipOption = ({ title, description, icon }) => (
-  <div className="bg-white/5 backdrop-blur-sm rounded-lg border border-white/10 p-5 hover:border-purple-500/30 transition-all duration-300 flex flex-col items-center text-center">
+  <div className="bg-black/50 rounded-lg border border-white/10 p-5 hover:border-purple-500/30 hover:scale-105 transition-all duration-300 flex flex-col items-center text-center" 
+       style={{ 
+         background: 'rgba(20, 20, 25, 0.6)',
+         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)'
+       }}>
     <div className="text-purple-400 mb-4">
       {icon}
     </div>

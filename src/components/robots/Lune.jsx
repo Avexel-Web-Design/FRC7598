@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { HashLink } from "react-router-hash-link";
 import useScrollReveal from '../../hooks/useScrollReveal';
-import { getAssetPath } from '../../utils/assetUtils';
+// Import robot image directly
+import robotImage from '../../assets/images/Robot.jpg';
 import '../../assets/styles/main.css';
 
 const Lune = () => {
@@ -45,7 +46,7 @@ const Lune = () => {
               <div className="relative">
                 <div className="aspect-square rounded-xl overflow-hidden border border-sca-gold/20 shadow-neon relative hover:scale-[1.02] transition-all duration-300">
                   <img 
-                    src={getAssetPath("Robot.jpg")} 
+                    src={robotImage} 
                     alt="Lune - 2025 REEFSCAPE Robot"
                     className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                   />

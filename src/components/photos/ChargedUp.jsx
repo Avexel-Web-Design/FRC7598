@@ -1,7 +1,5 @@
 import React from 'react';
 import Gallery from './Gallery';
-// Import images correctly for React deployment
-import starImage from '/Star.png';
 
 const ChargedUp = () => {
   return (
@@ -11,23 +9,6 @@ const ChargedUp = () => {
       subtitle="Building Momentum"
       year="2023"
       description="Photos from our 2023 season competing in the Charged Up challenge."
-      photos={[
-        {
-          src: starImage,
-          alt: 'Description of image',
-          caption: 'Optional caption'
-        },
-        {
-          src: starImage,
-          alt: 'Description of image',
-          caption: 'Optional caption'
-        },
-        {
-          src: starImage,
-          alt: 'Description of image',
-          caption: 'Optional caption'
-        },
-      ]}
     />
   );
 };

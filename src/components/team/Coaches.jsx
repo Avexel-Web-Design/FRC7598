@@ -18,13 +18,13 @@ const Team = () => {
         name: "Katie B",
         role: "Head Coach/Business Mentor",
         image: placeholderImage,
-        bio: "Mechanical engineer with 15 years of industry experience. Passionate about inspiring the next generation of innovators."
+        bio: "Leads the team's overall direction while specializing in business strategy, sponsorship development, and team organization. Helps students build professional skills and manage team resources."
       },
       {
         name: "Andrew G",
-        role: "Hean Coach/Mechanical Mentor",
+        role: "Head Coach/Mechanical Mentor",
         image: placeholderImage,
-        bio: "Software developer and FIRST alumnus who guides our team in robot programming and control systems."
+        bio: "Oversees team operations and provides expertise in mechanical design, fabrication techniques, and robot construction. Helps students translate engineering concepts into real-world applications."
       },
     ],
   };

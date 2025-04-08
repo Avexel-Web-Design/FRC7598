@@ -1,37 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import useScrollReveal from '../../hooks/useScrollReveal';
+import { getGalleryImages } from '../../utils/assetUtils';
 
-const Gallery = ({ id, title, subtitle, year, description, photos = [] }) => {
+const Gallery = ({ id, title, subtitle, year, description }) => {
   useScrollReveal();
   const [activePhoto, setActivePhoto] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [photos, setPhotos] = useState([]);
 
-  // Add fadeIn effect when component mounts
   useEffect(() => {
     setIsVisible(true);
+    loadPhotos();
     
-    // Add additional animation for gallery elements
     const galleryElements = document.querySelectorAll('.gallery-animate');
-    
-    // Add a slight delay before starting animations
     setTimeout(() => {
       galleryElements.forEach((element, index) => {
-        // Staggered animation
         setTimeout(() => {
           element.classList.add('animation-ready');
         }, index * 150);
       });
     }, 200);
-  }, []);
+  }, [id]);
 
-  // For now, use placeholders until real photos are added
-  const placeholderPhotos = Array(6).fill({
-    src: '/Logo-nobg-sm.png',
-    alt: 'Placeholder Image',
-    caption: 'Placeholder - Images will be added later'
-  });
-
-  const allPhotos = photos.length > 0 ? photos : placeholderPhotos;
+  const loadPhotos = async () => {
+    const images = await getGalleryImages(id);
+    setPhotos(images);
+  };
 
   const openModal = (index) => {
     setActivePhoto(index);
@@ -44,11 +38,11 @@ const Gallery = ({ id, title, subtitle, year, description, photos = [] }) => {
   };
 
   const nextPhoto = () => {
-    setActivePhoto((prev) => (prev + 1) % allPhotos.length);
+    setActivePhoto((prev) => (prev + 1) % photos.length);
   };
 
   const prevPhoto = () => {
-    setActivePhoto((prev) => (prev - 1 + allPhotos.length) % allPhotos.length);
+    setActivePhoto((prev) => (prev - 1 + photos.length) % photos.length);
   };
 
   return (
@@ -67,39 +61,31 @@ const Gallery = ({ id, title, subtitle, year, description, photos = [] }) => {
             <p className="text-xl md:text-2xl text-[#d3b840] font-semibold mb-3">{subtitle} ({year})</p>
             <p className="text-gray-300 max-w-3xl mx-auto">{description}</p>
           </div>
-
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {allPhotos.map((photo, index) => (
+            {photos.map((photo, index) => (
               <div 
                 key={index} 
-                className="group relative overflow-hidden rounded-xl bg-[#471a67]/20 border border-[#d3b840]/20 hover:border-[#d3b840]/60 transition-all duration-500 hover:shadow-lg hover:shadow-[#d3b840]/20 cursor-pointer gallery-animate"
+                className="group relative overflow-hidden rounded-xl bg-[#471a67]/20 border border-[#d3b840]/20 hover:border-[#d3b840]/60 transition-all duration-500 hover:shadow-lg hover:shadow-[#d3b840]/20 cursor-pointer gallery-animate h-64"
                 onClick={() => openModal(index)}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
-                <div className="aspect-w-16 aspect-h-10 overflow-hidden">
-                  <img 
-                    src={photo.src} 
-                    alt={photo.alt} 
-                    className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110" 
-                  />
-                  <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <button 
-                      className="bg-[#d3b840]/80 hover:bg-[#d3b840] text-black px-4 py-2 rounded-full font-medium"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        openModal(index);
-                      }}
-                    >
-                      View Photo
-                    </button>
-                  </div>
+                <img 
+                  src={photo.src} 
+                  alt={photo.alt} 
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                />
+                <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <button 
+                    className="bg-[#d3b840]/80 hover:bg-[#d3b840] text-black px-4 py-2 rounded-full font-medium"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openModal(index);
+                    }}
+                  >
+                    View Photo
+                  </button>
                 </div>
-                {photo.caption && (
-                  <div className="p-4">
-                    <p className="text-gray-300 text-sm">{photo.caption}</p>
-                  </div>
-                )}
               </div>
             ))}
           </div>
@@ -121,12 +107,11 @@ const Gallery = ({ id, title, subtitle, year, description, photos = [] }) => {
 
             <div className="overflow-hidden rounded-xl relative flex-1 flex items-center justify-center">
               <img 
-                src={allPhotos[activePhoto].src} 
-                alt={allPhotos[activePhoto].alt}
+                src={photos[activePhoto].src} 
+                alt={photos[activePhoto].alt}
                 className="max-h-[80vh] max-w-full object-contain" 
               />
               
-
               <button 
                 className="absolute left-4 bg-[#471a67]/50 hover:bg-[#471a67] rounded-full p-2"
                 onClick={(e) => { e.stopPropagation(); prevPhoto(); }}
@@ -145,12 +130,6 @@ const Gallery = ({ id, title, subtitle, year, description, photos = [] }) => {
                 </svg>
               </button>
             </div>
-            
-            {allPhotos[activePhoto].caption && (
-              <div className="bg-[#471a67]/70 p-4 text-center mt-2 rounded-lg">
-                <p className="text-white">{allPhotos[activePhoto].caption}</p>
-              </div>
-            )}
           </div>
         </div>
       )}
