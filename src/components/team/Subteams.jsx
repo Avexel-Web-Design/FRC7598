@@ -17,17 +17,17 @@ const Team = () => {
       {
         name: "Drive Team",
         description: "Controls the robot at competitions.",
-        members: ["Tori W", "Beatrice D", "Neha J", "November B"]
+        members: ["Brooke W - Driver", "Beatrice D- Operator", "Jenna B - Drive Coach", "Elizabeth C - Technition", "November B - Human Player"]
       },
       {
         name: "Controls Team",
         description: "Creates and maintains the robot's power systems and electronic components.",
-        members: ["Placeholder", "Placeholder", "Placeholder"]
+        members: ["Tori W", "Beatrice D", "Neha J", "November B"]
       },
       {
-        name: "Business Team",
+        name: "Spitit Team",
         description: "Handles team logistics, sponsorships, and community engagement activities.",
-        members: ["Everyone participates in this subteam"]
+        members: ["Tori W", "Neha J"]
       }
     ]
   };
