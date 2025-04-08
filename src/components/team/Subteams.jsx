@@ -17,7 +17,7 @@ const Team = () => {
       {
         name: "Drive Team",
         description: "Controls the robot at competitions.",
-        members: ["Tori W", "Beatrice D", "Neha J"]
+        members: ["Brooke W", "Beatrice D", "Jenna B", "Elizabteh C", "November B"]
       },
       {
         name: "Controls Team",
@@ -26,7 +26,7 @@ const Team = () => {
       },
       {
         name: "Spirit Team",
-        description: "Handles team logistics, sponsorships, and community engagement activities.",
+        description: "Brings on the image, spirit, and energy of the team.",
         members: ["Tori W", "Neha J"]
       }
     ]
