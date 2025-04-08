@@ -71,7 +71,7 @@ const Team = () => {
 };
 
 const SubteamCard = ({ name, description, members, revealDirection }) => (
-  <div className={`bg-white/5 backdrop-blur-sm p-6 rounded-xl transition-all duration-300 reveal-${revealDirection}`}>
+  <div className={`bg-white/5 backdrop-blur-sm p-6 rounded-xl hover:bg-white/10 transition-all duration-300 reveal-${revealDirection}`}>
     <h4 className="text-xl font-bold text-white mb-3">{name}</h4>
     <p className="text-gray-300 mb-4">{description}</p>
     <div className="flex flex-wrap gap-2">
