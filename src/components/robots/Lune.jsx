@@ -44,9 +44,8 @@ const Lune = () => {
               {/* Robot image */}
               <div className="relative">
                 <div className="aspect-square rounded-xl overflow-hidden border border-sca-gold/20 shadow-neon relative hover:scale-[1.02] transition-all duration-300">
-                  {/* Replace with actual image when available */}
                   <img 
-                    src={getAssetPath("baywatchLogo.png")} 
+                    src={getAssetPath("Robot.jpg")} 
                     alt="Lune - 2025 REEFSCAPE Robot"
                     className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                   />

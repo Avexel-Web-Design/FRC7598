@@ -144,8 +144,8 @@ const Contact = () => {
                         value={formData.message}
                         onChange={handleChange}
                         required
-                        rows="5"
-                        className="w-full bg-[#471a67]/10 border border-[#d3b840]/20 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-[#d3b840]/60 focus:bg-[#471a67]/20 transition-colors"
+                        rows="10"
+                        className="w-full h-48 bg-[#471a67]/10 border border-[#d3b840]/20 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-[#d3b840]/60 focus:bg-[#471a67]/20 transition-colors resize-none"
                         placeholder="Tell us about your inquiry..."
                       ></textarea>
                     </div>
@@ -210,11 +210,12 @@ const Contact = () => {
                     <div className="transform hover:-translate-y-1 transition-transform duration-300">
                       <h4 className="text-lg font-medium text-white mb-1">Meeting Times</h4>
                       <p className="text-gray-300">
-                        Monday - Thursday<br />
-                        3:30 PM - 6:00 PM
+                        Tuesday, Thursday<br />
+                        4:30 PM - 8:30 PM
                       </p>
-                      <p className="text-gray-400 text-sm mt-1">
-                        Additional weekend meetings during build season
+                      <p className="text-gray-300">
+                        Saturday<br />
+                        10:00 AM - 4:00 PM
                       </p>
                     </div>
                   </div>
