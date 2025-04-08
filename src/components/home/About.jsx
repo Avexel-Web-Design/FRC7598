@@ -32,13 +32,14 @@ const About = () => {
                 <h3 className="text-2xl font-bold mb-4 text-gradient">Our Mission</h3>
                 
                 <p className="mb-4 text-gray-300">
-                  The SCA Constellations aim to inspire students in science, technology, 
+                  The SCA Constellations aim to inspire girls of all ages in science, technology, 
                   engineering, art, and mathematics while building essential skills like 
-                  teamwork, leadership, and problem-solving.
+                  teamwork, leadership, and problem-solving. We strive to create a welcoming community
+                  for people of all backgrounds and identities, where everyone can feel empowered to pursue their passions.
                 </p>
                 
                 <p className="text-gray-300">
-                  The SCA Constellations are dedicated to spreading the values of the feminine genius
+                  As a team are dedicated to spreading the values of the feminine genius
                   through integrity in creation, unity in our fields, and involvement in our community,
                   while promoting growth in our distinct S.T.E.M. identity, innovative abilities, 
                   and inspirational experience.
