@@ -12,12 +12,12 @@ const Team = () => {
       {
         name: "Mechanical Team",
         description: "Designs and builds the physical robot structure and mechanisms.",
-        members: ["Placeholder", "Placeholder", "Placeholder"]
+        members: ["Elizabeth C", "Jenna B", "Brooke W"]
       },
       {
         name: "Drive Team",
         description: "Controls the robot at competitions.",
-        members: ["Placeholder", "Placeholder", "Placeholder", "Placeholder"]
+        members: ["Tori W", "Beatrice D", "Neha J", "November B"]
       },
       {
         name: "Controls Team",
