@@ -38,10 +38,10 @@ const About = () => {
                 </p>
                 
                 <p className="text-gray-300">
-                  Through active participation in FIRST Robotics Competition, we provide hands-on 
-                  experience in designing, building, and programming sophisticated robots. Our team 
-                  members gain practical skills in mechanical engineering, electrical systems, 
-                  computer programming, project management, and effective communication.
+                  The SCA Constellations are dedicated to spreading the values of the feminine genius
+                  through integrity in creation, unity in our fields, and involvement in our community,
+                  while promoting growth in our distinct S.T.E.M. identity, innovative abilities, 
+                  and inspirational experience.
                 </p>
               </div>
             </div>
