@@ -93,7 +93,7 @@ const Sponsors = () => {
 };
 
 const SponsorshipOption = ({ title, description, icon }) => (
-  <div className="bg-black/50 rounded-lg border border-white/10 p-5 hover:border-purple-500/30 transition-all duration-300 flex flex-col items-center text-center" 
+  <div className="bg-black/50 rounded-lg border border-white/10 p-5 hover:border-purple-500/30 hover:scale-105 transition-all duration-300 flex flex-col items-center text-center" 
        style={{ 
          background: 'rgba(20, 20, 25, 0.6)',
          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.2)'
