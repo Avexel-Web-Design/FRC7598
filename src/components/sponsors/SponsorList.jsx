@@ -24,7 +24,7 @@ const Sponsors = () => {
     { name: "Pratt and Miller", logo: getAssetPath("PrattMiller.png"), website: "https://www.prattmiller.com" },
     { name: "Michigan Council of Women in Technology Foundation", logo: getAssetPath("MCWT.png"), website: "https://www.mcwt.org" },
     { name: "Kettering/GMI Alumni Association", logo: getAssetPath("Kettering.png"), website: "https://www.kettering.edu" },
-    { name: "Avexel", logo: getAssetPath("Avexel.png"), website: "https://www.avexel.co" }
+    
   ];
 
   return (
