@@ -20,12 +20,7 @@ const Team = () => {
         image: placeholderImage,
         bio: "Mechanical engineer with 15 years of industry experience. Passionate about inspiring the next generation of innovators."
       },
-      {
-        name: "Ron K",
-        role: "Programming Mentor",
-        image: placeholderImage,
-        bio: "Software developer and FIRST alumnus who guides our team in robot programming and control systems."
-      },
+      
       {
         name: "Greg N",
         role: "Business/Outreach Mentor",
