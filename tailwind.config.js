@@ -6,24 +6,24 @@ module.exports = {
       colors: {
         'dark': '#000000', // Dark color (black)
         'primary': {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8', // This matches the --primary-color in CSS variables
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c4a6e',
-          950: '#082f49',
+          50: '#fef9e7',
+          100: '#fcf3cf',
+          200: '#f9e79f',
+          300: '#f7da70',
+          400: '#d3b840', // This now matches the --sca-gold in CSS variables
+          500: '#aa9433',
+          600: '#8c7a2a',
+          700: '#6d5f21',
+          800: '#4e4418',
+          900: '#2f290f',
+          950: '#171407',
         },
         'secondary': {
           50: '#f5f3ff',
           100: '#ede9fe',
           200: '#ddd6fe',
           300: '#c4b5fd',
-          400: '#8b5cf6', // This matches the --secondary-color in CSS variables
+          400: '#8b5cf6', 
           500: '#7c3aed',
           600: '#6d28d9',
           700: '#5b21b6',

@@ -18,12 +18,12 @@
 
 /* Base styles */
 ::selection {
-    background: rgba(14, 165, 233, 0.2);
+    background: rgba(211, 184, 64, 0.2);
     color: #fff;
 }
 
 :root {
-  --primary-color: rgb(56, 189, 248);
+  --primary-color: #d3b840;
   --secondary-color: rgb(139, 92, 246);
   --dark-bg: #000000;
   --dark-card: #000000;
