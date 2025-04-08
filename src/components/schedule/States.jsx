@@ -224,13 +224,13 @@ const States = () => {
               </div>
               
               <div className="mt-8 flex justify-center">
-                <a 
-                  href={`https://frc7790.com/event.html?event=${eventData.key}`}
+              <a 
+                  href={`https://www.thebluealliance.com/event/${eventData.key}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-modern px-6 py-3 transition-all duration-300"
                 >
-                  View on FRC 7790
+                  View on TBA
                 </a>
               </div>
             </div>
