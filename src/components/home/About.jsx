@@ -25,13 +25,12 @@ const About = () => {
           </div>
 
           {/* Content grid with modernized cards */}
-          <div className="grid md:grid-cols-2 gap-12 items-stretch">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Left side - Mission with modern card styling */}
-            <div className="reveal flex">
-              <div className="modern-card p-8 md:p-10 flex-1 flex flex-col">
+            <div className="reveal">
+              <div className="modern-card p-8 md:p-10">
                 <h3 className="text-2xl font-bold mb-4 text-gradient">Our Mission</h3>
                 
-<<<<<<< HEAD
                 <p className="mb-4 text-gray-300">
                   The SCA Constellations aim to inspire girls of all ages in science, technology, 
                   engineering, art, and mathematics while building essential skills like 
@@ -45,31 +44,15 @@ const About = () => {
                   while promoting growth in our distinct S.T.E.M. identity, innovative abilities, 
                   and inspirational experience.
                 </p>
-=======
-                <div className="flex-grow">
-                  <p className="mb-4 text-gray-300">
-                    The SCA Constellations aim to inspire students in science, technology, 
-                    engineering, art, and mathematics while building essential skills like 
-                    teamwork, leadership, and problem-solving.
-                  </p>
-                  
-                  <p className="text-gray-300">
-                    The SCA Constellations are dedicated to spreading the values of the feminine genius
-                    through integrity in creation, unity in our fields, and involvement in our community,
-                    while promoting growth in our distinct S.T.E.M. identity, innovative abilities, 
-                    and inspirational experience.
-                  </p>
-                </div>
->>>>>>> c690c83d6996cf4851c1899ae9a0a4d8b84cc0bc
               </div>
             </div>
 
             {/* Right side - History with modern timeline */}
-            <div className="reveal flex">
-              <div className="modern-card p-8 md:p-10 flex-1 flex flex-col">
+            <div className="reveal">
+              <div className="modern-card p-8 md:p-10">
                 <h3 className="text-2xl font-bold mb-4 text-gradient">Our Journey</h3>
                 
-                <div className="space-y-6 relative flex-grow">
+                <div className="space-y-6 relative">
                   {/* Timeline connecting line */}
                   <div className="absolute left-6 top-6 bottom-6 w-0.5 bg-gradient-to-b from-[#d3b840] via-[#d3b840]/50 to-[#d3b840]/20"></div>
                   
