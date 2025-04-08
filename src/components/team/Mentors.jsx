@@ -18,20 +18,20 @@ const Team = () => {
         name: "Brianna F",
         role: "Mechanical and CAD Mentor",
         image: placeholderImage,
-        bio: "Mechanical engineer with 15 years of industry experience. Passionate about inspiring the next generation of innovators."
+        bio: "Experienced mechanical engineer specializing in CAD design and manufacturing processes. Guides students through the mechanical design and fabrication process."
       },
       
       {
         name: "Greg N",
         role: "Mechanical Mentor",
         image: placeholderImage,
-        bio: "Marketing executive who helps our team with community engagement and sponsorship development."
+        bio: "Expert in mechanical systems with extensive experience in robot construction and design. Helps students develop hands-on fabrication skills."
       },
       {
         name: "Ryan W",
-        role: "Controls ",
+        role: "Controls Mentor",
         image: placeholderImage,
-        bio: "Marketing executive who helps our team with community engagement and sponsorship development."
+        bio: "Specializes in robot control systems, programming, and electrical engineering. Teaches students about sensors, motors, and automation fundamentals."
       }
     ],
   };
