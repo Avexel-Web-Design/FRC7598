@@ -18,14 +18,14 @@ const Team = () => {
         name: "Brianna F",
         role: "Mechanical and CAD Mentor",
         image: placeholderImage,
-        bio: "Experienced mechanical engineer specializing in CAD design and manufacturing processes. Guides students through the mechanical design and fabrication process."
+        bio: "Specializing in CAD design and manufacturing processes she guides students through the mechanical design and fabrication process."
       },
       
       {
         name: "Greg N",
         role: "Mechanical Mentor",
         image: placeholderImage,
-        bio: "Expert in mechanical systems with extensive experience in robot construction and design. Helps students develop hands-on fabrication skills."
+        bio: "Expert in mechanical systems with extensive experience in education and robot development. Helps students develop hands-on fabrication skills."
       },
       {
         name: "Ryan W",
