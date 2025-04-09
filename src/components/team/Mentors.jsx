@@ -18,7 +18,7 @@ const Team = () => {
         name: "Brianna F",
         role: "Mechanical and CAD Mentor",
         image: placeholderImage,
-        bio: "Specializing in CAD design and manufacturing processes she guides students through the mechanical design and fabrication process."
+        bio: "Specializes in CAD design and manufacturing processes. Guides students through the mechanical design and fabrication process."
       },
       
       {
