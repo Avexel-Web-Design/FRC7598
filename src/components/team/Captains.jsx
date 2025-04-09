@@ -15,29 +15,24 @@ const Team = () => {
   const teamMembers = {
     leadership: [
       {
-        name: "Placeholder",
-        role: "Team Captain",
+        name: "Jenna B",
+        role: "Saftey Captain",
         image: placeholderImage,
-        bio: "Senior with 3 years of FIRST experience. Leads team meetings and competition strategy."
+        bio: "Senior with 4 years of FIRST experience. Keeps the team safe and motivated."
       },
       {
-        name: "Placeholder",
-        role: "Engineering Lead",
+        name: "Elizabeth C",
+        role: "Mechanical Lead",
         image: placeholderImage,
-        bio: "Junior specializing in mechanical design. Oversees the robot build process."
+        bio: "Senior specializing in mechanical design. Oversees the robot build process."
       },
       {
-        name: "Placeholder",
-        role: "Programming Lead",
+        name: "Tori W",
+        role: "Controls Lead",
         image: placeholderImage,
-        bio: "Senior who excels in Java and vision systems. Manages autonomous programming."
+        bio: "Senior who excels in electrical and business. Manages team image and control components."
       },
-      {
-        name: "Placeholder",
-        role: "Business Lead",
-        image: placeholderImage,
-        bio: "Junior focused on sponsorships, outreach, and team logistics."
-      }
+      
     ],
   };
 
@@ -55,7 +50,7 @@ const Team = () => {
             <h3 className="text-2xl font-bold mb-10 text-center text-white reveal-bottom">
               Captains
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {teamMembers.leadership.map((leader, index) => (
                 <TeamMemberCard
                   key={index}
