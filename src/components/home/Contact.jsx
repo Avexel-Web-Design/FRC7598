@@ -51,27 +51,25 @@ const Contact = () => {
       <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
       <div className="absolute top-0 left-0 w-full h-64 bg-[#471a67]/20 blur-3xl -z-10"></div>
 
-      <div className="container mx-auto px-4 md:px-8 relative z-10">
+      <div className="container mx-auto px-2 sm:px-4 md:px-8 relative z-10">
         <div className="max-w-6xl mx-auto">
           {/* Section header with staggered reveal */}
-          <div className="text-center mb-16 stagger-reveal">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+          <div className="text-center mb-8 sm:mb-16 stagger-reveal">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
               <span className="bg-gradient-to-r from-[#471a67] to-[#d3b840] bg-clip-text text-transparent">
                 Contact Us
               </span>
             </h2>
-            <p className="text-lg text-gray-300 max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg text-gray-300 max-w-3xl mx-auto px-2">
               Have questions about our team? Interested in sponsoring us or requesting a demonstration?
               We'd love to hear from you!
             </p>
           </div>
 
-          <div className="grid md:grid-cols-5 gap-8 mb-16">
+          <div className="grid md:grid-cols-5 gap-4 sm:gap-8">
             {/* Contact form with modern card styling */}
             <div className="md:col-span-3 reveal">
-              <div className="modern-card p-6 md:p-8">
-                <h3 className="text-2xl font-bold text-gradient mb-6">Get in Touch</h3>
-                
+              <div className="modern-card p-4 sm:p-6 md:p-8">
                 {formSubmitted ? (
                   <div className="glass-panel border border-[#d3b840]/30 rounded-lg p-6 text-center">
                     <div className="relative w-16 h-16 mx-auto mb-4">
@@ -163,10 +161,10 @@ const Contact = () => {
 
             {/* Contact info with modern styling */}
             <div className="md:col-span-2 reveal">
-              <div className="modern-card p-6 md:p-8 h-full">
+              <div className="modern-card p-4 sm:p-6 md:p-8 h-full">
                 <h3 className="text-2xl font-bold text-gradient mb-6">Team Information</h3>
                 
-                <div className="space-y-8">
+                <div className="space-y-6 sm:space-y-8">
                   <div className="flex items-start group">
                     <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12 mr-4 mt-1">
                       <i className="fas fa-envelope text-[#d3b840] transition-colors duration-300"></i>
@@ -222,7 +220,7 @@ const Contact = () => {
 
                   <div className="pt-4">
                     <h4 className="text-lg font-medium text-white mb-3">Follow Us</h4>
-                    <div className="flex space-x-4">
+                    <div className="flex flex-wrap gap-3">
                       <a href="https://www.instagram.com/scaconstellations/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-10 h-10 rounded-full glass-panel border border-[#d3b840]/20 flex items-center justify-center text-[#d3b840] hover:border-[#d3b840]/60 hover:scale-110 transition-all">
                         <i className="fab fa-instagram fa-lg"></i>
                       </a>
