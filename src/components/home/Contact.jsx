@@ -244,7 +244,7 @@ const Contact = () => {
       {/* Modern decorative elements */}
       <div 
         className="absolute top-1/4 left-0 w-64 h-64 bg-gradient-radial from-[#471a67]/20 to-transparent rounded-full filter blur-3xl animate-pulse-slow" 
-        aria-hidden="true"i
+        aria-hidden="true"
       ></div>
       <div 
         className="absolute bottom-1/4 right-0 w-96 h-96 bg-gradient-radial from-[#d3b840]/10 to-transparent rounded-full filter blur-3xl animate-pulse-slow" 
