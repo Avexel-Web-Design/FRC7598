@@ -1,8 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 import logoImage from "/Logo-nobg-sm.png";
 
 const MobileMenu = ({ isOpen, closeMenu, links, currentPath }) => {
+  const { user, clearSession } = useAuth();
+  const location = useLocation();
   // Check if path is active
   const isActive = (path) => {
     if (path === "/" && currentPath === "/") return true;
@@ -78,6 +81,23 @@ const MobileMenu = ({ isOpen, closeMenu, links, currentPath }) => {
                 <span className="block">{link.name}</span>
               </Link>
             ))}
+            {user ? (
+              <button
+                onClick={() => { clearSession(); closeMenu(); }}
+                className="py-3.5 px-5 rounded-full transition-all duration-300 transform text-white hover:bg-white/10 border border-sca-gold/20 hover:border-sca-gold/50 hover:shadow-md hover:shadow-sca-gold/10"
+              >
+                Logout
+              </button>
+            ) : (
+              <Link
+                to="/login"
+                state={{ from: location.pathname }}
+                className="py-3.5 px-5 rounded-full transition-all duration-300 transform text-white hover:bg-white/10 border border-sca-gold/20 hover:border-sca-gold/50 hover:shadow-md hover:shadow-sca-gold/10"
+                onClick={closeMenu}
+              >
+                Login
+              </Link>
+            )}
           </nav>
         </div>
       </div>

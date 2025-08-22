@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import MobileMenu from "./MobileMenu";
 // Import the logo images
 import logoImage from "/Star.png";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -80,6 +81,7 @@ const Navbar = () => {
                   {link.name}
                 </Link>
               ))}
+              <AuthButtonsDesktop />
             </div>
 
             {/* Mobile Menu Button with improved animation */}
@@ -144,3 +146,33 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+// Desktop auth buttons component to keep Navbar tidy
+const AuthButtonsDesktop = () => {
+  const { user, clearSession } = useAuth();
+  const location = useLocation();
+
+  if (user) {
+    return (
+      <>
+        <span className="px-3 text-white/80">Hi, {user.name?.split(' ')[0] || 'Member'}</span>
+        <button
+          onClick={clearSession}
+          className="px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 transform text-white hover:bg-white/15 border border-sca-gold/20 hover:border-sca-gold/50"
+        >
+          Logout
+        </button>
+      </>
+    );
+  }
+
+  return (
+    <Link
+      to="/login"
+      state={{ from: location.pathname }}
+      className="px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 transform text-white hover:bg-white/15 border border-sca-gold/20 hover:border-sca-gold/50"
+    >
+      Login
+    </Link>
+  );
+};
