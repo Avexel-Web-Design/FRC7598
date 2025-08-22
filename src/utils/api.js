@@ -19,7 +19,28 @@ async function request(path, { method = 'GET', body, token } = {}) {
 }
 
 export const api = {
-  login: ({ fullName, password }) => request('/auth/login', { method: 'POST', body: { fullName, password } }),
+  login: ({ fullName, password }) => {
+    // Mock login for testing - in real app this would call the backend
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (fullName && password) {
+          resolve({
+            user: {
+              id: 1,
+              name: fullName,
+              fullName: fullName,
+              email: `${fullName.toLowerCase().replace(' ', '.')}@frc7598.com`,
+              role: 'Member',
+              isAdmin: fullName.toLowerCase().includes('admin') || fullName.toLowerCase().includes('coach')
+            },
+            token: 'mock-jwt-token-for-demo'
+          });
+        } else {
+          reject(new Error('Please enter both name and password'));
+        }
+      }, 500);
+    });
+  },
   register: ({ fullName, password, is_admin }) => request('/auth/register', { method: 'POST', body: { fullName, password, is_admin } }),
   health: () => request('/health'),
 };

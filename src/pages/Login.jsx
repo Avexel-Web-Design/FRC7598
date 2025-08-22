@@ -18,7 +18,7 @@ const Login = () => {
     try {
       const res = await api.login({ fullName, password });
       saveSession(res.user, res.token);
-      navigate('/');
+      navigate('/dashboard'); // Redirect to dashboard instead of home
     } catch (e) {
       setError(e.message || 'Login failed');
     } finally {

@@ -22,9 +22,16 @@ export function AuthProvider({ children }) {
   }, []);
 
   const saveSession = (u, t) => {
-    setUser(u);
+    // Ensure user object has expected properties for dashboard
+    const userWithDefaults = {
+      ...u,
+      isAdmin: u?.isAdmin || u?.role === 'Admin' || false,
+      name: u?.name || u?.fullName || 'Unknown User',
+      email: u?.email || 'user@frc7598.com'
+    };
+    setUser(userWithDefaults);
     setToken(t);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ user: u, token: t }));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ user: userWithDefaults, token: t }));
   };
 
   const clearSession = () => {
@@ -33,7 +40,14 @@ export function AuthProvider({ children }) {
     localStorage.removeItem(STORAGE_KEY);
   };
 
-  const value = useMemo(() => ({ user, token, loading, saveSession, clearSession }), [user, token, loading]);
+  const value = useMemo(() => ({ 
+    user, 
+    token, 
+    loading, 
+    saveSession, 
+    clearSession,
+    isAuthenticated: !!user
+  }), [user, token, loading]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
