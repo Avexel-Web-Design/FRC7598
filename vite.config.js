@@ -5,7 +5,8 @@ import { resolve } from 'path';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/FRC7598/', // This matches the repository name for GitHub Pages
+  // For Cloudflare Pages the site is served from the root, so base should be '/'
+  base: '/',
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
