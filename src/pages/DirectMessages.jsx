@@ -34,6 +34,16 @@ const DirectMessages = () => {
   const pickerContainerRef = useRef(null);
   const infoContainerRef = useRef(null);
 
+  // Group chat modal state (create/edit)
+  const [isGroupModalOpen, setIsGroupModalOpen] = useState(false);
+  const [groupModalMode, setGroupModalMode] = useState('create'); // 'create' | 'edit'
+  const [editingGroupId, setEditingGroupId] = useState(null);
+  const [groupName, setGroupName] = useState('');
+  const [groupMembers, setGroupMembers] = useState([]); // user ids (excluding implicit self)
+  const [allUsers, setAllUsers] = useState([]);
+  const [isSavingGroup, setIsSavingGroup] = useState(false);
+  const [groupError, setGroupError] = useState('');
+
   const quickIcons = useMemo(() => ([
     { key: 'heart', icon: faHeart, title: 'Heart' },
     { key: 'thumbs_up', icon: faThumbsUp, title: 'Like' },
@@ -141,6 +151,97 @@ const DirectMessages = () => {
     document.addEventListener('mousedown', onDoc);
     return () => document.removeEventListener('mousedown', onDoc);
   }, [pickerOpenFor, infoOpenFor]);
+
+  const loadAllUsers = async () => {
+    try {
+      const resp = await frcAPI.get('/chat/users');
+      if (resp.ok) setAllUsers(await resp.json()); else setAllUsers([]);
+    } catch { setAllUsers([]); }
+  };
+
+  const openGroupModal = async () => {
+    setGroupModalMode('create');
+    setEditingGroupId(null);
+    setGroupName('');
+    setGroupMembers([]);
+    setGroupError('');
+    await loadAllUsers();
+    setIsGroupModalOpen(true);
+  };
+
+  const openEditGroupModal = async (group) => {
+    setGroupModalMode('edit');
+    setEditingGroupId(group.id);
+    setGroupName(group.name || '');
+    setGroupMembers([]);
+    setGroupError('');
+    await loadAllUsers();
+    try {
+      const m = await frcAPI.get(`/chat/channels/${group.id}/members`);
+      if (m.ok) {
+        const arr = await m.json();
+        const ids = (arr || []).map(x => x.user_id).filter(id => id !== user?.id);
+        setGroupMembers(ids);
+      }
+    } catch {}
+    setIsGroupModalOpen(true);
+  };
+
+  const toggleMember = (id) => {
+    setGroupMembers((prev) => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
+  };
+
+  const saveGroup = async () => {
+    if (!user) return;
+    setGroupError('');
+    const name = groupName.trim();
+    if (!name) { setGroupError('Group name is required'); return; }
+    if (groupMembers.length === 0 && groupModalMode === 'create') { setGroupError('Select at least one member'); return; }
+    setIsSavingGroup(true);
+    try {
+      if (groupModalMode === 'create') {
+        const resp = await frcAPI.post('/chat/groups', { name, created_by: user.id, members: groupMembers });
+        if (resp.ok) {
+          const data = await resp.json();
+          setIsGroupModalOpen(false);
+          await fetchChats(true);
+          const newChat = { type: 'group', id: data.id, name: data.name };
+          setSelectedChat(newChat);
+        } else {
+          const t = await resp.text();
+          setGroupError(t || 'Failed to create group');
+        }
+      } else {
+        const members = Array.from(new Set([...(groupMembers || []), user.id]));
+        const resp = await frcAPI.put(`/chat/groups/${editingGroupId}`, { name, members });
+        if (resp.ok) {
+          setIsGroupModalOpen(false);
+          await fetchChats(true);
+          setChatItems((cur) => cur.map(c => (c.type === 'group' && c.id === editingGroupId) ? { ...c, name } : c));
+          setSelectedChat((cur) => cur && cur.type === 'group' && cur.id === editingGroupId ? { ...cur, name } : cur);
+        } else {
+          const t = await resp.text();
+          setGroupError(t || 'Failed to update group');
+        }
+      }
+    } catch {
+      setGroupError(groupModalMode === 'create' ? 'Error creating group' : 'Error updating group');
+    } finally {
+      setIsSavingGroup(false);
+    }
+  };
+
+  const deleteGroup = async (group) => {
+    if (!user || group.type !== 'group') return;
+    if (!window.confirm(`Delete group "${group.name}"? All messages will be permanently deleted.`)) return;
+    try {
+      const resp = await frcAPI.delete(`/chat/groups/${group.id}`);
+      if (resp.ok) {
+        setChatItems(prev => prev.filter(c => !(c.type === 'group' && c.id === group.id)));
+        if (selectedChat && selectedChat.type === 'group' && selectedChat.id === group.id) setSelectedChat(null);
+      }
+    } catch {}
+  };
 
   const handleChatClick = (chat) => {
     setSelectedChat(chat);
@@ -263,9 +364,14 @@ const DirectMessages = () => {
     <div className="flex h-full w-full bg-black text-gray-100 overflow-hidden">
       {/* Desktop sidebar: chats list */}
       <div className="hidden md:flex w-64 bg-black flex-col">
-        <div className="pr-2">
+        <div className="px-2">
           <div className="px-4 pb-4 border-b border-gray-700 flex justify-between items-center">
             <h2 className="text-xl font-bold">Messages</h2>
+            <button onClick={openGroupModal} className="bg-black hover:bg-sca-purple text-sca-purple hover:text-white rounded-full p-1" title="Create group chat">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 3a1 1 0 00-1 1v5H4a1 1 0 100 2h5v5a1 1 0 102 0v-5h5a1 1 0 100-2h-5V4a1 1 0 00-1-1z" clipRule="evenodd" />
+              </svg>
+            </button>
           </div>
         </div>
         {isChatsLoading ? (
@@ -278,9 +384,10 @@ const DirectMessages = () => {
               const color = chat.type === 'group' ? '#4b5563' : (chat.avatar_color || generateColor(label, null));
               const channelId = chat.type === 'dm' && user ? getConversationId(user.id, chat.id) : chat.id.toString();
               const unread = unreadCounts[channelId] || 0;
+              const isSelected = selectedChat?.type === chat.type && selectedChat?.id === chat.id;
               return (
-                <button key={key} onClick={() => handleChatClick(chat)} className={`flex items-center justify-between w-full py-2 px-3 rounded-md transition-colors ${selectedChat?.type === chat.type && selectedChat?.id === chat.id ? 'bg-sca-purple text-white' : 'hover:text-sca-purple'}`}>
-                  <div className="flex items-center gap-3">
+                <div key={key} className={`flex items-center justify-between w-full py-2 px-3 rounded-md ${isSelected ? 'bg-sca-purple text-white' : 'hover:text-sca-purple'}`}>
+                  <button onClick={() => handleChatClick(chat)} className="flex items-center gap-3 flex-1 text-left">
                     <div className="relative">
                       <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm" style={{ backgroundColor: color }}>
                         {label?.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2)}
@@ -288,8 +395,18 @@ const DirectMessages = () => {
                       {unread > 0 && <NotificationDot count={unread} position="top-right" size="medium" />}
                     </div>
                     <span className="truncate">{label}</span>
-                  </div>
-                </button>
+                  </button>
+                  {user?.isAdmin && chat.type === 'group' && (
+                    <div className="flex gap-2 pl-2">
+                      <button onClick={(e) => { e.stopPropagation(); openEditGroupModal(chat); }} className="text-gray-400 hover:text-white" title="Edit group">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" /></svg>
+                      </button>
+                      <button onClick={(e) => { e.stopPropagation(); deleteGroup(chat); }} className="text-gray-400 hover:text-red-400" title="Delete group">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" /></svg>
+                      </button>
+                    </div>
+                  )}
+                </div>
               );
             })}
           </nav>
@@ -302,6 +419,9 @@ const DirectMessages = () => {
           <div className="p-4">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-bold">Messages</h2>
+              <button onClick={openGroupModal} className="bg-black hover:bg-sca-purple text-sca-purple hover:text-white rounded-full p-2" title="Create group chat">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 3a1 1 0 00-1 1v5H4a1 1 0 100 2h5v5a1 1 0 102 0v-5h5a1 1 0 100-2h-5V4a1 1 0 00-1-1z" clipRule="evenodd" /></svg>
+              </button>
             </div>
             {isChatsLoading ? (
               <div className="flex items-center justify-center p-8"><NebulaLoader size={48} /></div>
@@ -314,8 +434,8 @@ const DirectMessages = () => {
                   const channelId = chat.type === 'dm' && user ? getConversationId(user.id, chat.id) : chat.id.toString();
                   const unread = unreadCounts[channelId] || 0;
                   return (
-                    <button key={key} onClick={() => handleChatClick(chat)} className="w-full text-left py-4 px-4 rounded-xl border border-gray-700 hover:border-sca-purple hover:bg-gray-800 active:bg-gray-700 transition-all duration-200 flex items-center justify-between mobile-touch-target">
-                      <div className="flex items-center gap-3">
+                    <div key={key} className="w-full py-4 px-4 rounded-xl border border-gray-700 hover:border-sca-purple hover:bg-gray-800 active:bg-gray-700 transition-all duration-200 flex items-center justify-between mobile-touch-target">
+                      <button onClick={() => handleChatClick(chat)} className="flex items-center gap-3 flex-1 text-left">
                         <div className="relative">
                           <div className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-base" style={{ backgroundColor: color }}>
                             {label?.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2)}
@@ -323,8 +443,18 @@ const DirectMessages = () => {
                           {unread > 0 && <NotificationDot count={unread} position="top-right" size="medium" />}
                         </div>
                         <span className="font-medium text-base">{label}</span>
-                      </div>
-                    </button>
+                      </button>
+                      {user?.isAdmin && chat.type === 'group' && (
+                        <div className="flex gap-3 pl-2">
+                          <button onClick={(e) => { e.stopPropagation(); openEditGroupModal(chat); }} className="text-gray-400 hover:text-white" title="Edit group">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" /></svg>
+                          </button>
+                          <button onClick={(e) => { e.stopPropagation(); deleteGroup(chat); }} className="text-gray-400 hover:text-red-400" title="Delete group">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clipRule="evenodd" /></svg>
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   );
                 })}
               </div>
@@ -594,6 +724,43 @@ const DirectMessages = () => {
           </div>
         );
       })()}
+
+      {isGroupModalOpen && (
+        <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4" onClick={() => setIsGroupModalOpen(false)}>
+          <div className="bg-gray-900 border border-white/10 rounded-lg p-5 w-full max-w-md" onClick={(e) => e.stopPropagation()}>
+            <h3 className="text-lg font-semibold mb-3">{groupModalMode === 'create' ? 'New Group Chat' : 'Edit Group Chat'}</h3>
+            {groupError && (<div className="mb-2 bg-red-500/20 text-red-200 border border-red-500/40 rounded p-2">{groupError}</div>)}
+            <div className="space-y-3">
+              <div>
+                <label className="text-xs text-gray-400">Group name</label>
+                <input value={groupName} onChange={(e) => setGroupName(e.target.value)} placeholder="Project Tigers" className="w-full px-3 py-2 rounded bg-gray-800 border border-white/10" />
+              </div>
+              <div>
+                <label className="block text-xs text-gray-400 mb-1">Select members</label>
+                <div className="max-h-48 overflow-y-auto bg-gray-800 border border-white/10 rounded p-2">
+                  {allUsers.length === 0 && <p className="text-gray-400 text-sm">No users found.</p>}
+                  {allUsers.map(u => (
+                    <label key={u.id} className="flex items-center gap-2 py-1 text-sm">
+                      <input type="checkbox" disabled={u.id === user?.id} checked={u.id === user?.id ? true : groupMembers.includes(u.id)} onChange={() => toggleMember(u.id)} />
+                      <span className="inline-flex items-center gap-2">
+                        <span className="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold" style={{ backgroundColor: u.avatar_color || generateColor(u.username, null) }}>
+                          {u.username?.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2)}
+                        </span>
+                        {u.username}
+                        {u.id === user?.id && (<span className="text-xs text-gray-400">(you)</span>)}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="mt-4 flex justify-end gap-2">
+              <button onClick={() => setIsGroupModalOpen(false)} className="px-4 py-2 rounded bg-white/10">Cancel</button>
+              <button onClick={saveGroup} disabled={isSavingGroup} className="px-4 py-2 rounded bg-sca-purple disabled:opacity-50">{isSavingGroup ? (groupModalMode === 'create' ? 'Creating…' : 'Saving…') : (groupModalMode === 'create' ? 'Create Group' : 'Save Changes')}</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
