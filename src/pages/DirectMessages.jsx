@@ -460,7 +460,7 @@ const DirectMessages = () => {
   const canDelete = (m) => !!user && (user.isAdmin || m.sender_id === user.id);
 
   return (
-    <div className="flex h-full w-full bg-black text-gray-100 overflow-hidden">
+    <div className="flex h-full w-full min-w-0 bg-black text-gray-100 overflow-hidden">
       {/* Desktop sidebar: chats list */}
       <div className="hidden md:flex w-64 bg-black flex-col">
         <div className="px-2">
@@ -514,7 +514,7 @@ const DirectMessages = () => {
 
       {/* Mobile list selector */}
       <div
-        className={`md:hidden ${!selectedChat ? 'flex-1 min-h-0' : ''}`}
+        className={`md:hidden ${!selectedChat ? 'flex-1 min-h-0' : 'hidden'}`}
         onClick={(e) => {
           if (selectedChat) return; // only active when menu is open
           if (e.target.closest('button, a, input, textarea, select, label, [role="button"]')) return;
@@ -571,8 +571,8 @@ const DirectMessages = () => {
       </div>
 
       {/* Chat area */}
-  <div className={`flex-1 flex flex-col min-h-0 ${!selectedChat ? 'hidden md:flex' : ''}`}>
-        <div className="bg-black px-2">
+  <div className={`flex-1 flex flex-col min-h-0 min-w-0 ${!selectedChat ? 'hidden md:flex' : ''}`}>
+  <div className="bg-black px-2 w-full">
           <div className="px-4 pb-4 border-b border-gray-700 flex items-center justify-between">
             <div className="flex items-center">
               <button onClick={() => { prevSelectedChatRef.current = selectedChat; setSelectedChat(null); }} className="md:hidden mr-3 p-2 hover:text-sca-purple hover:bg-gray-800 rounded-lg transition-colors mobile-touch-target">
@@ -596,7 +596,7 @@ const DirectMessages = () => {
           <div className="bg-red-500 text-white p-2 text-sm text-center">{error}<button onClick={() => setError(null)} className="ml-2 font-bold">×</button></div>
         )}
 
-  <div className="flex-1 p-4 overflow-y-auto pb-20 md:pb-4">
+  <div className="flex-1 min-w-0 p-4 overflow-y-auto overflow-x-hidden pb-20 md:pb-4">
           {isMessagesLoading ? (
             <div className="flex items-center justify-center h-full"><NebulaLoader size={64} /></div>
           ) : selectedChat ? (

@@ -499,7 +499,7 @@ const Channels = () => {
   const canDeleteMessage = (message) => !!user && (user.isAdmin || message.sender_id === user.id);
 
   return (
-    <div className="flex h-full w-full bg-black text-gray-100 overflow-hidden">
+    <div className="flex h-full w-full min-w-0 bg-black text-gray-100 overflow-hidden">
       {/* Desktop Sidebar */}
       <div className="hidden md:flex w-64 bg-black flex-col">
         <div className="pr-2">
@@ -548,7 +548,7 @@ const Channels = () => {
 
       {/* Mobile Channel Selector */}
       <div
-        className={`md:hidden ${!selectedChannel ? 'flex-1 min-h-0' : ''}`}
+        className={`md:hidden ${!selectedChannel ? 'flex-1 min-h-0' : 'hidden'}`}
         onClick={(e) => {
           if (selectedChannel) return; // only active when menu is open
           if (e.target.closest('button, a, input, textarea, select, label, [role="button"]')) return;
@@ -583,9 +583,9 @@ const Channels = () => {
       </div>
 
       {/* Main Chat Area */}
-  <div className={`flex-1 flex flex-col min-h-0 ${!selectedChannel ? 'hidden md:flex' : ''}`}>
+  <div className={`flex-1 flex flex-col min-h-0 min-w-0 ${!selectedChannel ? 'hidden md:flex' : ''}`}>
         {/* Chat Header */}
-        <div className="bg-black px-2">
+  <div className="bg-black px-2 w-full">
           <div className="px-4 pb-4 border-b border-gray-700 flex items-center justify-between">
             <div className="flex items-center">
               {/* Mobile Back Button */}
@@ -615,7 +615,7 @@ const Channels = () => {
         )}
 
         {/* Messages */}
-  <div className="flex-1 p-4 overflow-y-auto pb-20 md:pb-4">
+  <div className="flex-1 min-w-0 p-4 overflow-y-auto overflow-x-hidden pb-20 md:pb-4">
           {isMessagesLoading ? (
             <div className="flex items-center justify-center h-full"><NebulaLoader size={64} /></div>
           ) : selectedChannel ? (

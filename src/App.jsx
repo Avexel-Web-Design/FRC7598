@@ -73,9 +73,9 @@ const DashboardLayout = () => {
     }
   }, []);
   return (
-    <div className="h-screen bg-black text-white flex overflow-hidden">
+  <div className="h-screen bg-black text-white flex overflow-hidden max-w-[100vw]">
       <DashboardSidebar />
-      <main className="flex-1 min-h-0 pb-16 md:pb-0 flex flex-col overflow-hidden">
+      <main className="flex-1 min-h-0 min-w-0 pb-16 md:pb-0 flex flex-col overflow-hidden">
         <Outlet />
       </main>
       <MobileDashboardNav />
