@@ -61,6 +61,12 @@ export function AuthProvider({ children }) {
     // Only run when token changes
   }, [token]);
 
+  // Ensure push registration happens when app starts and a session already exists
+  useEffect(() => {
+    if (!token) return;
+    ensurePushRegistered();
+  }, [token]);
+
   const clearSession = () => {
     setUser(null);
     setToken(null);

@@ -30,24 +30,31 @@ export async function ensurePushRegistered(onToken) {
       perm = await PushNotifications.requestPermissions();
       if (perm.receive !== 'granted') return;
     }
-    await PushNotifications.register();
-    return new Promise((resolve) => {
-      const cleanup = () => {
-        try {
-          PushNotifications.removeAllListeners && PushNotifications.removeAllListeners();
-        } catch {}
+    return new Promise(async (resolve) => {
+      let removeReg, removeErr;
+      const cleanup = async () => {
+        try { await removeReg?.remove?.(); } catch {}
+        try { await removeErr?.remove?.(); } catch {}
       };
-      PushNotifications.addListener('registration', async (token) => {
+      const onReg = async (token) => {
+        try { console.log('FCM push token:', token?.value); } catch {}
         await registerDeviceToken(token.value, 'android');
         onToken && onToken(token.value);
-        cleanup();
+        await cleanup();
         resolve(true);
-      });
-      PushNotifications.addListener('registrationError', (err) => {
+      };
+      const onErr = async (err) => {
         console.error('Push registration error', err);
-        cleanup();
+        await cleanup();
         resolve(false);
-      });
+      };
+      removeReg = await PushNotifications.addListener('registration', onReg);
+      removeErr = await PushNotifications.addListener('registrationError', onErr);
+      try {
+        await PushNotifications.register();
+      } catch (e) {
+        await onErr(e);
+      }
     });
   } catch (e) {
     // Non-native or plugin missing; ignore
