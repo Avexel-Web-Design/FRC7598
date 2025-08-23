@@ -1,11 +1,13 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { ensurePushRegistered } from '@/utils/push';
+import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext(null);
 
 const STORAGE_KEY = 'frc7598_auth';
 
 export function AuthProvider({ children }) {
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -66,6 +68,39 @@ export function AuthProvider({ children }) {
     if (!token) return;
     ensurePushRegistered();
   }, [token]);
+
+  // Handle notification taps with route hints (Capacitor PushNotifications)
+  useEffect(() => {
+    let removeListener;
+    const isNative = typeof window !== 'undefined' && !!window.Capacitor?.isNativePlatform?.();
+    if (!isNative) return;
+    (async () => {
+      try {
+        const { PushNotifications } = await import('@capacitor/push-notifications');
+        removeListener = await PushNotifications.addListener('pushNotificationActionPerformed', (action) => {
+          try {
+            const data = action?.notification?.data || {};
+            const route = data.route || data.url || null;
+            if (route) {
+              localStorage.setItem('frc7598_pending_route', route);
+              // Try to navigate immediately if app is in foreground
+              navigate(route, { replace: false });
+            }
+          } catch {}
+        });
+      } catch {}
+    })();
+    return () => { try { removeListener?.remove?.(); } catch {} };
+  }, [navigate]);
+
+  // Apply any pending route from a cold start
+  useEffect(() => {
+    const pending = localStorage.getItem('frc7598_pending_route');
+    if (pending) {
+      localStorage.removeItem('frc7598_pending_route');
+      try { navigate(pending, { replace: false }); } catch {}
+    }
+  }, [navigate]);
 
   const clearSession = () => {
     setUser(null);

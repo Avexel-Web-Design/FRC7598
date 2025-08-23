@@ -119,7 +119,7 @@ push.post('/test', async (c) => {
   const user = await getAuthUser(c);
   if (!user) return c.json({ error: 'Unauthorized' }, 401);
 
-  const { title = 'Test Notification', body = 'Hello from FRC7598', token } = await c.req.json().catch(() => ({}));
+  const { title = 'Test Notification', body = 'Hello from FRC7598', token, route = '/channels', channelId, dmId } = await c.req.json().catch(() => ({}));
   const saJson = c.env.GOOGLE_SERVICE_ACCOUNT_JSON;
   let projectId: string | undefined;
   if (saJson) {
@@ -145,14 +145,14 @@ push.post('/test', async (c) => {
       // include a simple route hint; app can read it later
       let r;
       if (usingV1) {
-        r = await sendFCMv1(saJson as string, projectId as string, t, title, body, { route: '/channels' });
+        r = await sendFCMv1(saJson as string, projectId as string, t, title, body, { route, channelId, dmId });
       } else {
         // Fallback only if legacy is enabled in your project
         r = await (async () => {
           const serverKey = c.env.FCM_SERVER_KEY as string;
           const res = await fetch('https://fcm.googleapis.com/fcm/send', {
             method: 'POST', headers: { 'Authorization': `key=${serverKey}`, 'Content-Type': 'application/json' },
-            body: JSON.stringify({ to: t, notification: { title, body }, data: { route: '/channels' }, priority: 'high' }),
+            body: JSON.stringify({ to: t, notification: { title, body }, data: { route, channelId, dmId }, priority: 'high' }),
           });
           return { ok: res.ok, status: res.status, text: await res.text() };
         })();

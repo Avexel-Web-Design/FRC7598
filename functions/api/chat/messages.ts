@@ -1,5 +1,6 @@
 import { Context } from 'hono';
 import { D1Database } from '@cloudflare/workers-types';
+import { sendPushToUsers, stripReplyMarker } from '../utils/push';
 
 interface Env {
 	DB: D1Database;
@@ -157,6 +158,34 @@ export async function sendMessage(c: Context): Promise<Response> {
 					 VALUES (?, ?, ?)
 					 ON CONFLICT(user_id, channel_id) DO UPDATE SET last_read_timestamp = excluded.last_read_timestamp`
 				).bind(sender_id, channelId, timestamp).run();
+			} catch {}
+
+			// Send push notifications to channel members (excluding sender)
+			try {
+				// Resolve target users for this channel
+				let targetUserIds: number[] = [];
+				const chanInfo = await c.env.DB.prepare('SELECT is_private FROM channels WHERE id = ?').bind(channelId).first();
+				const isPriv = (chanInfo as any)?.is_private === 1;
+				if (isPriv) {
+					const { results: membs } = await c.env.DB.prepare('SELECT user_id FROM channel_members WHERE channel_id = ? AND user_id != ?')
+						.bind(channelId, sender_id)
+						.all();
+					targetUserIds = (membs as any[]).map(r => Number((r as any).user_id)).filter(Boolean);
+				} else {
+					// Public channel: notify all users except sender (optional: scope to recent participants)
+					const { results: users } = await c.env.DB.prepare('SELECT id FROM users WHERE id != ?').bind(sender_id).all();
+					targetUserIds = (users as any[]).map(r => Number((r as any).id)).filter(Boolean);
+				}
+				if (targetUserIds.length > 0) {
+					// Fetch sender name for nicer title
+					let senderName = `User ${sender_id}`;
+					try {
+						const s = await c.env.DB.prepare('SELECT full_name FROM users WHERE id = ?').bind(sender_id).first();
+						senderName = (s as any)?.full_name || senderName;
+					} catch {}
+					const preview = stripReplyMarker(content).slice(0, 120);
+					await sendPushToUsers(c, targetUserIds, `${senderName} in ${channelId}`, preview, { route: '/channels', channelId });
+				}
 			} catch {}
 			return new Response(JSON.stringify({ message: 'Message sent' }), { status: 201, headers: { 'Content-Type': 'application/json' } });
 		}
@@ -319,6 +348,18 @@ export async function sendDMMessage(c: Context): Promise<Response> {
 					 VALUES (?, ?, ?)
 					 ON CONFLICT(user_id, channel_id) DO UPDATE SET last_read_timestamp = excluded.last_read_timestamp`
 				).bind(sender_id, dmId, timestamp).run();
+			} catch {}
+
+			// Send push to the other participant only
+			try {
+				const otherId = sender_id === user1Id ? user2Id : user1Id;
+				let senderName = `User ${sender_id}`;
+				try {
+					const s = await c.env.DB.prepare('SELECT full_name FROM users WHERE id = ?').bind(sender_id).first();
+					senderName = (s as any)?.full_name || senderName;
+				} catch {}
+				const preview = stripReplyMarker(content).slice(0, 120);
+				await sendPushToUsers(c, [otherId], `${senderName}`, preview, { route: '/messages', dmId });
 			} catch {}
 			return new Response(JSON.stringify({ message: 'DM message sent' }), { status: 201, headers: { 'Content-Type': 'application/json' } });
 		}
