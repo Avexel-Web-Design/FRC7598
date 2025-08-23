@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import NebulaLoader from '@/components/common/NebulaLoader';
 import frcAPI from '@/utils/frcApiClient';
 import { useAuth } from '@/contexts/AuthContext';
+import { useLocation } from 'react-router-dom';
 
 export default function Planner() {
   const { user } = useAuth();
+  const location = useLocation();
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -12,6 +14,16 @@ export default function Planner() {
   const [filter, setFilter] = useState('pending');
   const [users, setUsers] = useState([]);
   const [newTask, setNewTask] = useState({ title: '', description: '', assigned_to: '', due_date: '', priority: 'medium' });
+
+  // On mount, honor ?filter=assigned deeplink and normalize unknown values
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const f = params.get('filter');
+    if (f === 'assigned') {
+      setFilter('assigned');
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => { fetchTasks(); fetchUsers(); }, []);
 
@@ -58,7 +70,11 @@ export default function Planner() {
     if (res.ok) setTasks(tasks.map(t => t.id === task.id ? { ...t, completed: !t.completed } : t));
   };
 
-  const filteredTasks = tasks.filter(t => filter === 'pending' ? !t.completed : t.completed);
+  const filteredTasks = useMemo(() => {
+    if (filter === 'completed') return tasks.filter(t => t.completed);
+    if (filter === 'assigned') return tasks.filter(t => !t.completed && t.assigned_to === user?.id);
+    return tasks.filter(t => !t.completed);
+  }, [tasks, filter, user?.id]);
   const stats = {
     total: tasks.length,
     completed: tasks.filter(t => t.completed).length,
@@ -120,13 +136,14 @@ export default function Planner() {
         <div className="border border-white/10 rounded-lg p-4 mb-4">
           <div className="flex flex-wrap gap-2">
             <button onClick={()=>setFilter('pending')} className={`px-3 py-2 rounded text-sm ${filter==='pending' ? 'bg-sca-purple/30 text-sca-gold' : 'bg-gray-800 text-gray-400 hover:text-white'}`}>Pending</button>
+            <button onClick={()=>setFilter('assigned')} className={`px-3 py-2 rounded text-sm ${filter==='assigned' ? 'bg-yellow-600/25 text-yellow-200' : 'bg-gray-800 text-gray-400 hover:text-white'}`}>Assigned to me</button>
             <button onClick={()=>setFilter('completed')} className={`px-3 py-2 rounded text-sm ${filter==='completed' ? 'bg-green-600/25 text-green-300' : 'bg-gray-800 text-gray-400 hover:text-white'}`}>Completed</button>
           </div>
         </div>
 
         <div className="border border-white/10 rounded-lg overflow-hidden">
           <div className="px-6 py-4 border-b border-white/10">
-            <h3 className="text-lg font-medium">{filter==='pending' ? 'Pending Tasks' : 'Completed Tasks'}</h3>
+            <h3 className="text-lg font-medium">{filter==='pending' ? 'Pending Tasks' : filter==='assigned' ? 'Assigned to Me' : 'Completed Tasks'}</h3>
           </div>
           <div className="divide-y divide-white/10">
             {filteredTasks.length > 0 ? filteredTasks.map(task => (

@@ -21,9 +21,7 @@ const Item = React.forwardRef(({ to, title, icon: Icon, showDot }, ref) => {
             }`}
           />
           {showDot ? (
-            <span className="absolute -top-0.5 -right-0.5 inline-flex items-center justify-center w-4 h-4 rounded-full bg-sca-gold text-[10px] text-black font-bold shadow">
-              •
-            </span>
+            <span className="absolute -top-0.5 -right-0.5 inline-block w-4 h-4 rounded-full bg-sca-gold shadow" />
           ) : null}
         </>
       )}
@@ -33,7 +31,7 @@ const Item = React.forwardRef(({ to, title, icon: Icon, showDot }, ref) => {
 Item.displayName = 'Item';
 
 export default function DashboardSidebar() {
-  const { channelsHaveUnread, messagesHaveUnread } = useNotifications();
+  const { channelsHaveUnread, messagesHaveUnread, plannerHaveUnread } = useNotifications();
   const { user, clearSession } = useAuth();
   const navigate = useNavigate();
 
@@ -62,12 +60,12 @@ export default function DashboardSidebar() {
       { to: '/channels', title: 'Channels', icon: Hash, dot: channelsHaveUnread },
       { to: '/messages', title: 'Direct Messages', icon: MessagesSquare, dot: messagesHaveUnread },
       { to: '/calendar', title: 'Calendar', icon: Calendar },
-      { to: '/planner', title: 'Planner', icon: ClipboardList },
+      { to: '/planner', title: 'Planner', icon: ClipboardList, dot: plannerHaveUnread },
       { to: '/profile', title: 'Profile', icon: UserIcon },
     ];
     if (user?.isAdmin) base.push({ to: '/admin/users', title: 'Admin Users', icon: Shield });
     return base;
-  }, [channelsHaveUnread, messagesHaveUnread, user?.isAdmin]);
+  }, [channelsHaveUnread, messagesHaveUnread, plannerHaveUnread, user?.isAdmin]);
 
   const [cursorTop, setCursorTop] = useState(0);
   const [cursorVisible, setCursorVisible] = useState(false);

@@ -16,6 +16,7 @@ export function NotificationProvider({ children }) {
   const [totalUnread, setTotalUnread] = useState(0);
   const [channelsHaveUnread, setChannelsHaveUnread] = useState(false);
   const [messagesHaveUnread, setMessagesHaveUnread] = useState(false);
+  const [plannerHaveUnread, setPlannerHaveUnread] = useState(false);
   const [activeChannel, setActiveChannel] = useState(null);
   const [lastRefresh, setLastRefresh] = useState(0);
 
@@ -39,6 +40,14 @@ export function NotificationProvider({ children }) {
         setTotalUnread(Math.max(0, totalUnread - activeCount));
         setChannelsHaveUnread(Math.max(0, (isActiveRegular ? channelsUnread - activeCount : channelsUnread)) > 0);
         setMessagesHaveUnread(Math.max(0, (!isActiveRegular ? messagesUnread - activeCount : messagesUnread)) > 0);
+        // Also fetch planner counts (assigned to me, pending)
+        try {
+          const tr = await frcAPI.get('/tasks/counts');
+          if (tr.ok) {
+            const tdata = await tr.json();
+            setPlannerHaveUnread((tdata.assignedPending || 0) > 0);
+          }
+        } catch {}
       }
     } catch {}
   }, [user, activeChannel, lastRefresh]);
@@ -72,6 +81,6 @@ export function NotificationProvider({ children }) {
     }
   }, [activeChannel, user, refreshNotifications]);
 
-  const value = { unreadCounts, totalUnread, channelsHaveUnread, messagesHaveUnread, markChannelAsRead, refreshNotifications, setActiveChannel, activeChannel };
+  const value = { unreadCounts, totalUnread, channelsHaveUnread, messagesHaveUnread, plannerHaveUnread, markChannelAsRead, refreshNotifications, setActiveChannel, activeChannel };
   return <NotificationContext.Provider value={value}>{children}</NotificationContext.Provider>;
 }

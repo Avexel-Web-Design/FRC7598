@@ -5,7 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Hash, MessagesSquare, ClipboardList, Calendar as CalendarIcon, User as UserIcon, Shield } from 'lucide-react';
 
 export default function MobileDashboardNav() {
-  const { channelsHaveUnread, messagesHaveUnread } = useNotifications();
+  const { channelsHaveUnread, messagesHaveUnread, plannerHaveUnread } = useNotifications();
   const { user } = useAuth();
 
   const Item = ({ to, label, icon: Icon, showDot }) => (
@@ -33,7 +33,7 @@ export default function MobileDashboardNav() {
         <Item to="/channels" label="Channels" icon={Hash} showDot={channelsHaveUnread} />
         <Item to="/messages" label="Messages" icon={MessagesSquare} showDot={messagesHaveUnread} />
         <Item to="/calendar" label="Calendar" icon={CalendarIcon} />
-        <Item to="/planner" label="Planner" icon={ClipboardList} />
+  <Item to="/planner" label="Planner" icon={ClipboardList} showDot={plannerHaveUnread} />
         <Item to="/profile" label="Profile" icon={UserIcon} />
         {user?.isAdmin && <Item to="/admin/users" label="Users" icon={Shield} />}
       </div>
