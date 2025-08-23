@@ -421,44 +421,6 @@ export default function CalendarPage() {
             })}
           </div>
         </div>
-
-        <div className="mt-6 border border-white/10 rounded-lg overflow-hidden">
-          <div className="px-6 py-4 border-b border-white/10">
-            <h3 className="text-lg font-medium">Upcoming Events</h3>
-          </div>
-          <div className="divide-y divide-white/10">
-            {events
-              .filter(e => new Date(e.event_date) >= new Date())
-              .sort((a,b) => new Date(a.event_date).getTime() - new Date(b.event_date).getTime())
-              .slice(0,5)
-              .map((event) => (
-                <div key={event.id} className="px-6 py-4 flex items-center justify-between">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <h4 className="text-sm font-medium">{event.title}</h4>
-                      {event.is_recurring && (
-                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-sca-purple/30 text-sca-gold">Recurring</span>
-                      )}
-                      {event.is_recurring_instance && (
-                        <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-sca-purple/20 text-sca-gold">Instance</span>
-                      )}
-                    </div>
-                    <p className="text-sm text-gray-400 mt-1">{event.description}</p>
-                    <div className="mt-1 text-xs text-gray-500">
-                      {new Date(event.event_date).toLocaleDateString()}
-                      {event.event_time && ` at ${formatTime(event.event_time)}`}
-                      {event.event_end_time && ` - ${formatTime(event.event_end_time)}`}
-                      {event.location && ` • ${event.location}`}
-                    </div>
-                  </div>
-                  <button onClick={()=>handleEventClick(event)} className="text-sca-gold hover:text-white text-sm">Edit</button>
-                </div>
-              ))}
-            {events.filter(e => new Date(e.event_date) >= new Date()).length === 0 && (
-              <div className="px-6 py-8 text-center text-gray-400">No upcoming events</div>
-            )}
-          </div>
-        </div>
       </div>
 
       {showModal && currentEvent && (
