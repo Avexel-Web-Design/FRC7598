@@ -46,15 +46,27 @@ const SiteLayout = () => (
 );
 
 // Layout for dashboard pages (no Navbar/Footer)
-const DashboardLayout = () => (
-  <div className="h-screen bg-black text-white flex overflow-hidden">
-    <DashboardSidebar />
-    <main className="flex-1 min-h-0 pb-16 md:pb-0 flex flex-col overflow-hidden">
-      <Outlet />
-    </main>
-    <MobileDashboardNav />
-  </div>
-);
+const DashboardLayout = () => {
+  // On first mount, if path is a dashboard path and we have a saved subpath, navigate there.
+  useEffect(() => {
+    const saved = localStorage.getItem('frc7598_last_dashboard_route');
+    const p = window.location.pathname;
+    const isDash = p.startsWith('/channels') || p.startsWith('/messages') || p.startsWith('/calendar') || p.startsWith('/planner') || p.startsWith('/profile') || p.startsWith('/admin');
+    if (isDash && saved && saved !== p) {
+      // replace to avoid history spam on reload
+      window.history.replaceState(null, '', saved);
+    }
+  }, []);
+  return (
+    <div className="h-screen bg-black text-white flex overflow-hidden">
+      <DashboardSidebar />
+      <main className="flex-1 min-h-0 pb-16 md:pb-0 flex flex-col overflow-hidden">
+        <Outlet />
+      </main>
+      <MobileDashboardNav />
+    </div>
+  );
+};
 
 function App() {
   // Initialize scroll reveal animations when the page loads

@@ -18,7 +18,12 @@ const Login = () => {
     try {
   const res = await api.login({ fullName, password });
   saveSession(res.user, res.token);
-  navigate('/channels');
+  const saved = localStorage.getItem('frc7598_last_dashboard_route');
+  if (saved && saved.startsWith('/')) {
+    navigate(saved);
+  } else {
+    navigate('/channels');
+  }
     } catch (e) {
       setError(e.message || 'Login failed');
     } finally {

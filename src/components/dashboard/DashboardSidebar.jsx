@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { NavLink, useLocation, Link } from 'react-router-dom';
+import { NavLink, useLocation, Link, useNavigate } from 'react-router-dom';
 import { useNotifications } from '@/contexts/NotificationContext';
 import { Hash, MessagesSquare, Calendar, Users, FileText, Settings, Shield, ClipboardList, User as UserIcon, LogOut } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
@@ -35,6 +35,7 @@ Item.displayName = 'Item';
 export default function DashboardSidebar() {
   const { channelsHaveUnread, messagesHaveUnread } = useNotifications();
   const { user, clearSession } = useAuth();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     try { clearSession(); } catch {}
@@ -42,6 +43,13 @@ export default function DashboardSidebar() {
   };
 
   const location = useLocation();
+  // Persist last visited dashboard route
+  useEffect(() => {
+    const p = location.pathname;
+    if (p.startsWith('/channels') || p.startsWith('/messages') || p.startsWith('/calendar') || p.startsWith('/planner') || p.startsWith('/profile') || p.startsWith('/admin')) {
+      localStorage.setItem('frc7598_last_dashboard_route', p);
+    }
+  }, [location.pathname]);
   const itemsContainerRef = useRef(null);
   const refsMap = useRef(new Map());
   const setItemRef = (path) => (el) => {

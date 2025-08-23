@@ -78,15 +78,22 @@ const DirectMessages = () => {
     try {
       if (!maintainSelection) setIsChatsLoading(true);
       setError(null);
-      // Recent users for DMs
-      let users = [];
-      const usersResp = await frcAPI.get(`/chat/users/recent?user_id=${user.id}`);
-      if (usersResp.ok) {
-        users = await usersResp.json();
-      } else {
-        const fallback = await frcAPI.get('/chat/users');
-        if (fallback.ok) users = (await fallback.json()).filter(u => u.id !== user.id);
-      }
+      // Merge recent users with all users so non-recent don't disappear
+      let recent = [];
+      let allUsers = [];
+      try {
+        const recentResp = await frcAPI.get(`/chat/users/recent?user_id=${user.id}`);
+        if (recentResp.ok) recent = await recentResp.json();
+      } catch {}
+      try {
+        const allResp = await frcAPI.get('/chat/users');
+        if (allResp.ok) allUsers = (await allResp.json()).filter(u => u.id !== user.id);
+      } catch {}
+      // De-duplicate by id, prefer recent entries (with last_message_time)
+      const byId = new Map();
+      for (const r of recent) byId.set(r.id, r);
+      for (const a of allUsers) if (!byId.has(a.id)) byId.set(a.id, a);
+      const users = Array.from(byId.values());
       // Group chats membership
       let groups = [];
       const groupsResp = await frcAPI.get(`/chat/groups?user_id=${user.id}`);
