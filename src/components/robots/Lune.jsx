@@ -78,7 +78,7 @@ const Lune = () => {
             </div>
 
             {/* Technical details */}
-            <div className="mt-12 pt-8 border-t border-white/10 grid md:grid-cols-3 gap-6 lune-animate" style={{ transitionDelay: '0.4s' }}>
+            <div className="mt-12 pt-8 border-t border-white/10 grid md:grid-cols-2 gap-6 lune-animate" style={{ transitionDelay: '0.4s' }}>
               <div className="p-4 rounded-lg hover:bg-white/5 hover:shadow-md transition-all duration-300">
                 <h4 className="text-xl font-bold text-white mb-4">Drivetrain</h4>
                 <ul className="space-y-2 text-gray-300">
@@ -106,7 +106,7 @@ const Lune = () => {
                 <ul className="space-y-2 text-gray-300">
                   <li className="flex items-start">
                     <span className="text-sca-gold mr-2">•</span>
-                    <span>Dual-Stage Carbon Fiber Elevator</span>
+                    <span>Dual-Stage Elevator</span>
                   </li>
                   <li className="flex items-start">
                     <span className="text-sca-gold mr-2">•</span>
@@ -118,29 +118,7 @@ const Lune = () => {
                   </li>
                   <li className="flex items-start">
                     <span className="text-sca-gold mr-2">•</span>
-                    <span>L1, L2 and Processor Scoring</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="p-4 rounded-lg hover:bg-white/5 hover:shadow-md transition-all duration-300">
-                <h4 className="text-xl font-bold text-white mb-4">Electronics & Control</h4>
-                <ul className="space-y-2 text-gray-300">
-                  <li className="flex items-start">
-                    <span className="text-sca-gold mr-2">•</span>
-                    <span>REV Robotics control system</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-sca-gold mr-2">•</span>
-                    <span>Custom vision processing for autonomous</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-sca-gold mr-2">•</span>
-                    <span>Gyroscopic stabilization</span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-sca-gold mr-2">•</span>
-                    <span>PID-controlled depth assessment</span>
+                    <span>L1, L2, L3, and Processor Scoring</span>
                   </li>
                 </ul>
               </div>
