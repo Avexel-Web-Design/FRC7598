@@ -25,6 +25,7 @@ const Channels = () => {
 
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+  const prevSelectedChannelRef = useRef(null);
 
   const [pickerOpenFor, setPickerOpenFor] = useState(null);
   const [infoOpenFor, setInfoOpenFor] = useState(null);
@@ -508,7 +509,15 @@ const Channels = () => {
       </div>
 
       {/* Mobile Channel Selector */}
-      <div className="md:hidden">
+      <div
+        className={`md:hidden ${!selectedChannel ? 'flex-1 min-h-0' : ''}`}
+        onClick={(e) => {
+          if (selectedChannel) return; // only active when menu is open
+          if (e.target.closest('button, a, input, textarea, select, label, [role="button"]')) return;
+          const prev = prevSelectedChannelRef.current;
+          if (prev) setSelectedChannel(prev);
+        }}
+      >
         {!selectedChannel ? (
           <div className="p-4">
             <div className="flex justify-between items-center mb-4">
@@ -542,7 +551,7 @@ const Channels = () => {
           <div className="px-4 pb-4 border-b border-gray-700 flex items-center justify-between">
             <div className="flex items-center">
               {/* Mobile Back Button */}
-              <button onClick={() => setSelectedChannel(null)} className="md:hidden mr-3 p-2 hover:text-sca-purple hover:bg-gray-800 rounded-lg transition-colors mobile-touch-target">
+              <button onClick={() => { prevSelectedChannelRef.current = selectedChannel; setSelectedChannel(null); }} className="md:hidden mr-3 p-2 hover:text-sca-purple hover:bg-gray-800 rounded-lg transition-colors mobile-touch-target">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
               </button>
               <h2 className="text-lg md:text-xl font-bold truncate">{selectedChannel ? selectedChannel.name : 'Select a Channel'}</h2>

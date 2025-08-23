@@ -392,14 +392,14 @@ export default function CalendarPage() {
               const isToday = day.toDateString() === new Date().toDateString();
               const dayEvents = getEventsForDate(day);
               return (
-                <div key={idx}
-                     className={`bg-black px-3 py-2 text-sm min-h-[110px] cursor-pointer hover:bg-white/5 ${!isCurrentMonth ? 'text-gray-500' : 'text-gray-100'} ${isToday ? 'ring-1 ring-sca-purple/60' : ''}`}
-                     onClick={()=>handleDayClick(day)}>
+       <div key={idx}
+         className={`bg-black px-3 py-1 sm:py-2 text-sm min-h-[80px] sm:min-h-[110px] cursor-pointer hover:bg-white/5 ${!isCurrentMonth ? 'text-gray-500' : 'text-gray-100'} ${isToday ? 'ring-1 ring-sca-purple/60' : ''}`}
+         onClick={()=>handleDayClick(day)}>
                   <div className={`font-medium ${isToday ? 'text-sca-gold' : ''}`}>{day.getDate()}</div>
                   <div className="mt-1 space-y-1">
                     {dayEvents.slice(0,3).map((event) => (
                       <div key={event.id}
-                           className={`text-xs p-1 rounded truncate cursor-pointer transition-colors ${ (event.is_recurring || event.is_recurring_instance) ? 'bg-sca-purple/25 text-sca-gold hover:bg-sca-purple/40' : 'bg-sca-purple/25 text-sca-gold hover:bg-sca-purple/40'}`}
+                           className={`text-xs -mx-3 px-0 py-1 sm:mx-0 sm:px-1 rounded truncate cursor-pointer transition-colors ${ (event.is_recurring || event.is_recurring_instance) ? 'bg-sca-purple/25 text-sca-gold hover:bg-sca-purple/40' : 'bg-sca-purple/25 text-sca-gold hover:bg-sca-purple/40'}`}
                            onClick={(e)=>{ e.stopPropagation(); handleEventClick(event); }}>
                         <div className="flex items-center gap-1">
                           {(event.is_recurring || event.is_recurring_instance) && (<span>⟳</span>)}
