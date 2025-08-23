@@ -420,8 +420,8 @@ const Channels = () => {
     <div className="flex h-full w-full bg-black text-gray-100 overflow-hidden">
       {/* Desktop Sidebar */}
       <div className="hidden md:flex w-64 bg-black flex-col">
-        <div className="px-2">
-          <div className="p-4 border-b border-gray-700 flex justify-between items-center">
+        <div className="pr-2">
+          <div className="px-4 pb-4 border-b border-gray-700 flex justify-between items-center">
             <h2 className="text-xl font-bold">Channels</h2>
             {user?.isAdmin && (
               <button onClick={openCreateModal} className="bg-black hover:bg-sca-purple text-sca-purple hover:text-white rounded-full p-1" title="Create new channel">
@@ -496,7 +496,7 @@ const Channels = () => {
   <div className={`flex-1 flex flex-col min-h-0 ${!selectedChannel ? 'hidden md:flex' : ''}`}>
         {/* Chat Header */}
         <div className="bg-black px-2">
-          <div className="p-4 border-b border-gray-700 flex items-center justify-between">
+          <div className="px-4 pb-4 border-b border-gray-700 flex items-center justify-between">
             <div className="flex items-center">
               {/* Mobile Back Button */}
               <button onClick={() => setSelectedChannel(null)} className="md:hidden mr-3 p-2 hover:text-sca-purple hover:bg-gray-800 rounded-lg transition-colors mobile-touch-target">

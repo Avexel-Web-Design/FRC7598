@@ -263,8 +263,8 @@ const DirectMessages = () => {
     <div className="flex h-full w-full bg-black text-gray-100 overflow-hidden">
       {/* Desktop sidebar: chats list */}
       <div className="hidden md:flex w-64 bg-black flex-col">
-        <div className="px-2">
-          <div className="p-4 border-b border-gray-700 flex justify-between items-center">
+        <div className="pr-2">
+          <div className="px-4 pb-4 border-b border-gray-700 flex justify-between items-center">
             <h2 className="text-xl font-bold">Messages</h2>
           </div>
         </div>
@@ -336,7 +336,7 @@ const DirectMessages = () => {
       {/* Chat area */}
   <div className={`flex-1 flex flex-col min-h-0 ${!selectedChat ? 'hidden md:flex' : ''}`}>
         <div className="bg-black px-2">
-          <div className="p-4 border-b border-gray-700 flex items-center justify-between">
+          <div className="px-4 pb-4 border-b border-gray-700 flex items-center justify-between">
             <div className="flex items-center">
               <button onClick={() => setSelectedChat(null)} className="md:hidden mr-3 p-2 hover:text-sca-purple hover:bg-gray-800 rounded-lg transition-colors mobile-touch-target">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>

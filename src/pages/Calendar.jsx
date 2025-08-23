@@ -1,4 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import NebulaLoader from '@/components/common/NebulaLoader';
 import frcAPI from '@/utils/frcApiClient';
 import { useAuth } from '@/contexts/AuthContext';
@@ -369,9 +371,13 @@ export default function CalendarPage() {
           <p className="text-sm text-gray-400">Manage team events, competitions, and meetings</p>
         </div>
         <div className="flex items-center gap-2">
-          <button onClick={()=>navigateMonth(-1)} className="p-2 rounded-md hover:bg-white/5">◀</button>
+          <button onClick={()=>navigateMonth(-1)} className="p-2 rounded-md hover:text-sca-gold" aria-label="Previous month" title="Previous month">
+            <FontAwesomeIcon icon={faChevronLeft} className="w-4 h-4" />
+          </button>
           <div className="text-gray-300">{monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}</div>
-          <button onClick={()=>navigateMonth(1)} className="p-2 rounded-md hover:bg-white/5">▶</button>
+          <button onClick={()=>navigateMonth(1)} className="p-2 rounded-md hover:text-sca-gold" aria-label="Next month" title="Next month">
+            <FontAwesomeIcon icon={faChevronRight} className="w-4 h-4" />
+          </button>
         </div>
       </div>
 
