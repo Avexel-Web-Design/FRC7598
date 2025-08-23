@@ -28,6 +28,14 @@ export default defineConfig({
       strict: false, // Allow serving files from outside the project root
       allow: ['..'], // Allow serving files from parent directory
     },
+    proxy: {
+      // Forward API calls to local Cloudflare Pages Functions dev server
+      '/api': {
+        target: 'http://127.0.0.1:8788',
+        changeOrigin: true,
+        // Cloudflare Pages dev server serves functions under same origin; this proxy simplifies fetch('/api/...') in dev
+      },
+    },
   },
   // Add optimizeDeps configuration
   optimizeDeps: {

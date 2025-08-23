@@ -82,12 +82,13 @@ const MobileMenu = ({ isOpen, closeMenu, links, currentPath }) => {
               </Link>
             ))}
             {user ? (
-              <button
-                onClick={() => { clearSession(); closeMenu(); }}
+              <Link
+                to="/channels"
                 className="py-3.5 px-5 rounded-full transition-all duration-300 transform text-white hover:bg-white/10 border border-sca-gold/20 hover:border-sca-gold/50 hover:shadow-md hover:shadow-sca-gold/10"
+                onClick={closeMenu}
               >
-                Logout
-              </button>
+                Dashboard
+              </Link>
             ) : (
               <Link
                 to="/login"

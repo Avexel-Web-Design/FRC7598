@@ -3,6 +3,11 @@ import { handle } from 'hono/cloudflare-pages';
 import login from './auth/login';
 import register from './auth/register';
 import { corsMiddleware, errorMiddleware } from './middleware';
+import chat from './chat';
+import admin from './admin';
+import calendar from './calendar';
+import tasks from './tasks';
+import profile from './profile';
 
 const app = new Hono().basePath('/api');
 
@@ -12,6 +17,11 @@ app.use('*', errorMiddleware);
 
 app.route('/auth/login', login);
 app.route('/auth/register', register);
+app.route('/chat', chat);
+app.route('/admin', admin);
+app.route('/calendar', calendar);
+app.route('/tasks', tasks);
+app.route('/profile', profile);
 
 app.get('/health', (c) => c.json({ ok: true, env: 'pages', time: new Date().toISOString() }));
 

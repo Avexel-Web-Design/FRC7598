@@ -1,0 +1,1 @@
+const f=(r,c)=>{if(c)return c;if(!r)return"#cccccc";let e=0;for(let t=0;t<r.length;t++)e=r.charCodeAt(t)+((e<<5)-e);let l="#";for(let t=0;t<3;t++){const o=e>>t*8&255;l+=("00"+o.toString(16)).slice(-2)}return l};export{f as g};

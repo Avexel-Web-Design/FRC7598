@@ -16,9 +16,9 @@ const Login = () => {
     setError('');
     setLoading(true);
     try {
-      const res = await api.login({ fullName, password });
-      saveSession(res.user, res.token);
-      navigate('/');
+  const res = await api.login({ fullName, password });
+  saveSession(res.user, res.token);
+  navigate('/channels');
     } catch (e) {
       setError(e.message || 'Login failed');
     } finally {

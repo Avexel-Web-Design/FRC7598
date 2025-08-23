@@ -147,22 +147,19 @@ const Navbar = () => {
 
 export default Navbar;
 
-// Desktop auth buttons component to keep Navbar tidy
+// Desktop auth/dashboard button
 const AuthButtonsDesktop = () => {
-  const { user, clearSession } = useAuth();
+  const { user } = useAuth();
   const location = useLocation();
 
   if (user) {
     return (
-      <>
-        <span className="px-3 text-white/80">Hi, {user.name?.split(' ')[0] || 'Member'}</span>
-        <button
-          onClick={clearSession}
-          className="px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 transform text-white hover:bg-white/15 border border-sca-gold/20 hover:border-sca-gold/50"
-        >
-          Logout
-        </button>
-      </>
+      <Link
+        to="/channels"
+        className="px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 transform text-white hover:bg-white/15 border border-sca-gold/20 hover:border-sca-gold/50"
+      >
+        Dashboard
+      </Link>
     );
   }
 

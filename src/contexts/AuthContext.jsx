@@ -27,13 +27,44 @@ export function AuthProvider({ children }) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ user: u, token: t }));
   };
 
+  // Merge updates into current user and persist
+  const updateUser = (partial) => {
+    setUser(prev => {
+      const next = { ...(prev || {}), ...(partial || {}) };
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...parsed, user: next }));
+        }
+      } catch {}
+      return next;
+    });
+  };
+
+  // Refresh profile details (name + avatarColor) from server on startup when token exists
+  useEffect(() => {
+    const loadProfile = async () => {
+      if (!token) return;
+      try {
+        const res = await fetch('/api/profile', { headers: { Authorization: `Bearer ${token}` } });
+        if (res.ok) {
+          const data = await res.json();
+          updateUser({ name: data.username, avatarColor: data.avatar_color ?? null, isAdmin: !!data.is_admin });
+        }
+      } catch {}
+    };
+    loadProfile();
+    // Only run when token changes
+  }, [token]);
+
   const clearSession = () => {
     setUser(null);
     setToken(null);
     localStorage.removeItem(STORAGE_KEY);
   };
 
-  const value = useMemo(() => ({ user, token, loading, saveSession, clearSession }), [user, token, loading]);
+  const value = useMemo(() => ({ user, token, loading, saveSession, clearSession, updateUser }), [user, token, loading]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
