@@ -2220,7 +2220,7 @@ async function getMessages(c) {
       }
     }
     const { results } = await c.env.DB.prepare(
-      "SELECT messages.*, users.full_name as sender_username FROM messages JOIN users ON messages.sender_id = users.id WHERE channel_id = ? ORDER BY timestamp ASC"
+      "SELECT messages.*, users.full_name as sender_username, users.avatar_color as sender_avatar_color FROM messages JOIN users ON messages.sender_id = users.id WHERE channel_id = ? ORDER BY timestamp ASC"
     ).bind(channelId).all();
     let channelReadStatuses = [];
     try {
@@ -2375,7 +2375,7 @@ async function getDMMessages(c) {
     if (userId !== user1Id && userId !== user2Id)
       return new Response("Unauthorized", { status: 403 });
     const { results } = await c.env.DB.prepare(
-      "SELECT messages.*, users.full_name as sender_username FROM messages JOIN users ON messages.sender_id = users.id WHERE channel_id = ? ORDER BY timestamp ASC"
+      "SELECT messages.*, users.full_name as sender_username, users.avatar_color as sender_avatar_color FROM messages JOIN users ON messages.sender_id = users.id WHERE channel_id = ? ORDER BY timestamp ASC"
     ).bind(dmId).all();
     let dmReadStatuses = [];
     try {
@@ -2884,7 +2884,7 @@ __name(getTotalUnreadCount, "getTotalUnreadCount");
 __name2(getTotalUnreadCount, "getTotalUnreadCount");
 async function getAllUsers(c) {
   try {
-    const { results } = await c.env.DB.prepare("SELECT id, full_name as username, is_admin FROM users ORDER BY full_name ASC").all();
+    const { results } = await c.env.DB.prepare("SELECT id, full_name as username, is_admin, avatar_color FROM users ORDER BY full_name ASC").all();
     return new Response(JSON.stringify(results), { headers: { "Content-Type": "application/json" } });
   } catch {
     return new Response("Error fetching users", { status: 500 });
@@ -2916,8 +2916,9 @@ async function getRecentDMUsers(c) {
            CAST(substr(channel_id, 4 + instr(substr(channel_id, 4), '_')) AS INTEGER) as uid2
          FROM dm_msgs
        )
-       SELECT u.id, u.full_name as username, u.is_admin,
-              p.last_time as last_message_time
+  SELECT u.id, u.full_name as username, u.is_admin,
+    u.avatar_color,
+    p.last_time as last_message_time
        FROM parts p
        JOIN users u
          ON (
@@ -2926,7 +2927,7 @@ async function getRecentDMUsers(c) {
        ORDER BY p.last_time DESC`
     ).bind(dmLike, `dm_${userId}_%`, `dm_%_${userId}`, userId, userId).all();
     if (!results || results.length === 0) {
-      const { results: all } = await c.env.DB.prepare("SELECT id, full_name as username, is_admin FROM users WHERE id != ? ORDER BY full_name ASC").bind(userId).all();
+      const { results: all } = await c.env.DB.prepare("SELECT id, full_name as username, is_admin, avatar_color FROM users WHERE id != ? ORDER BY full_name ASC").bind(userId).all();
       return new Response(JSON.stringify(all), { headers: { "Content-Type": "application/json" } });
     }
     return new Response(JSON.stringify(results), { headers: { "Content-Type": "application/json" } });
@@ -2990,7 +2991,7 @@ admin.get("/users", async (c) => {
   if (!au || !au.isAdmin)
     return c.json({ error: "Forbidden" }, 403);
   try {
-    const { results } = await c.env.DB.prepare("SELECT id, full_name as username, is_admin, created_at FROM users ORDER BY full_name ASC").all();
+    const { results } = await c.env.DB.prepare("SELECT id, full_name as username, is_admin, created_at, avatar_color FROM users ORDER BY full_name ASC").all();
     return c.json(results);
   } catch (e) {
     console.error("Failed to load users", e);

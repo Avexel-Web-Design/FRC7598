@@ -2,7 +2,7 @@ import { Context } from 'hono';
 
 export async function getAllUsers(c: Context): Promise<Response> {
   try {
-    const { results } = await c.env.DB.prepare('SELECT id, full_name as username, is_admin FROM users ORDER BY full_name ASC').all();
+  const { results } = await c.env.DB.prepare('SELECT id, full_name as username, is_admin, avatar_color FROM users ORDER BY full_name ASC').all();
     return new Response(JSON.stringify(results), { headers: { 'Content-Type': 'application/json' } });
   } catch {
     return new Response('Error fetching users', { status: 500 });
@@ -34,8 +34,9 @@ export async function getRecentDMUsers(c: Context): Promise<Response> {
            CAST(substr(channel_id, 4 + instr(substr(channel_id, 4), '_')) AS INTEGER) as uid2
          FROM dm_msgs
        )
-       SELECT u.id, u.full_name as username, u.is_admin,
-              p.last_time as last_message_time
+  SELECT u.id, u.full_name as username, u.is_admin,
+    u.avatar_color,
+    p.last_time as last_message_time
        FROM parts p
        JOIN users u
          ON (
@@ -46,7 +47,7 @@ export async function getRecentDMUsers(c: Context): Promise<Response> {
 
     // Fallback: if none, return all except current
     if (!results || (results as any[]).length === 0) {
-      const { results: all } = await c.env.DB.prepare('SELECT id, full_name as username, is_admin FROM users WHERE id != ? ORDER BY full_name ASC').bind(userId).all();
+  const { results: all } = await c.env.DB.prepare('SELECT id, full_name as username, is_admin, avatar_color FROM users WHERE id != ? ORDER BY full_name ASC').bind(userId).all();
       return new Response(JSON.stringify(all), { headers: { 'Content-Type': 'application/json' } });
     }
     return new Response(JSON.stringify(results), { headers: { 'Content-Type': 'application/json' } });

@@ -275,7 +275,7 @@ const DirectMessages = () => {
             {chatItems.map((chat) => {
               const key = `${chat.type}-${chat.id}`;
               const label = chat.type === 'group' ? chat.name : chat.username;
-              const color = chat.type === 'group' ? '#4b5563' : generateColor(label, null);
+              const color = chat.type === 'group' ? '#4b5563' : (chat.avatar_color || generateColor(label, null));
               const channelId = chat.type === 'dm' && user ? getConversationId(user.id, chat.id) : chat.id.toString();
               const unread = unreadCounts[channelId] || 0;
               return (
@@ -310,7 +310,7 @@ const DirectMessages = () => {
                 {chatItems.map((chat) => {
                   const key = `${chat.type}-${chat.id}`;
                   const label = chat.type === 'group' ? chat.name : chat.username;
-                  const color = chat.type === 'group' ? '#4b5563' : generateColor(label, null);
+                  const color = chat.type === 'group' ? '#4b5563' : (chat.avatar_color || generateColor(label, null));
                   const channelId = chat.type === 'dm' && user ? getConversationId(user.id, chat.id) : chat.id.toString();
                   const unread = unreadCounts[channelId] || 0;
                   return (
@@ -379,7 +379,7 @@ const DirectMessages = () => {
                   const isLast = !(sameNext && (nextTs - thisTs) <= TWO_MIN);
 
                   const avatar = (
-                    <div className="w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-white font-bold text-sm md:text-lg" style={{ backgroundColor: generateColor(m.sender_username, null) }}>
+                    <div className="w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-white font-bold text-sm md:text-lg" style={{ backgroundColor: m.sender_avatar_color || generateColor(m.sender_username, null) }}>
                       {m.sender_username?.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2)}
                     </div>
                   );

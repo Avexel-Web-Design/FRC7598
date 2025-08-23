@@ -26,7 +26,7 @@ export async function getMessages(c: Context): Promise<Response> {
 		}
 
 		const { results } = await c.env.DB.prepare(
-			'SELECT messages.*, users.full_name as sender_username FROM messages JOIN users ON messages.sender_id = users.id WHERE channel_id = ? ORDER BY timestamp ASC'
+			'SELECT messages.*, users.full_name as sender_username, users.avatar_color as sender_avatar_color FROM messages JOIN users ON messages.sender_id = users.id WHERE channel_id = ? ORDER BY timestamp ASC'
 		).bind(channelId).all();
 
 		// Fetch read status for this channel to compute readers per message
@@ -169,7 +169,7 @@ export async function getDMMessages(c: Context): Promise<Response> {
 		const user2Id = parseInt(dmParts[2]);
 		if (userId !== user1Id && userId !== user2Id) return new Response('Unauthorized', { status: 403 });
 		const { results } = await c.env.DB.prepare(
-			'SELECT messages.*, users.full_name as sender_username FROM messages JOIN users ON messages.sender_id = users.id WHERE channel_id = ? ORDER BY timestamp ASC'
+			'SELECT messages.*, users.full_name as sender_username, users.avatar_color as sender_avatar_color FROM messages JOIN users ON messages.sender_id = users.id WHERE channel_id = ? ORDER BY timestamp ASC'
 		).bind(dmId).all();
 
 		let dmReadStatuses: Array<{ user_id: number; last_read_timestamp: string; username: string }> = [];

@@ -35,7 +35,7 @@ admin.get('/users', async (c) => {
   if (!au || !au.isAdmin) return c.json({ error: 'Forbidden' }, 403);
   try {
     const { results } = await c.env.DB
-      .prepare('SELECT id, full_name as username, is_admin, created_at FROM users ORDER BY full_name ASC')
+      .prepare('SELECT id, full_name as username, is_admin, created_at, avatar_color FROM users ORDER BY full_name ASC')
       .all();
     return c.json(results);
   } catch (e) {

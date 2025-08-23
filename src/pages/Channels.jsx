@@ -546,8 +546,9 @@ const Channels = () => {
                   const isFirst = !closePrev;
                   const isLast = !closeNext;
 
+                  const avatarColor = message.sender_avatar_color || generateColor(message.sender_username, null);
                   const avatar = (
-                    <div className="w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-white font-bold text-sm md:text-lg" style={{ backgroundColor: generateColor(message.sender_username, null) }}>
+                    <div className="w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-white font-bold text-sm md:text-lg" style={{ backgroundColor: avatarColor }}>
                       {message.sender_username?.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2) || '??'}
                     </div>
                   );

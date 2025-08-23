@@ -13,7 +13,7 @@ const Item = ({ to, title, icon: Icon, showDot }) => {
       title={title}
       className={({ isActive }) =>
         `relative group flex items-center justify-center w-12 h-12 rounded-xl transition-colors ${
-          isActive ? 'bg-sca-purple text-white' : 'text-gray-400 hover:text-sca-purple'
+          isActive ? 'bg-sca-purple text-white hover:text-sca-gold' : 'text-gray-400 hover:text-sca-gold'
         }`
       }
     >
@@ -39,7 +39,7 @@ export default function DashboardSidebar() {
   return (
     <aside className="hidden md:flex md:flex-col items-center gap-3 py-4 px-2 border-r border-white/10 bg-black">
       <Link to="/" title="Home" className="mb-1">
-        <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-white/5 hover:bg-white/10 transition-colors">
+        <div className="w-12 h-12 rounded-xl flex items-center justify-center transition-colors">
           <img src="/Star.png" alt="Team 7598" className="w-8 h-8" />
         </div>
       </Link>
@@ -59,7 +59,7 @@ export default function DashboardSidebar() {
         <button
           title="Logout"
           onClick={handleLogout}
-          className="relative group flex items-center justify-center w-12 h-12 rounded-xl text-gray-400 hover:text-sca-purple transition-colors"
+          className="relative group flex items-center justify-center w-12 h-12 rounded-xl text-gray-400 hover:text-sca-gold transition-colors"
         >
           <LogOut className="w-5 h-5" />
         </button>

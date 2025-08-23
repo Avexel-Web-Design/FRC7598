@@ -140,7 +140,7 @@ export default function AdminUsers() {
                 <tr key={u.id}>
                   <td className="px-6 py-3">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: generateColor(u.username, null) }}>
+                      <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: u.avatar_color || generateColor(u.username, null) }}>
                         {u.username.split(' ').map(n => n[0]).join('').toUpperCase().slice(0,2)}
                       </div>
                       <div>
@@ -172,7 +172,7 @@ export default function AdminUsers() {
             <div key={u.id} className="border border-white/10 rounded-lg p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: generateColor(u.username, null) }}>
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: u.avatar_color || generateColor(u.username, null) }}>
                     {u.username.split(' ').map(n => n[0]).join('').toUpperCase().slice(0,2)}
                   </div>
                   <div>
