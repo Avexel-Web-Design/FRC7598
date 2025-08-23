@@ -64,4 +64,17 @@ devices.delete('/', async (c) => {
   }
 });
 
+// List device tokens for the authenticated user
+devices.get('/', async (c) => {
+  try {
+    const userId = await getAuthUserId(c);
+    if (!userId) return c.json({ error: 'Unauthorized' }, 401);
+    const { results } = await c.env.DB.prepare('SELECT token, platform, updated_at FROM device_tokens WHERE user_id = ? ORDER BY updated_at DESC')
+      .bind(userId).all();
+    return c.json({ ok: true, tokens: results || [] });
+  } catch (e) {
+    return c.json({ error: 'Failed to list device tokens' }, 500);
+  }
+});
+
 export default devices;

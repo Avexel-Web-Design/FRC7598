@@ -3945,6 +3945,17 @@ devices.delete("/", async (c) => {
     return c.json({ error: "Failed to remove device token" }, 500);
   }
 });
+devices.get("/", async (c) => {
+  try {
+    const userId = await getAuthUserId(c);
+    if (!userId)
+      return c.json({ error: "Unauthorized" }, 401);
+    const { results } = await c.env.DB.prepare("SELECT token, platform, updated_at FROM device_tokens WHERE user_id = ? ORDER BY updated_at DESC").bind(userId).all();
+    return c.json({ ok: true, tokens: results || [] });
+  } catch (e) {
+    return c.json({ error: "Failed to list device tokens" }, 500);
+  }
+});
 var devices_default = devices;
 var uploads = new Hono2();
 uploads.post("/image", async (c) => {

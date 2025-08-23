@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "840605921413",
+    "project_id": "frc7598",
+    "storage_bucket": "frc7598.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:840605921413:android:665c195ac26a2af14df9ec",
+        "android_client_info": {
+          "package_name": "com.avexel.frc7598"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5kB7jYSwWRaXl7niv2joEDxptBT84e7g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
