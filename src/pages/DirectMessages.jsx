@@ -112,6 +112,14 @@ const DirectMessages = () => {
         return an.localeCompare(bn, undefined, { sensitivity: 'base' });
       });
       setChatItems(combined);
+      // Auto-select the top chat when landing on this page
+      if (!maintainSelection) {
+        const hasCurrent = selectedChat && combined.some(c => c.type === selectedChat.type && c.id === selectedChat.id);
+        if (!hasCurrent && combined.length > 0) {
+          // Use existing handler to set active channel and mark as read
+          handleChatClick(combined[0]);
+        }
+      }
     } catch (e) {
       setError('Error loading chats');
     } finally {
