@@ -1,5 +1,5 @@
 import React, { Suspense, lazy, useEffect } from "react";
-import { Routes, Route, Outlet } from "react-router-dom";
+import { Routes, Route, Outlet, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import "./App.css";
 import "./assets/styles/main.css";
@@ -32,18 +32,33 @@ const PageLoading = () => (
 );
 
 // Layout for public site pages (has Navbar + Footer)
-const SiteLayout = () => (
-  <div className="relative bg-gradient-to-b from-sca-purple-dark via-sca-purple to-sca-purple-dark text-white overflow-x-hidden min-h-screen">
-    <ParticleBackground />
-    <div className="sticky top-0 z-50">
-      <Navbar />
+const SiteLayout = () => {
+  const navigate = useNavigate();
+  const loc = useLocation();
+  useEffect(() => {
+    // If host resets path to '/', bounce back to last dashboard page if user has a saved session
+    if (loc.pathname === '/') {
+      try {
+        const saved = localStorage.getItem('frc7598_last_dashboard_route');
+        const auth = localStorage.getItem('frc7598_auth');
+        const isDash = saved && (saved.startsWith('/channels') || saved.startsWith('/messages') || saved.startsWith('/calendar') || saved.startsWith('/planner') || saved.startsWith('/profile') || saved.startsWith('/admin'));
+        if (auth && isDash) navigate(saved, { replace: true });
+      } catch {}
+    }
+  }, [loc.pathname, navigate]);
+  return (
+    <div className="relative bg-gradient-to-b from-sca-purple-dark via-sca-purple to-sca-purple-dark text-white overflow-x-hidden min-h-screen">
+      <ParticleBackground />
+      <div className="sticky top-0 z-50">
+        <Navbar />
+      </div>
+      <main className="relative pt-16">
+        <Outlet />
+      </main>
+      <Footer />
     </div>
-    <main className="relative pt-16">
-      <Outlet />
-    </main>
-    <Footer />
-  </div>
-);
+  );
+};
 
 // Layout for dashboard pages (no Navbar/Footer)
 const DashboardLayout = () => {

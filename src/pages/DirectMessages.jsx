@@ -784,7 +784,7 @@ const DirectMessages = () => {
           <div ref={messagesEndRef} />
         </div>
 
-        <div className="bg-black px-2 pb-safe sticky bottom-0 md:relative md:bottom-auto">
+        <div className="bg-black px-2 pb-safe sticky bottom-0 left-0 right-0 md:relative md:bottom-auto">
           <div className="p-4 border-t border-gray-700">
             {replyTo && (
               <div className="mb-2 flex items-center gap-2 rounded-md border border-gray-700 bg-gray-900 p-2">
@@ -801,7 +801,7 @@ const DirectMessages = () => {
               <button type="button" onClick={handleAttachClick} className="bg-gray-800 hover:bg-gray-700 text-white rounded-lg px-3">
                 <PaperclipIcon className="w-5 h-5" />
               </button>
-              <input type="text" ref={inputRef} value={messageInput} onChange={(e) => setMessageInput(e.target.value)} placeholder={selectedChat ? `Message ${selectedChat.type === 'group' ? selectedChat.name : selectedChat.username}` : 'Select a chat...'} className="flex-1 bg-gray-800 text-gray-100 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-sca-purple border border-gray-600" disabled={!selectedChat} />
+              <input type="text" ref={inputRef} value={messageInput} onChange={(e) => setMessageInput(e.target.value)} placeholder={selectedChat ? `Message ${selectedChat.type === 'group' ? selectedChat.name : selectedChat.username}` : 'Select a chat...'} className="flex-1 min-w-0 bg-gray-800 text-gray-100 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-sca-purple border border-gray-600" disabled={!selectedChat} />
               <button type="submit" className="bg-sca-purple hover:bg-sca-purple/80 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed" disabled={!selectedChat || !messageInput.trim()}>
                 <span className="hidden sm:inline">Send</span>
                 <svg className="w-5 h-5 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
