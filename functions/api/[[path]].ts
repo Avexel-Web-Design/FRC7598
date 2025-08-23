@@ -8,6 +8,8 @@ import admin from './admin';
 import calendar from './calendar';
 import tasks from './tasks';
 import profile from './profile';
+import devices from './devices';
+import uploads from './uploads';
 
 const app = new Hono().basePath('/api');
 
@@ -22,6 +24,8 @@ app.route('/admin', admin);
 app.route('/calendar', calendar);
 app.route('/tasks', tasks);
 app.route('/profile', profile);
+app.route('/devices', devices);
+app.route('/uploads', uploads);
 
 app.get('/health', (c) => c.json({ ok: true, env: 'pages', time: new Date().toISOString() }));
 

@@ -55,3 +55,21 @@ Troubleshooting
 - 401 Invalid credentials: verify user exists and password is correct
 - 500 on auth endpoints: ensure DB binding (DB) and JWT_SECRET are configured in Pages project settings
 - CORS: CORS is open (*) via middleware; tighten as needed for your domain
+
+Additional (Mobile App Support)
+
+Database
+- Run migrations in `migrations/` sequentially against your D1 database.
+- New: `device_tokens` table to store push tokens (user_id, token PK, platform, updated_at).
+
+API endpoints
+- POST `/api/devices` — Register/update a device token. Body: `{ user_id, token, platform? }`.
+- DELETE `/api/devices` — Remove a device token. Body: `{ token }`.
+- POST `/api/uploads/image` — Temporary stub that echoes a data URL back for base64 images. Replace with Cloudflare R2 in production.
+
+Push notifications (outline)
+- Create a Firebase project and Android app (package id), add FCM.
+- Store a service-account credential securely (Cloudflare secret). Use a Worker utility to call FCM HTTP v1 API and send to tokens from `device_tokens`.
+
+Uploads (outline)
+- Use Cloudflare R2 to store images. Return public URLs consumed by the app (messages, profile avatars).

@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { ensurePushRegistered } from '@/utils/push';
 
 const AuthContext = createContext(null);
 
@@ -25,6 +26,8 @@ export function AuthProvider({ children }) {
     setUser(u);
     setToken(t);
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ user: u, token: t }));
+    // If running in Capacitor, register for push now
+    ensurePushRegistered();
   };
 
   // Merge updates into current user and persist

@@ -3886,6 +3886,110 @@ profile.post("/change-password", async (c) => {
   }
 });
 var profile_default = profile;
+var devices = new Hono2();
+async function getAuthUserId(c) {
+  const auth = c.req.header("Authorization");
+  if (!auth || !auth.startsWith("Bearer "))
+    return null;
+  try {
+    const token = auth.split(" ")[1];
+    const decoded = await verify2(token, c.env.JWT_SECRET);
+    return Number(decoded.id);
+  } catch {
+    return null;
+  }
+}
+__name(getAuthUserId, "getAuthUserId");
+__name2(getAuthUserId, "getAuthUserId");
+devices.post("/", async (c) => {
+  try {
+    const userId = await getAuthUserId(c);
+    if (!userId)
+      return c.json({ error: "Unauthorized" }, 401);
+    const body = await c.req.json();
+    const token = (body.token || "").trim();
+    const platform = (body.platform || "android").toLowerCase();
+    if (!token)
+      return c.json({ error: "token is required" }, 400);
+    await c.env.DB.prepare(`
+      CREATE TABLE IF NOT EXISTS device_tokens (
+        user_id INTEGER NOT NULL,
+        token TEXT PRIMARY KEY,
+        platform TEXT,
+        updated_at TEXT
+      );
+    `).run();
+    const now = (/* @__PURE__ */ new Date()).toISOString();
+    await c.env.DB.prepare(`
+      INSERT INTO device_tokens (user_id, token, platform, updated_at)
+      VALUES (?, ?, ?, ?)
+      ON CONFLICT(token) DO UPDATE SET user_id = excluded.user_id, platform = excluded.platform, updated_at = excluded.updated_at
+    `).bind(userId, token, platform, now).run();
+    return c.json({ ok: true });
+  } catch (e) {
+    return c.json({ error: "Failed to save device token" }, 500);
+  }
+});
+devices.delete("/", async (c) => {
+  try {
+    const userId = await getAuthUserId(c);
+    if (!userId)
+      return c.json({ error: "Unauthorized" }, 401);
+    const body = await c.req.json();
+    const token = (body.token || "").trim();
+    if (!token)
+      return c.json({ error: "token is required" }, 400);
+    await c.env.DB.prepare("DELETE FROM device_tokens WHERE token = ? AND user_id = ?").bind(token, userId).run();
+    return c.json({ ok: true });
+  } catch (e) {
+    return c.json({ error: "Failed to remove device token" }, 500);
+  }
+});
+var devices_default = devices;
+var uploads = new Hono2();
+uploads.post("/image", async (c) => {
+  try {
+    const body = await c.req.json();
+    const { dataBase64, filename = "image", contentType = "image/jpeg" } = body || {};
+    if (!dataBase64)
+      return c.json({ error: "dataBase64 is required" }, 400);
+    try {
+      if (c.env.R2_BUCKET) {
+        const key = `uploads/${Date.now()}-${Math.random().toString(36).slice(2)}-${filename}`.replace(/\s+/g, "-");
+        const bytes = Uint8Array.from(atob(dataBase64), (c2) => c2.charCodeAt(0));
+        await c.env.R2_BUCKET.put(key, bytes, { httpMetadata: { contentType } });
+        const encodedKey = encodeURIComponent(key);
+        return c.json({ ok: true, url: `/api/uploads/r2/${encodedKey}`, key, contentType, storage: "r2" });
+      }
+    } catch (e) {
+    }
+    const url = `data:${contentType};base64,${dataBase64}`;
+    return c.json({ ok: true, url, filename, contentType, storage: "data-url" });
+  } catch (e) {
+    return c.json({ error: "Upload failed" }, 500);
+  }
+});
+uploads.get("/r2/*", async (c) => {
+  try {
+    if (!c.env.R2_BUCKET)
+      return c.json({ error: "Storage not configured" }, 501);
+    const key = decodeURIComponent(c.req.path.replace(/^.*\/r2\//, ""));
+    if (!key)
+      return c.json({ error: "Missing key" }, 400);
+    const obj = await c.env.R2_BUCKET.get(key);
+    if (!obj)
+      return c.json({ error: "Not found" }, 404);
+    const headers = new Headers();
+    const ct = obj.httpMetadata?.contentType || "application/octet-stream";
+    headers.set("Content-Type", ct);
+    if (obj.httpMetadata?.cacheControl)
+      headers.set("Cache-Control", obj.httpMetadata.cacheControl);
+    return new Response(obj.body, { headers, status: 200 });
+  } catch (e) {
+    return c.json({ error: "Failed to fetch object" }, 500);
+  }
+});
+var uploads_default = uploads;
 var app3 = new Hono2().basePath("/api");
 app3.use("*", corsMiddleware);
 app3.use("*", errorMiddleware);
@@ -3896,6 +4000,8 @@ app3.route("/admin", admin_default);
 app3.route("/calendar", calendar_default);
 app3.route("/tasks", tasks_default);
 app3.route("/profile", profile_default);
+app3.route("/devices", devices_default);
+app3.route("/uploads", uploads_default);
 app3.get("/health", (c) => c.json({ ok: true, env: "pages", time: (/* @__PURE__ */ new Date()).toISOString() }));
 app3.get("/", (c) => c.json({
   message: "FRC7598 API",

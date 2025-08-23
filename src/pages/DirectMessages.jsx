@@ -5,7 +5,7 @@ import frcAPI from '@/utils/frcApiClient';
 import { generateColor } from '@/utils/color';
 import NebulaLoader from '@/components/common/NebulaLoader';
 import NotificationDot from '@/components/common/NotificationDot';
-import { SmilePlus, Trash2, Reply as ReplyIcon, Copy as CopyIcon, Info as InfoIcon } from 'lucide-react';
+import { SmilePlus, Trash2, Reply as ReplyIcon, Copy as CopyIcon, Info as InfoIcon, Paperclip as PaperclipIcon, Image as ImageIcon } from 'lucide-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faThumbsUp, faThumbsDown, faFaceLaughSquint, faCircleCheck as faCircleCheckRegular } from '@fortawesome/free-regular-svg-icons';
 import { faExclamation, faQuestion, faCircleCheck as faCircleCheckSolid } from '@fortawesome/free-solid-svg-icons';
@@ -25,6 +25,7 @@ const DirectMessages = () => {
 
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+  const fileInputRef = useRef(null);
   const prevSelectedChatRef = useRef(null);
 
   const [pickerOpenFor, setPickerOpenFor] = useState(null);
@@ -319,6 +320,46 @@ const DirectMessages = () => {
   const copyToClipboard = async (text) => {
     try { if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(text); return true; } } catch {}
     try { const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.focus(); ta.select(); const ok = document.execCommand('copy'); document.body.removeChild(ta); return ok; } catch { return false; }
+  };
+
+  const readFileAsBase64 = (file) => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const res = reader.result;
+      if (typeof res === 'string') {
+        const comma = res.indexOf(',');
+        resolve({ base64: res.substring(comma + 1), contentType: file.type || 'application/octet-stream' });
+      } else {
+        reject(new Error('Unsupported result type'));
+      }
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+
+  const handleAttachClick = () => fileInputRef.current?.click();
+
+  const handleFileSelected = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file || !user || !selectedChat) return;
+    try {
+      const { base64, contentType } = await readFileAsBase64(file);
+      const res = await frcAPI.post('/uploads/image', { dataBase64: base64, contentType, filename: file.name || 'image' });
+      if (res.ok) {
+        const { url } = await res.json();
+        // Send as an image message with a special prefix to render as image
+        const endpoint = selectedChat.type === 'dm'
+          ? `/chat/messages/dm/${getConversationId(user.id, selectedChat.id)}?user_id=${user.id}`
+          : `/chat/messages/${selectedChat.id}?user_id=${user.id}`;
+        await frcAPI.post(endpoint, { content: `::image::${url}`, sender_id: user.id });
+        const upd = await frcAPI.get(endpoint);
+        if (upd.ok) setMessages(sortAsc(await upd.json()));
+      }
+    } catch {
+      setError('Failed to attach image');
+    } finally {
+      e.target.value = '';
+    }
   };
 
   const toggleReaction = async (messageId, key) => {
@@ -654,7 +695,11 @@ const DirectMessages = () => {
                         )}
                         {!isOwn && isFirst && isGroup && (<div className="text-xs font-semibold mb-1 opacity-90">{m.sender_username}</div>)}
                         <div className={`whitespace-pre-wrap break-words ${isOwn ? 'text-right' : ''}`}>
-                          <span>{parsed.text}</span>
+                          {parsed.text.startsWith('::image::') ? (
+                            <img src={parsed.text.replace('::image::','')} alt="attachment" className="max-w-full rounded-lg border border-white/10" />
+                          ) : (
+                            <span>{parsed.text}</span>
+                          )}
                           {isLast && (
                             <span className={`ml-2 text-[10px] ${isOwn ? 'text-white/80' : 'text-gray-400'} whitespace-nowrap align-baseline`}>
                               {formatTs(m.timestamp)}
@@ -752,6 +797,10 @@ const DirectMessages = () => {
               </div>
             )}
             <form onSubmit={handleSend} className="flex space-x-2">
+              <input type="file" accept="image/*" ref={fileInputRef} className="hidden" onChange={handleFileSelected} />
+              <button type="button" onClick={handleAttachClick} className="bg-gray-800 hover:bg-gray-700 text-white rounded-lg px-3">
+                <PaperclipIcon className="w-5 h-5" />
+              </button>
               <input type="text" ref={inputRef} value={messageInput} onChange={(e) => setMessageInput(e.target.value)} placeholder={selectedChat ? `Message ${selectedChat.type === 'group' ? selectedChat.name : selectedChat.username}` : 'Select a chat...'} className="flex-1 bg-gray-800 text-gray-100 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-sca-purple border border-gray-600" disabled={!selectedChat} />
               <button type="submit" className="bg-sca-purple hover:bg-sca-purple/80 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed" disabled={!selectedChat || !messageInput.trim()}>
                 <span className="hidden sm:inline">Send</span>
