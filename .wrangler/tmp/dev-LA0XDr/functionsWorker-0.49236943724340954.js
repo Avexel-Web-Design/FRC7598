@@ -2222,6 +2222,36 @@ async function getMessages(c) {
     const { results } = await c.env.DB.prepare(
       "SELECT messages.*, users.full_name as sender_username, users.avatar_color as sender_avatar_color FROM messages JOIN users ON messages.sender_id = users.id WHERE channel_id = ? ORDER BY timestamp ASC"
     ).bind(channelId).all();
+    try {
+      const ids = results.map((r) => r.id);
+      if (ids.length > 0) {
+        const placeholders = ids.map(() => "?").join(",");
+        const reactRes = await c.env.DB.prepare(
+          `SELECT mr.message_id, mr.user_id, mr.reaction_key, u.full_name as username
+					 FROM message_reactions mr JOIN users u ON u.id = mr.user_id
+					 WHERE mr.message_id IN (${placeholders})`
+        ).bind(...ids).all();
+        const byMsg = /* @__PURE__ */ new Map();
+        for (const r of reactRes.results || []) {
+          const arr = byMsg.get(r.message_id) || [];
+          arr.push({ user_id: Number(r.user_id), username: String(r.username), reaction_key: String(r.reaction_key) });
+          byMsg.set(r.message_id, arr);
+        }
+        for (const m of results) {
+          const arr = byMsg.get(Number(m.id)) || [];
+          const counts = {};
+          const mine = [];
+          for (const r of arr) {
+            counts[r.reaction_key] = (counts[r.reaction_key] || 0) + 1;
+            if (userId && r.user_id === userId)
+              mine.push(r.reaction_key);
+          }
+          m.reaction_counts = counts;
+          m.my_reactions = mine;
+        }
+      }
+    } catch {
+    }
     let channelReadStatuses = [];
     try {
       const readRes = await c.env.DB.prepare(
@@ -2377,6 +2407,36 @@ async function getDMMessages(c) {
     const { results } = await c.env.DB.prepare(
       "SELECT messages.*, users.full_name as sender_username, users.avatar_color as sender_avatar_color FROM messages JOIN users ON messages.sender_id = users.id WHERE channel_id = ? ORDER BY timestamp ASC"
     ).bind(dmId).all();
+    try {
+      const ids = results.map((r) => r.id);
+      if (ids.length > 0) {
+        const placeholders = ids.map(() => "?").join(",");
+        const reactRes = await c.env.DB.prepare(
+          `SELECT mr.message_id, mr.user_id, mr.reaction_key, u.full_name as username
+					 FROM message_reactions mr JOIN users u ON u.id = mr.user_id
+					 WHERE mr.message_id IN (${placeholders})`
+        ).bind(...ids).all();
+        const byMsg = /* @__PURE__ */ new Map();
+        for (const r of reactRes.results || []) {
+          const arr = byMsg.get(r.message_id) || [];
+          arr.push({ user_id: Number(r.user_id), username: String(r.username), reaction_key: String(r.reaction_key) });
+          byMsg.set(r.message_id, arr);
+        }
+        for (const m of results) {
+          const arr = byMsg.get(Number(m.id)) || [];
+          const counts = {};
+          const mine = [];
+          for (const r of arr) {
+            counts[r.reaction_key] = (counts[r.reaction_key] || 0) + 1;
+            if (userId && r.user_id === userId)
+              mine.push(r.reaction_key);
+          }
+          m.reaction_counts = counts;
+          m.my_reactions = mine;
+        }
+      }
+    } catch {
+    }
     let dmReadStatuses = [];
     try {
       const readRes = await c.env.DB.prepare(
@@ -2943,6 +3003,52 @@ chat.post("/messages/:channelId", sendMessage);
 chat.delete("/messages/:messageId", deleteMessage);
 chat.get("/messages/dm/:dmId", getDMMessages);
 chat.post("/messages/dm/:dmId", sendDMMessage);
+chat.post("/messages/:messageId/reactions/:reactionKey/toggle", async (c) => {
+  const { messageId, reactionKey } = c.req.param();
+  const userIdStr = c.req.query("user_id");
+  const userId = userIdStr ? Number(userIdStr) : void 0;
+  if (!userId)
+    return c.json({ error: "User ID is required" }, 400);
+  try {
+    const msg = await c.env.DB.prepare("SELECT channel_id FROM messages WHERE id = ?").bind(messageId).first();
+    if (!msg)
+      return c.json({ error: "Message not found" }, 404);
+    const channelId = msg.channel_id;
+    if (channelId && !channelId.startsWith("dm_")) {
+      const chan = await c.env.DB.prepare("SELECT is_private FROM channels WHERE id = ?").bind(channelId).first();
+      if (!chan)
+        return c.json({ error: "Channel not found" }, 404);
+      const isPrivate = chan.is_private === 1;
+      if (isPrivate) {
+        const adm = await c.env.DB.prepare("SELECT is_admin FROM users WHERE id = ?").bind(userId).first();
+        const isAdmin = !!adm && adm.is_admin === 1;
+        if (!isAdmin) {
+          const mem = await c.env.DB.prepare("SELECT 1 FROM channel_members WHERE channel_id = ? AND user_id = ?").bind(channelId, userId).first();
+          if (!mem)
+            return c.json({ error: "Forbidden" }, 403);
+        }
+      }
+    } else if (channelId && channelId.startsWith("dm_")) {
+      const parts = channelId.split("_");
+      if (parts.length !== 3)
+        return c.json({ error: "Invalid DM" }, 400);
+      const u1 = parseInt(parts[1]);
+      const u2 = parseInt(parts[2]);
+      if (userId !== u1 && userId !== u2)
+        return c.json({ error: "Forbidden" }, 403);
+    }
+    const existing = await c.env.DB.prepare("SELECT 1 FROM message_reactions WHERE message_id = ? AND user_id = ? AND reaction_key = ?").bind(messageId, userId, reactionKey).first();
+    if (existing) {
+      await c.env.DB.prepare("DELETE FROM message_reactions WHERE message_id = ? AND user_id = ? AND reaction_key = ?").bind(messageId, userId, reactionKey).run();
+      return c.json({ toggled: "off" });
+    } else {
+      await c.env.DB.prepare("INSERT INTO message_reactions (message_id, user_id, reaction_key, created_at) VALUES (?, ?, ?, ?)").bind(messageId, userId, reactionKey, (/* @__PURE__ */ new Date()).toISOString()).run();
+      return c.json({ toggled: "on" });
+    }
+  } catch (e) {
+    return c.json({ error: "Failed to toggle reaction" }, 500);
+  }
+});
 chat.get("/channels", getChannels);
 chat.post("/channels", createChannel);
 chat.put("/channels/:channelId", updateChannel);

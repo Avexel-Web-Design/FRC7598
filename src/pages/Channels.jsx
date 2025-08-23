@@ -260,24 +260,67 @@ const Channels = () => {
     }
   };
 
-  const [reactions, setReactions] = useState({});
-  const [userReactions, setUserReactions] = useState({});
-  const toggleReaction = (messageId, emoji) => {
-    if (!emoji) return;
-    setReactions(prev => {
-      const msgMap = { ...(prev[messageId] || {}) };
-      const current = msgMap[emoji] || 0;
-      const has = !!userReactions[messageId]?.has(emoji);
-      const next = Math.max(0, current + (has ? -1 : 1));
-      if (next === 0) delete msgMap[emoji]; else msgMap[emoji] = next;
-      return { ...prev, [messageId]: msgMap };
-    });
-    setUserReactions(prev => {
-      const setFor = new Set(prev[messageId] || []);
-      if (setFor.has(emoji)) setFor.delete(emoji); else setFor.add(emoji);
-      return { ...prev, [messageId]: setFor };
-    });
+  const toggleReaction = async (messageId, key) => {
+    if (!key || !user) return;
+    // optimistic update
+    setMessages(prev => prev.map(m => {
+      if (m.id !== messageId) return m;
+      const counts = { ...(m.reaction_counts || {}) };
+      const mine = new Set(m.my_reactions || []);
+      const has = mine.has(key);
+      if (has) {
+        const next = (counts[key] || 0) - 1;
+        if (next <= 0) delete counts[key]; else counts[key] = next;
+        mine.delete(key);
+      } else {
+        counts[key] = (counts[key] || 0) + 1;
+        mine.add(key);
+      }
+      return { ...m, reaction_counts: counts, my_reactions: Array.from(mine) };
+    }));
     setPickerOpenFor(null);
+    try {
+      const resp = await frcAPI.post(`/chat/messages/${messageId}/reactions/${key}/toggle?user_id=${user.id}`);
+      if (!resp.ok) {
+        // revert on failure
+        setMessages(prev => prev.map(m => {
+          if (m.id !== messageId) return m;
+          const counts = { ...(m.reaction_counts || {}) };
+          const mine = new Set(m.my_reactions || []);
+          const has = mine.has(key);
+          if (has) {
+            // we had added in optimistic; remove now
+            const next = (counts[key] || 0) - 1;
+            if (next <= 0) delete counts[key]; else counts[key] = next;
+            mine.delete(key);
+          } else {
+            // we had removed in optimistic; add back
+            counts[key] = (counts[key] || 0) + 1;
+            mine.add(key);
+          }
+          return { ...m, reaction_counts: counts, my_reactions: Array.from(mine) };
+        }));
+        setError('Failed to toggle reaction');
+      }
+    } catch {
+      // revert on error
+      setMessages(prev => prev.map(m => {
+        if (m.id !== messageId) return m;
+        const counts = { ...(m.reaction_counts || {}) };
+        const mine = new Set(m.my_reactions || []);
+        const has = mine.has(key);
+        if (has) {
+          const next = (counts[key] || 0) - 1;
+          if (next <= 0) delete counts[key]; else counts[key] = next;
+          mine.delete(key);
+        } else {
+          counts[key] = (counts[key] || 0) + 1;
+          mine.add(key);
+        }
+        return { ...m, reaction_counts: counts, my_reactions: Array.from(mine) };
+      }));
+      setError('Failed to toggle reaction');
+    }
   };
 
   const loadUsers = async () => {
@@ -638,10 +681,10 @@ const Channels = () => {
                               )}
                             </span>
                           )}
-                          {Object.keys(reactions[message.id] || {}).length > 0 && (
+                          {Object.keys(message.reaction_counts || {}).length > 0 && (
                             <div className={`mt-1 flex flex-wrap gap-1 ${isOwn ? 'justify-end' : 'justify-start'}`}>
-                              {Object.entries(reactions[message.id]).map(([key, count]) => (
-                                <button key={key} type="button" onClick={() => toggleReaction(message.id, key)} className={`px-1.5 py-0.5 rounded-full text-xs border transition-colors ${userReactions[message.id]?.has(key) ? (isOwn ? 'bg-white/20 border-white/40' : 'bg-white/10 border-white/20') : (isOwn ? 'bg-black/10 border-white/20' : 'bg-black/20 border-white/10')}`} title="Toggle reaction">
+                              {Object.entries(message.reaction_counts || {}).map(([key, count]) => (
+                                <button key={key} type="button" onClick={() => toggleReaction(message.id, key)} className={`px-1.5 py-0.5 rounded-full text-xs border transition-colors ${(message.my_reactions || []).includes(key) ? (isOwn ? 'bg-white/20 border-white/40' : 'bg-white/10 border-white/20') : (isOwn ? 'bg-black/10 border-white/20' : 'bg-black/20 border-white/10')}`} title="Toggle reaction">
                                   <FontAwesomeIcon icon={iconMap[key]} className="w-3.5 h-3.5 mr-1 inline-block" />
                                   <span className="tabular-nums">{count}</span>
                                 </button>

@@ -17,7 +17,7 @@ const Item = React.forwardRef(({ to, title, icon: Icon, showDot }, ref) => {
         <>
           <Icon
             className={`w-5 h-5 transition-colors ${
-              isActive ? 'text-white' : 'text-gray-400 group-hover:text-sca-gold'
+              isActive ? 'text-white group-hover:text-sca-gold' : 'text-gray-400 group-hover:text-sca-gold'
             }`}
           />
           {showDot ? (

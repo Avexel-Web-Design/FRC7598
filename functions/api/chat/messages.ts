@@ -29,6 +29,36 @@ export async function getMessages(c: Context): Promise<Response> {
 			'SELECT messages.*, users.full_name as sender_username, users.avatar_color as sender_avatar_color FROM messages JOIN users ON messages.sender_id = users.id WHERE channel_id = ? ORDER BY timestamp ASC'
 		).bind(channelId).all();
 
+		// Attach reactions per message
+		try {
+			const ids = (results as any[]).map(r => r.id);
+			if (ids.length > 0) {
+				const placeholders = ids.map(() => '?').join(',');
+				const reactRes = await c.env.DB.prepare(
+					`SELECT mr.message_id, mr.user_id, mr.reaction_key, u.full_name as username
+					 FROM message_reactions mr JOIN users u ON u.id = mr.user_id
+					 WHERE mr.message_id IN (${placeholders})`
+				).bind(...ids).all();
+				const byMsg = new Map<number, Array<{ user_id: number; username: string; reaction_key: string }>>();
+				for (const r of (reactRes.results as any[]) || []) {
+					const arr = byMsg.get((r as any).message_id) || [];
+					arr.push({ user_id: Number((r as any).user_id), username: String((r as any).username), reaction_key: String((r as any).reaction_key) });
+					byMsg.set((r as any).message_id, arr);
+				}
+				for (const m of results as any[]) {
+					const arr = byMsg.get(Number(m.id)) || [];
+					const counts: Record<string, number> = {};
+					const mine: string[] = [];
+					for (const r of arr) {
+						counts[r.reaction_key] = (counts[r.reaction_key] || 0) + 1;
+						if (userId && r.user_id === userId) mine.push(r.reaction_key);
+					}
+					(m as any).reaction_counts = counts;
+					(m as any).my_reactions = mine;
+				}
+			}
+		} catch {}
+
 		// Fetch read status for this channel to compute readers per message
 		let channelReadStatuses: Array<{ user_id: number; last_read_timestamp: string; username: string }> = [];
 		try {
@@ -171,6 +201,36 @@ export async function getDMMessages(c: Context): Promise<Response> {
 		const { results } = await c.env.DB.prepare(
 			'SELECT messages.*, users.full_name as sender_username, users.avatar_color as sender_avatar_color FROM messages JOIN users ON messages.sender_id = users.id WHERE channel_id = ? ORDER BY timestamp ASC'
 		).bind(dmId).all();
+
+		// Attach reactions per message
+		try {
+			const ids = (results as any[]).map(r => r.id);
+			if (ids.length > 0) {
+				const placeholders = ids.map(() => '?').join(',');
+				const reactRes = await c.env.DB.prepare(
+					`SELECT mr.message_id, mr.user_id, mr.reaction_key, u.full_name as username
+					 FROM message_reactions mr JOIN users u ON u.id = mr.user_id
+					 WHERE mr.message_id IN (${placeholders})`
+				).bind(...ids).all();
+				const byMsg = new Map<number, Array<{ user_id: number; username: string; reaction_key: string }>>();
+				for (const r of (reactRes.results as any[]) || []) {
+					const arr = byMsg.get((r as any).message_id) || [];
+					arr.push({ user_id: Number((r as any).user_id), username: String((r as any).username), reaction_key: String((r as any).reaction_key) });
+					byMsg.set((r as any).message_id, arr);
+				}
+				for (const m of results as any[]) {
+					const arr = byMsg.get(Number(m.id)) || [];
+					const counts: Record<string, number> = {};
+					const mine: string[] = [];
+					for (const r of arr) {
+						counts[r.reaction_key] = (counts[r.reaction_key] || 0) + 1;
+						if (userId && r.user_id === userId) mine.push(r.reaction_key);
+					}
+					(m as any).reaction_counts = counts;
+					(m as any).my_reactions = mine;
+				}
+			}
+		} catch {}
 
 		let dmReadStatuses: Array<{ user_id: number; last_read_timestamp: string; username: string }> = [];
 		try {
