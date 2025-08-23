@@ -10,6 +10,7 @@ import tasks from './tasks';
 import profile from './profile';
 import devices from './devices';
 import uploads from './uploads';
+import push from './push';
 
 const app = new Hono().basePath('/api');
 
@@ -26,6 +27,7 @@ app.route('/tasks', tasks);
 app.route('/profile', profile);
 app.route('/devices', devices);
 app.route('/uploads', uploads);
+app.route('/push', push);
 
 app.get('/health', (c) => c.json({ ok: true, env: 'pages', time: new Date().toISOString() }));
 
