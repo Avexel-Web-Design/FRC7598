@@ -32,7 +32,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-[60vh] flex items-center justify-center px-4">
+    <div className="min-h-[60vh] flex items-center justify-center px-4 mt-12">
       <div className="w-full max-w-md bg-white/10 border border-sca-gold/20 rounded-2xl p-6 shadow-xl">
         <h1 className="text-2xl font-semibold mb-1">Member Login</h1>
         <p className="text-white/70 mb-6">Use your full name and password</p>
