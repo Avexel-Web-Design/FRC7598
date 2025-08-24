@@ -1,5 +1,6 @@
 // src/components/Footer.jsx
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -19,7 +20,7 @@ const Footer = () => {
           {/* Copyright text */}
           <div className="flex items-center gap-4 mb-4 md:mb-0 text-xs">
             <span className="text-gray-500">&copy; {currentYear} SCA Constellations - FRC Team 7598</span>
-            <a href="/privacy" className="text-gray-400 hover:text-[#d3b840] transition-colors">Privacy</a>
+            <Link to="/privacy" className="text-gray-400 hover:text-[#d3b840] transition-colors">Privacy</Link>
           </div>
           
           {/* Social links using Font Awesome icons */}
