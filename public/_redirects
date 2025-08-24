@@ -1,13 +1,2 @@
-# Serve privacy policy at the new path
-/privacypolicy /privacy/index.html 200
-/privacypolicy/ /privacy/index.html 200
-/privacypolicy/* /privacy/index.html 200
-
-# Redirect legacy paths to the new location
-/privacy /privacypolicy 301
-/privacy/ /privacypolicy 301
-/privacy/* /privacypolicy 301
-/privacy.html /privacypolicy 301
-
-# SPA fallback
+/privacy   /privacy.html 200
 /* /index.html 200

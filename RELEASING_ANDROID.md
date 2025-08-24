@@ -36,11 +36,11 @@ Output: `android/app/build/outputs/bundle/release/app-release.aab`
 
 - Create app → fill in details
 - Upload `.aab` to Internal testing release
-- Complete Store Listing and App Content (Privacy policy URL `/privacy.html`, Data safety, Content rating)
+- Complete Store Listing and App Content (Data safety, Content rating)
 - Rollout to testers; then promote to Production
 
 ## 5) Troubleshooting
 
 - Upload rejected: bump `versionCode`
 - FCM not working: check `google-services.json` matches `applicationId`
-- Missing privacy policy: `public/privacy.html`
+- Note: The privacy policy is maintained in the repository as `PRIVACY-POLICY.md`.
