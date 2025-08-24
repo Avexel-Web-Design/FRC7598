@@ -22,8 +22,15 @@ const Footer = () => {
             <span className="text-gray-500">&copy; {currentYear} SCA Constellations - FRC Team 7598</span>
           </div>
           
-          {/* Social links using Font Awesome icons */}
-          <div className="flex flex-wrap justify-center gap-4">
+          {/* Links */}
+          <div className="flex flex-wrap justify-center gap-4 items-center">
+            <a
+              href="/privacy"
+              className="text-gray-400 hover:text-[#d3b840] transition-colors text-xs md:text-sm"
+            >
+              Privacy Policy
+            </a>
+            {/* Social links using Font Awesome icons */}
             <a 
               href="https://www.instagram.com/scaconstellations/" 
               target="_blank" 
