@@ -14,7 +14,6 @@ const Team = lazy(() => import("./pages/Team"));
 const Sponsors = lazy(() => import("./pages/Sponsors"));
 const Schedule = lazy(() => import("./pages/Schedule"));
 const Photos = lazy(() => import("./pages/Photos"));
-const Privacy = lazy(() => import("./pages/Privacy"));
 const Login = lazy(() => import("./pages/Login"));
 const Channels = lazy(() => import("./pages/Channels"));
 const DirectMessages = lazy(() => import("./pages/DirectMessages"));
@@ -137,7 +136,7 @@ function App() {
           <Route path="/sponsors" element={<Sponsors />} />
           <Route path="/schedule" element={<Schedule />} />
           <Route path="/photos" element={<Photos />} />
-          <Route path="/privacy" element={<Privacy />} />
+          { /* Privacy is served as a static page under /privacy via public/_redirects */ }
           <Route path="/login" element={<Login />} />
         </Route>
         {/* Dashboard routes (no Navbar/Footer) */}
