@@ -46,7 +46,7 @@ const SiteLayout = () => {
       } catch {}
     }
   }, [loc.pathname, navigate]);
-  const hasNavbar = !loc.pathname.startsWith('/privacy');
+  const hasNavbar = !(loc.pathname.startsWith('/privacy') || loc.pathname.startsWith('/privacypolicy'));
   return (
     <div className="relative bg-gradient-to-b from-sca-purple-dark via-sca-purple to-sca-purple-dark text-white overflow-x-hidden min-h-screen">
       <ParticleBackground />
@@ -136,7 +136,7 @@ function App() {
           <Route path="/sponsors" element={<Sponsors />} />
           <Route path="/schedule" element={<Schedule />} />
           <Route path="/photos" element={<Photos />} />
-          { /* Privacy is served as a static page under /privacy via public/_redirects */ }
+          { /* Privacy is served as a static page under /privacypolicy via public/_redirects */ }
           <Route path="/login" element={<Login />} />
         </Route>
         {/* Dashboard routes (no Navbar/Footer) */}
