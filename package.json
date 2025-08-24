@@ -23,6 +23,7 @@
     },
     "devDependencies": {
         "@capacitor/android": "^7.4.3",
+        "@capacitor/assets": "^3.0.5",
         "@capacitor/cli": "^7.4.3",
         "@cloudflare/workers-types": "^4.20250204.0",
         "@tailwindcss/aspect-ratio": "^0.4.2",
@@ -40,6 +41,8 @@
         "start": "vite",
         "build": "vite build",
         "preview": "vite preview",
+        "android:bundle": "cd android && gradlew.bat bundleRelease",
+        "android:clean": "cd android && gradlew.bat clean",
         "dev:pages": "wrangler pages dev dist",
         "migrate:local": "wrangler d1 migrations apply frc7598 --local",
         "predeploy": "npm run build",
