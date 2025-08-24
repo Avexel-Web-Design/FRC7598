@@ -47,13 +47,16 @@ const SiteLayout = () => {
       } catch {}
     }
   }, [loc.pathname, navigate]);
+  const hasNavbar = !loc.pathname.startsWith('/privacy');
   return (
     <div className="relative bg-gradient-to-b from-sca-purple-dark via-sca-purple to-sca-purple-dark text-white overflow-x-hidden min-h-screen">
       <ParticleBackground />
-      <div className="sticky top-0 z-50">
-        <Navbar />
-      </div>
-      <main className="relative pt-16">
+      {hasNavbar && (
+        <div className="sticky top-0 z-50">
+          <Navbar />
+        </div>
+      )}
+      <main className={`relative ${hasNavbar ? 'pt-24 md:pt-28' : 'pt-0'}`}>
         <Outlet />
       </main>
       <Footer />
