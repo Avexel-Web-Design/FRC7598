@@ -55,8 +55,8 @@ const Contact = () => {
         <div className="max-w-6xl mx-auto">
           {/* Section header with staggered reveal */}
           <div className="text-center mb-16 stagger-reveal">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-              <span className="bg-gradient-to-r from-[#471a67] to-[#d3b840] bg-clip-text text-transparent">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
+              <span className="text-[#471a67]">
                 Contact Us
               </span>
             </h2>
@@ -70,7 +70,7 @@ const Contact = () => {
             {/* Contact form with modern card styling */}
             <div className="md:col-span-3 reveal">
               <div className="modern-card p-6 md:p-8">
-                <h3 className="text-2xl font-bold text-gradient mb-6">Get in Touch</h3>
+                <h3 className="text-2xl font-bold text-[#471a67] mb-6">Get in Touch</h3>
                 
                 {formSubmitted ? (
                   <div className="glass-panel border border-[#d3b840]/30 rounded-lg p-6 text-center">
@@ -164,7 +164,7 @@ const Contact = () => {
             {/* Contact info with modern styling */}
             <div className="md:col-span-2 reveal">
               <div className="modern-card p-6 md:p-8 h-full">
-                <h3 className="text-2xl font-bold text-gradient mb-6">Team Information</h3>
+                <h3 className="text-2xl font-bold text-[#471a67] mb-6">Team Information</h3>
                 
                 <div className="space-y-8">
                   <div className="flex items-start group">
