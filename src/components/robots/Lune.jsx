@@ -67,7 +67,7 @@ const Lune = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="bg-white/5 backdrop-blur-sm p-4 rounded-lg border border-white/10 hover:bg-white/10 hover:border-sca-gold/30 hover:-translate-y-1 transition-all duration-300">
                     <h4 className="text-sca-gold font-medium mb-2">Dimensions</h4>
-                    <p className="text-sm text-gray-400">27" × 25" × 31"</p>
+                    <p className="text-sm text-gray-400">28" × 28" × 31"</p>
                   </div>
                   <div className="bg-white/5 backdrop-blur-sm p-4 rounded-lg border border-white/10 hover:bg-white/10 hover:border-sca-gold/30 hover:-translate-y-1 transition-all duration-300">
                     <h4 className="text-sca-gold font-medium mb-2">Weight</h4>
