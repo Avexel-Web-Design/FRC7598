@@ -3,29 +3,49 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
+        "@capacitor/camera": "^7.0.2",
+        "@capacitor/core": "^7.4.3",
+        "@capacitor/push-notifications": "^7.0.2",
+        "@fortawesome/fontawesome-svg-core": "^6.7.2",
+        "@fortawesome/free-regular-svg-icons": "^6.7.2",
+        "@fortawesome/free-solid-svg-icons": "^6.7.2",
+        "@fortawesome/react-fontawesome": "^0.2.2",
         "@tailwindcss/forms": "^0.5.10",
         "@tailwindcss/typography": "^0.5.16",
         "framer-motion": "^12.5.0",
+        "hono": "^4.6.6",
+        "lucide-react": "^0.471.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
+        "react-markdown": "^10.1.0",
         "react-router-dom": "^6.20.1",
         "react-router-hash-link": "^2.4.3",
         "web-vitals": "^2.1.4"
     },
     "devDependencies": {
+        "@capacitor/android": "^7.4.3",
+        "@capacitor/assets": "^3.0.5",
+        "@capacitor/cli": "^7.4.3",
+        "@cloudflare/workers-types": "^4.20250204.0",
         "@tailwindcss/aspect-ratio": "^0.4.2",
         "@vitejs/plugin-react": "^4.2.0",
         "autoprefixer": "^10.4.21",
         "gh-pages": "^6.3.0",
         "postcss": "^8.4.31",
         "tailwindcss": "^3.4.17",
-        "vite": "^6.3.4"
+        "typescript": "^5.9.2",
+        "vite": "^6.3.4",
+        "wrangler": "^4.33.0"
     },
     "scripts": {
         "dev": "vite",
         "start": "vite",
         "build": "vite build",
         "preview": "vite preview",
+        "android:bundle": "cd android && gradlew.bat bundleRelease",
+        "android:clean": "cd android && gradlew.bat clean",
+        "dev:pages": "wrangler pages dev dist",
+        "migrate:local": "wrangler d1 migrations apply frc7598 --local",
         "predeploy": "npm run build",
         "deploy": "gh-pages -d dist"
     },
@@ -41,7 +61,6 @@
             "last 1 safari version"
         ]
     },
-    "homepage": "https://avexel-web-design.github.io/FRC7598",
     "repository": {
         "type": "git",
         "url": "https://github.com/avexel-web-design/FRC7598.git"

@@ -66,11 +66,17 @@ const Contact = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-5 gap-8 mb-16">
+          <div className="grid lg:grid-cols-5 gap-6 lg:gap-8 mb-16">
             {/* Contact form with modern card styling */}
+<<<<<<< HEAD
             <div className="md:col-span-3 reveal">
               <div className="modern-card p-6 md:p-8">
                 <h3 className="text-2xl font-bold text-[#471a67] mb-6">Get in Touch</h3>
+=======
+            <div className="lg:col-span-3 reveal">
+              <div className="modern-card p-4 sm:p-6 md:p-8">
+                <h3 className="text-xl sm:text-2xl font-bold text-gradient mb-6">Get in Touch</h3>
+>>>>>>> 6fc6a55ef2ff18148dc908b322cc794831dbd82e
                 
                 {formSubmitted ? (
                   <div className="glass-panel border border-[#d3b840]/30 rounded-lg p-6 text-center">
@@ -84,8 +90,8 @@ const Contact = () => {
                     <p className="text-gray-300">Your message has been sent. We'll get back to you as soon as possible.</p>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit}>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  <form onSubmit={handleSubmit} className="contact-form">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 mb-6">
                       <div>
                         <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
                           Your Name
@@ -144,8 +150,8 @@ const Contact = () => {
                         value={formData.message}
                         onChange={handleChange}
                         required
-                        rows="10"
-                        className="w-full h-48 bg-[#471a67]/10 border border-[#d3b840]/20 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-[#d3b840]/60 focus:bg-[#471a67]/20 transition-colors resize-none"
+                        rows="8"
+                        className="w-full h-32 sm:h-40 lg:h-48 bg-[#471a67]/10 border border-[#d3b840]/20 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-[#d3b840]/60 focus:bg-[#471a67]/20 transition-colors resize-none"
                         placeholder="Tell us about your inquiry..."
                       ></textarea>
                     </div>
@@ -162,39 +168,45 @@ const Contact = () => {
             </div>
 
             {/* Contact info with modern styling */}
+<<<<<<< HEAD
             <div className="md:col-span-2 reveal">
               <div className="modern-card p-6 md:p-8 h-full">
                 <h3 className="text-2xl font-bold text-[#471a67] mb-6">Team Information</h3>
+=======
+            <div className="lg:col-span-2 reveal">
+              <div className="modern-card p-4 sm:p-6 md:p-8 h-full">
+                <h3 className="text-xl sm:text-2xl font-bold text-gradient mb-6">Team Information</h3>
+>>>>>>> 6fc6a55ef2ff18148dc908b322cc794831dbd82e
                 
-                <div className="space-y-8">
+                <div className="space-y-6 lg:space-y-8">
                   <div className="flex items-start group">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12 mr-4 mt-1">
-                      <i className="fas fa-envelope text-[#d3b840] transition-colors duration-300"></i>
+                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12 mr-3 sm:mr-4 mt-1">
+                      <i className="fas fa-envelope text-[#d3b840] transition-colors duration-300 text-sm sm:text-base"></i>
                     </div>
-                    <div className="transform hover:-translate-y-1 transition-transform duration-300">
-                      <h4 className="text-lg font-medium text-white mb-1">Email Us</h4>
+                    <div className="min-w-0 flex-1 transform hover:-translate-y-1 transition-transform duration-300">
+                      <h4 className="text-base sm:text-lg font-medium text-white mb-1">Email Us</h4>
                       <button 
                         onClick={copyEmailToClipboard}
-                        className="hover:text-[#e4ce67] transition-colors flex items-center"
+                        className="hover:text-[#e4ce67] transition-colors flex items-center text-sm sm:text-base contact-email"
                       >
                         kbrandt@saintcatherineacademy.org
-                        <i className={`ml-2 ${emailCopied ? 'fas fa-check text-green-400' : 'fas fa-copy text-[#d3b840]'}`}></i>
-                        {emailCopied && <span className="text-xs text-green-400 ml-2">Copied!</span>}
+                        <i className={`ml-2 ${emailCopied ? 'fas fa-check text-green-400' : 'fas fa-copy text-[#d3b840]'} flex-shrink-0`}></i>
+                        {emailCopied && <span className="text-xs text-green-400 ml-2 flex-shrink-0">Copied!</span>}
                       </button>
                     </div>
                   </div>
                   
                   <div className="flex items-start group">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12 mr-4 mt-1">
-                      <i className="fas fa-location-dot text-[#d3b840] transition-colors duration-300"></i>
+                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12 mr-3 sm:mr-4 mt-1">
+                      <i className="fas fa-location-dot text-[#d3b840] transition-colors duration-300 text-sm sm:text-base"></i>
                     </div>
-                    <div className="transform hover:-translate-y-1 transition-transform duration-300">
-                      <h4 className="text-lg font-medium text-white mb-1">Our Location</h4>
+                    <div className="min-w-0 flex-1 transform hover:-translate-y-1 transition-transform duration-300">
+                      <h4 className="text-base sm:text-lg font-medium text-white mb-1">Our Location</h4>
                       <a 
                         href="https://maps.google.com/?q=St.+Catherine+of+Siena+Academy,+28200+Napier+Road,+Wixom,+MI+48393" 
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="text-gray-300 hover:text-[#d3b840] transition-colors"
+                        className="text-gray-300 hover:text-[#d3b840] transition-colors text-sm sm:text-base"
                       >
                         St. Catherine of Siena Academy<br />
                         28200 Napier Road<br />
@@ -204,16 +216,16 @@ const Contact = () => {
                   </div>
                   
                   <div className="flex items-start group">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12 mr-4 mt-1">
-                      <i className="fas fa-calendar-days text-[#d3b840] transition-colors duration-300"></i>
+                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12 mr-3 sm:mr-4 mt-1">
+                      <i className="fas fa-calendar-days text-[#d3b840] transition-colors duration-300 text-sm sm:text-base"></i>
                     </div>
-                    <div className="transform hover:-translate-y-1 transition-transform duration-300">
-                      <h4 className="text-lg font-medium text-white mb-1">Meeting Times</h4>
-                      <p className="text-gray-300">
+                    <div className="min-w-0 flex-1 transform hover:-translate-y-1 transition-transform duration-300">
+                      <h4 className="text-base sm:text-lg font-medium text-white mb-1">Meeting Times</h4>
+                      <p className="text-gray-300 text-sm sm:text-base">
                         Tuesday, Thursday<br />
                         4:30 PM - 8:30 PM
                       </p>
-                      <p className="text-gray-300">
+                      <p className="text-gray-300 text-sm sm:text-base">
                         Saturday<br />
                         10:00 AM - 4:00 PM
                       </p>
@@ -221,16 +233,16 @@ const Contact = () => {
                   </div>
 
                   <div className="pt-4">
-                    <h4 className="text-lg font-medium text-white mb-3">Follow Us</h4>
-                    <div className="flex space-x-4">
-                      <a href="https://www.instagram.com/scaconstellations/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-10 h-10 rounded-full glass-panel border border-[#d3b840]/20 flex items-center justify-center text-[#d3b840] hover:border-[#d3b840]/60 hover:scale-110 transition-all">
-                        <i className="fab fa-instagram fa-lg"></i>
+                    <h4 className="text-base sm:text-lg font-medium text-white mb-3">Follow Us</h4>
+                    <div className="flex flex-wrap gap-3 sm:gap-4">
+                      <a href="https://www.instagram.com/scaconstellations/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-9 h-9 sm:w-10 sm:h-10 rounded-full glass-panel border border-[#d3b840]/20 flex items-center justify-center text-[#d3b840] hover:border-[#d3b840]/60 hover:scale-110 transition-all">
+                        <i className="fab fa-instagram text-sm sm:text-base"></i>
                       </a>
-                      <a href="https://www.facebook.com/scaconstellations7598" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="w-10 h-10 rounded-full glass-panel border border-[#d3b840]/20 flex items-center justify-center text-[#d3b840] hover:border-[#d3b840]/60 hover:scale-110 transition-all">
-                        <i className="fab fa-facebook fa-lg"></i>
+                      <a href="https://www.facebook.com/scaconstellations7598" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="w-9 h-9 sm:w-10 sm:h-10 rounded-full glass-panel border border-[#d3b840]/20 flex items-center justify-center text-[#d3b840] hover:border-[#d3b840]/60 hover:scale-110 transition-all">
+                        <i className="fab fa-facebook text-sm sm:text-base"></i>
                       </a>
-                      <a href="https://github.com/SCAconstellations" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="w-10 h-10 rounded-full glass-panel border border-[#d3b840]/20 flex items-center justify-center text-[#d3b840] hover:border-[#d3b840]/60 hover:scale-110 transition-all">
-                        <i className="fab fa-github fa-lg"></i>
+                      <a href="https://github.com/SCAconstellations" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="w-9 h-9 sm:w-10 sm:h-10 rounded-full glass-panel border border-[#d3b840]/20 flex items-center justify-center text-[#d3b840] hover:border-[#d3b840]/60 hover:scale-110 transition-all">
+                        <i className="fab fa-github text-sm sm:text-base"></i>
                       </a>
                     </div>
                   </div>
@@ -244,7 +256,7 @@ const Contact = () => {
       {/* Modern decorative elements */}
       <div 
         className="absolute top-1/4 left-0 w-64 h-64 bg-gradient-radial from-[#471a67]/20 to-transparent rounded-full filter blur-3xl animate-pulse-slow" 
-        aria-hidden="true"i
+        aria-hidden="true"
       ></div>
       <div 
         className="absolute bottom-1/4 right-0 w-96 h-96 bg-gradient-radial from-[#d3b840]/10 to-transparent rounded-full filter blur-3xl animate-pulse-slow" 

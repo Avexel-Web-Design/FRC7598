@@ -5,7 +5,8 @@ import { resolve } from 'path';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/FRC7598/', // This matches the repository name for GitHub Pages
+  // For Cloudflare Pages the site is served from the root, so base should be '/'
+  base: '/',
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
@@ -26,6 +27,14 @@ export default defineConfig({
     fs: {
       strict: false, // Allow serving files from outside the project root
       allow: ['..'], // Allow serving files from parent directory
+    },
+    proxy: {
+      // Forward API calls to local Cloudflare Pages Functions dev server
+      '/api': {
+        target: 'http://127.0.0.1:8788',
+        changeOrigin: true,
+        // Cloudflare Pages dev server serves functions under same origin; this proxy simplifies fetch('/api/...') in dev
+      },
     },
   },
   // Add optimizeDeps configuration

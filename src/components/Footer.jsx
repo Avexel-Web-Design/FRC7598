@@ -1,5 +1,6 @@
 // src/components/Footer.jsx
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -15,14 +16,21 @@ const Footer = () => {
     >
       {/* Very minimal footer content */}
       <div className="container mx-auto px-4 relative z-10">
-        <div className="flex flex-col md:flex-row justify-between items-center">
+  <div className="flex flex-col md:flex-row justify-between items-center gap-3 md:gap-6">
           {/* Copyright text */}
-          <div className="text-gray-500 text-xs mb-4 md:mb-0">
-            &copy; {currentYear} SCA Constellations - FRC Team 7598
+          <div className="flex items-center gap-4 mb-4 md:mb-0 text-xs">
+            <span className="text-gray-500">&copy; {currentYear} SCA Constellations - FRC Team 7598</span>
           </div>
           
-          {/* Social links using Font Awesome icons */}
-          <div className="flex flex-wrap justify-center gap-4">
+          {/* Links */}
+          <div className="flex flex-wrap justify-center gap-4 items-center">
+            <a
+              href="/privacy"
+              className="text-gray-400 hover:text-[#d3b840] transition-colors text-xs md:text-sm"
+            >
+              Privacy Policy
+            </a>
+            {/* Social links using Font Awesome icons */}
             <a 
               href="https://www.instagram.com/scaconstellations/" 
               target="_blank" 

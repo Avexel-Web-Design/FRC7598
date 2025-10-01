@@ -1,0 +1,20 @@
+    # Cloudflare Pages/Workers configuration for FRC7598 backend
+# You will need to create a D1 database and set the binding and JWT secret.
+# - Create a D1 DB in Cloudflare dashboard and note its Database ID
+# - Bind it as DB in Pages project settings or set here for local dev
+# - Set an environment variable JWT_SECRET in Pages project settings
+
+name = "frc7598"
+compatibility_date = "2024-11-05"
+
+# Only used for local dev and Workers deploys; Pages bindings are configured in dashboard
+[[d1_databases]]
+binding = "DB"
+database_name = "frc7598"
+# Replace with your actual database_id from Cloudflare D1
+# You can also leave this blank for now and use `wrangler d1` to create one.
+database_id = "cbfe2e3f-d4e9-4bc0-800b-2fc169ef044a"
+
+[vars]
+# Fallback for local dev; in production set in Cloudflare Pages dashboard
+JWT_SECRET = "change-me-in-dashboard"
