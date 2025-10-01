@@ -68,15 +68,9 @@ const Contact = () => {
 
           <div className="grid lg:grid-cols-5 gap-6 lg:gap-8 mb-16">
             {/* Contact form with modern card styling */}
-<<<<<<< HEAD
-            <div className="md:col-span-3 reveal">
-              <div className="modern-card p-6 md:p-8">
-                <h3 className="text-2xl font-bold text-[#471a67] mb-6">Get in Touch</h3>
-=======
             <div className="lg:col-span-3 reveal">
               <div className="modern-card p-4 sm:p-6 md:p-8">
-                <h3 className="text-xl sm:text-2xl font-bold text-gradient mb-6">Get in Touch</h3>
->>>>>>> 6fc6a55ef2ff18148dc908b322cc794831dbd82e
+                <h3 className="text-xl sm:text-2xl font-bold text-[#471a67] mb-6">Get in Touch</h3>
                 
                 {formSubmitted ? (
                   <div className="glass-panel border border-[#d3b840]/30 rounded-lg p-6 text-center">
@@ -168,15 +162,9 @@ const Contact = () => {
             </div>
 
             {/* Contact info with modern styling */}
-<<<<<<< HEAD
-            <div className="md:col-span-2 reveal">
-              <div className="modern-card p-6 md:p-8 h-full">
-                <h3 className="text-2xl font-bold text-[#471a67] mb-6">Team Information</h3>
-=======
             <div className="lg:col-span-2 reveal">
               <div className="modern-card p-4 sm:p-6 md:p-8 h-full">
-                <h3 className="text-xl sm:text-2xl font-bold text-gradient mb-6">Team Information</h3>
->>>>>>> 6fc6a55ef2ff18148dc908b322cc794831dbd82e
+                <h3 className="text-xl sm:text-2xl font-bold text-[#471a67] mb-6">Team Information</h3>
                 
                 <div className="space-y-6 lg:space-y-8">
                   <div className="flex items-start group">
