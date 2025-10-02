@@ -25,9 +25,8 @@ const Team = () => {
         role: "Controls Lead",
         image: placeholderImage,
         bio: "Senior who excels in electrical and business. Manages team image and control components."
-      },
-      
-    ],
+      }
+    ]
   };
 
   return (
@@ -44,7 +43,7 @@ const Team = () => {
             <h3 className="text-2xl font-bold mb-10 text-center text-white reveal-bottom">
               Captains
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
               {teamMembers.leadership.map((leader, index) => (
                 <TeamMemberCard
                   key={index}
