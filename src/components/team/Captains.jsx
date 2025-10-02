@@ -18,13 +18,13 @@ const Team = () => {
         name: "Brooke W",
         role: "Captain/Mechanical Lead",
         image: placeholderImage,
-        bio: "Senior with 4 years of FIRST experience. Keeps the team safe and motivated."
+        bio: "Senior with 8 years of FIRST experience. Leads the mechanical design and fabrication efforts."
       },
       {
         name: "Beatrice D",
         role: "Controls Lead",
         image: placeholderImage,
-        bio: "Senior who excels in electrical and business. Manages team image and control components."
+        bio: "Senior with a strong background in programming and electrical systems. Oversees all control system development."
       }
     ]
   };
