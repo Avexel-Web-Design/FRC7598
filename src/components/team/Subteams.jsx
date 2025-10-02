@@ -27,7 +27,7 @@ const Team = () => {
       {
         name: "Spirit Team",
         description: "Brings on the image, spirit, and energy of the team.",
-        members: ["Neha J", "Maddie K", "Sarah G", "Lucy W"]
+        members: ["Neha J", "Maddie K", "Sarah G", "Lucy W", "Brooke W", "Beatrice D"]
       }
     ]
   };
