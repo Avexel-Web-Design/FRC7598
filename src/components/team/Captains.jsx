@@ -21,7 +21,7 @@ const Team = () => {
         bio: "Senior with 4 years of FIRST experience. Keeps the team safe and motivated."
       },
       {
-        name: "Beatrice D,
+        name: "Beatrice D",
         role: "Controls Lead",
         image: placeholderImage,
         bio: "Senior who excels in electrical and business. Manages team image and control components."
