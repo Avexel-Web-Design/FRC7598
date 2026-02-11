@@ -4,6 +4,7 @@ import { Html } from "@react-three/drei";
 import * as THREE from "three";
 import { latLngToVector3, GLOBE_RADIUS } from "./constellationData";
 
+// Tight, clean glow — no bloom blowout
 const glowVertexShader = `
   varying vec2 vUv;
   void main() {
@@ -15,34 +16,34 @@ const glowVertexShader = `
 const glowFragmentShader = `
   uniform vec3 uColor;
   uniform float uOpacity;
-  uniform float uTime;
   varying vec2 vUv;
 
   void main() {
     vec2 center = vUv - 0.5;
     float dist = length(center) * 2.0;
 
-    float pulse = 0.92 + 0.08 * sin(uTime * 2.0 + dist * 5.0);
-
-    float core = smoothstep(0.45 * pulse, 0.0, dist);
-    float glow = smoothstep(0.9, 0.15, dist) * 0.45;
+    // Sharp core, tight falloff
+    float core = smoothstep(0.3, 0.0, dist);
+    float glow = smoothstep(0.65, 0.15, dist) * 0.25;
 
     float alpha = (core + glow) * uOpacity;
-    vec3 color = mix(uColor, vec3(1.0), core * 0.6);
 
+    // Hard edge cutoff
+    alpha *= smoothstep(1.0, 0.55, dist);
+
+    vec3 color = mix(uColor, vec3(1.0), core * 0.5);
     gl_FragColor = vec4(color, alpha);
   }
 `;
 
-// Altitude above globe surface for nodes
-const NODE_ALTITUDE = 0.15;
+const NODE_ALTITUDE = 0.1;
 
 const ConstellationNode = ({
   lat,
   lng,
   label,
   color = "#d3b840",
-  size = 0.09,
+  size = 0.07,
   revealProgress = 0,
 }) => {
   const meshRef = useRef();
@@ -53,74 +54,67 @@ const ConstellationNode = ({
     [lat, lng]
   );
 
-  // Normal direction (pointing away from globe center) for label offset
   const normal = useMemo(() => position.clone().normalize(), [position]);
 
   const uniforms = useMemo(
     () => ({
       uColor: { value: new THREE.Color(color) },
       uOpacity: { value: 0 },
-      uTime: { value: 0 },
     }),
     [color]
   );
 
   useFrame((state) => {
-    const t = state.clock.getElapsedTime();
-    uniforms.uTime.value = t;
-
-    // Smoothly animate reveal
+    // Smooth reveal
     uniforms.uOpacity.value = THREE.MathUtils.lerp(
       uniforms.uOpacity.value,
       revealProgress,
-      0.08
+      0.1
     );
 
     if (groupRef.current) {
       const targetScale = revealProgress > 0.05 ? 1 : 0;
       const currentScale = groupRef.current.scale.x;
-      const newScale = THREE.MathUtils.lerp(currentScale, targetScale, 0.07);
-      groupRef.current.scale.setScalar(newScale);
+      groupRef.current.scale.setScalar(
+        THREE.MathUtils.lerp(currentScale, targetScale, 0.08)
+      );
     }
 
-    // Billboard: always face camera
+    // Billboard
     if (meshRef.current) {
       meshRef.current.quaternion.copy(state.camera.quaternion);
     }
   });
 
-  const labelOpacity = Math.max(0, (revealProgress - 0.3) / 0.7);
+  const labelOpacity = Math.max(0, (revealProgress - 0.4) / 0.6);
 
-  // Label position: offset along surface normal
   const labelPos = useMemo(
-    () => [normal.x * 0.35, normal.y * 0.35, normal.z * 0.35],
+    () => [normal.x * 0.25, normal.y * 0.25, normal.z * 0.25],
     [normal]
   );
 
   return (
     <group ref={groupRef} position={position} scale={0}>
-      {/* Glow sprite (billboard) */}
+      {/* Clean glow sprite */}
       <mesh ref={meshRef}>
-        <planeGeometry args={[size * 3, size * 3]} />
+        <planeGeometry args={[size * 2.5, size * 2.5]} />
         <shaderMaterial
           vertexShader={glowVertexShader}
           fragmentShader={glowFragmentShader}
           uniforms={uniforms}
           transparent
           depthWrite={false}
-          depthTest={false}
           blending={THREE.AdditiveBlending}
         />
       </mesh>
 
-      {/* Bright core dot */}
+      {/* Crisp core dot */}
       <mesh>
-        <sphereGeometry args={[size * 0.2, 12, 12]} />
+        <sphereGeometry args={[size * 0.18, 10, 10]} />
         <meshBasicMaterial
-          color="#fffef0"
+          color="#fff"
           transparent
-          opacity={revealProgress * 0.9}
-          depthTest={false}
+          opacity={revealProgress * 0.95}
         />
       </mesh>
 
@@ -131,7 +125,7 @@ const ConstellationNode = ({
         distanceFactor={10}
         style={{
           opacity: labelOpacity,
-          transition: "opacity 0.4s ease",
+          transition: "opacity 0.3s ease",
           pointerEvents: "none",
           userSelect: "none",
         }}
@@ -139,14 +133,13 @@ const ConstellationNode = ({
         <div
           style={{
             fontFamily: "'Inter', sans-serif",
-            fontSize: "10px",
+            fontSize: "8px",
             fontWeight: 600,
-            letterSpacing: "1px",
-            color: "#fff",
+            letterSpacing: "0.5px",
+            color: "rgba(255,255,255,0.85)",
             textTransform: "uppercase",
             whiteSpace: "nowrap",
-            textShadow:
-              "0 0 8px rgba(211, 184, 64, 0.5), 0 2px 6px rgba(0,0,0,0.9)",
+            textShadow: "0 1px 4px rgba(0,0,0,0.8)",
           }}
         >
           {label}

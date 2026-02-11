@@ -4,7 +4,7 @@ import { Html } from "@react-three/drei";
 import * as THREE from "three";
 import { latLngToVector3, GLOBE_RADIUS } from "./constellationData";
 
-// Glow shader for the central star — billboard sprite that always faces camera
+// Clean, tight glow shader — no excessive bloom
 const glowVertexShader = `
   varying vec2 vUv;
   void main() {
@@ -24,31 +24,29 @@ const glowFragmentShader = `
     vec2 center = vUv - 0.5;
     float dist = length(center) * 2.0;
 
-    float pulse = 0.95 + 0.05 * sin(uTime * 1.5);
+    // Tight core with minimal spread
+    float core = smoothstep(0.35, 0.0, dist);
+    float glow = smoothstep(0.7, 0.2, dist) * 0.3;
 
-    float core = smoothstep(0.5 * pulse, 0.0, dist);
-    float inner = smoothstep(0.8, 0.1, dist) * 0.6;
-    float outer = smoothstep(1.0, 0.3, dist) * 0.25;
+    // Subtle pulse — barely perceptible
+    float pulse = 0.97 + 0.03 * sin(uTime * 1.0);
+    core *= pulse;
 
     vec3 color = mix(uColorOuter, uColorInner, core);
-    float alpha = (core + inner + outer) * uOpacity;
+    float alpha = (core + glow) * uOpacity;
 
-    float shimmer = 0.02 * sin(uTime * 3.0 + dist * 10.0);
-    color += shimmer;
+    // Hard cutoff to prevent hazy edges
+    alpha *= smoothstep(1.0, 0.6, dist);
 
     gl_FragColor = vec4(color, alpha);
   }
 `;
 
-// Altitude above globe surface for the central star
-const CENTRAL_ALTITUDE = 0.18;
+const CENTRAL_ALTITUDE = 0.12;
 
-const CentralStar = ({ animationProgress = 0, globeRotationY = 0 }) => {
-  const groupRef = useRef();
+const CentralStar = ({ animationProgress = 0 }) => {
   const meshRef = useRef();
-  const haloRef = useRef();
 
-  // Position on globe surface: Wixom, MI
   const basePosition = useMemo(
     () => latLngToVector3(42.5248, -83.5363, GLOBE_RADIUS, CENTRAL_ALTITUDE),
     []
@@ -65,73 +63,38 @@ const CentralStar = ({ animationProgress = 0, globeRotationY = 0 }) => {
   );
 
   useFrame((state) => {
-    const t = state.clock.getElapsedTime();
-    uniforms.uTime.value = t;
-
+    uniforms.uTime.value = state.clock.getElapsedTime();
     if (meshRef.current) {
-      // Always face the camera (billboard)
       meshRef.current.quaternion.copy(state.camera.quaternion);
-      const breathe = 1.0 + 0.06 * Math.sin(t * 1.2);
-      meshRef.current.scale.setScalar(breathe);
-    }
-
-    // Billboard the outer halo too
-    if (haloRef.current) {
-      haloRef.current.quaternion.copy(state.camera.quaternion);
     }
   });
 
-  const labelOpacity = Math.min(1, animationProgress * 4);
+  const labelOpacity = Math.min(1, animationProgress * 3);
 
   return (
-    <group ref={groupRef} position={basePosition}>
-      {/* Outer purple halo — billboard */}
-      <mesh ref={haloRef}>
-        <planeGeometry args={[0.7, 0.7]} />
-        <shaderMaterial
-          vertexShader={glowVertexShader}
-          fragmentShader={glowFragmentShader}
-          uniforms={{
-            uColorInner: { value: new THREE.Color("#8b5cf6") },
-            uColorOuter: { value: new THREE.Color("#471a67") },
-            uOpacity: { value: 0.5 },
-            uTime: uniforms.uTime,
-          }}
-          transparent
-          depthWrite={false}
-          depthTest={false}
-          blending={THREE.AdditiveBlending}
-        />
-      </mesh>
-
-      {/* Main gold glow — billboard */}
+    <group position={basePosition}>
+      {/* Single clean glow — no separate oversized halo */}
       <mesh ref={meshRef}>
-        <planeGeometry args={[0.5, 0.5]} />
+        <planeGeometry args={[0.35, 0.35]} />
         <shaderMaterial
           vertexShader={glowVertexShader}
           fragmentShader={glowFragmentShader}
           uniforms={uniforms}
           transparent
           depthWrite={false}
-          depthTest={false}
           blending={THREE.AdditiveBlending}
         />
       </mesh>
 
-      {/* Bright core */}
+      {/* Crisp core dot */}
       <mesh>
-        <sphereGeometry args={[0.035, 16, 16]} />
-        <meshBasicMaterial
-          color="#fffef0"
-          transparent
-          opacity={0.95}
-          depthTest={false}
-        />
+        <sphereGeometry args={[0.03, 16, 16]} />
+        <meshBasicMaterial color="#fffef0" />
       </mesh>
 
       {/* Label */}
       <Html
-        position={[0, -0.45, 0]}
+        position={[0, -0.3, 0]}
         center
         distanceFactor={8}
         style={{
@@ -150,26 +113,22 @@ const CentralStar = ({ animationProgress = 0, globeRotationY = 0 }) => {
         >
           <div
             style={{
-              fontSize: "20px",
-              fontWeight: 800,
-              letterSpacing: "4px",
-              background:
-                "linear-gradient(135deg, #d3b840 0%, #fffbe6 50%, #d3b840 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-              filter: "drop-shadow(0 0 12px rgba(211, 184, 64, 0.6))",
+              fontSize: "14px",
+              fontWeight: 700,
+              letterSpacing: "3px",
+              color: "#d3b840",
+              textShadow: "0 0 6px rgba(211, 184, 64, 0.4)",
             }}
           >
             SCA
           </div>
           <div
             style={{
-              fontSize: "9px",
+              fontSize: "7px",
               fontWeight: 500,
-              letterSpacing: "3px",
-              color: "rgba(211, 184, 64, 0.7)",
-              marginTop: "3px",
+              letterSpacing: "2.5px",
+              color: "rgba(211, 184, 64, 0.6)",
+              marginTop: "2px",
               textTransform: "uppercase",
             }}
           >

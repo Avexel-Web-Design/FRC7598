@@ -23,20 +23,17 @@ function cinematicEase(t) {
 
 // ────────────────────────────────────────────
 // Compute initial camera position looking at SCA (Wixom, MI)
+// Start much closer to see Michigan nodes clearly
 // ────────────────────────────────────────────
 function getInitialCameraPosition() {
-  // Get the direction from globe center toward Wixom, MI
   const scaPos = latLngToVector3(SCA_HOME.lat, SCA_HOME.lng, GLOBE_RADIUS, 0);
   const dir = scaPos.clone().normalize();
-  // Camera starts close, looking directly at the SCA point on the globe
   return dir.multiplyScalar(ANIMATION.CAMERA_START_DISTANCE);
 }
 
 function getFinalCameraPosition() {
-  // Pull back to see the full globe, slightly elevated and angled
   const scaPos = latLngToVector3(SCA_HOME.lat, SCA_HOME.lng, GLOBE_RADIUS, 0);
   const dir = scaPos.clone().normalize();
-  // Mix in some upward and sideways offset so we see the globe from a nice angle
   const up = new THREE.Vector3(0, 1, 0);
   const finalDir = dir
     .clone()
@@ -78,7 +75,6 @@ function CameraAnimator({ onProgress }) {
     );
     const eased = cinematicEase(t);
 
-    // Interpolate camera position
     camera.position.lerpVectors(startPos, endPos, eased);
     camera.lookAt(0, 0, 0);
 
@@ -94,7 +90,6 @@ function CameraAnimator({ onProgress }) {
 function computeTimings(nodes) {
   const scaVec = latLngToVector3(SCA_HOME.lat, SCA_HOME.lng, GLOBE_RADIUS, 0);
 
-  // Sort by angular distance from SCA so nearby nodes light up first
   const withDistance = nodes.map((node) => {
     const nodeVec = latLngToVector3(node.lat, node.lng, GLOBE_RADIUS, 0);
     const angle = scaVec.angleTo(nodeVec);
@@ -132,49 +127,40 @@ function SceneContent() {
     setZoomProgress(p);
   }, []);
 
-  // Globe auto-rotation state
   const autoRotateRef = useRef(0);
 
   useFrame((state) => {
     clockRef.current = state.clock.getElapsedTime();
 
-    // Slow auto-rotation after zoom completes
     if (zoomProgress >= 0.98 && globeGroupRef.current) {
-      autoRotateRef.current += ANIMATION.GLOBE_AUTO_ROTATE_SPEED * 0.016; // ~60fps
+      autoRotateRef.current += ANIMATION.GLOBE_AUTO_ROTATE_SPEED * 0.016;
       globeGroupRef.current.rotation.y = autoRotateRef.current;
     }
   });
 
   return (
     <>
-      {/* Lighting — bright enough to show Earth texture clearly */}
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[10, 8, 5]} intensity={1.2} color="#ffffff" />
-      <pointLight position={[-8, -5, 10]} intensity={0.3} color="#d3b840" />
+      {/* Minimal lighting — globe uses meshBasicMaterial, but nodes/lines may benefit */}
+      <ambientLight intensity={0.3} />
+      <directionalLight position={[10, 8, 5]} intensity={0.6} color="#ffffff" />
 
-      {/* Background starfield */}
+      {/* Subtle background starfield — small, dim, no bloom */}
       <Stars
-        radius={100}
-        depth={80}
-        count={2000}
-        factor={3}
-        saturation={0.1}
+        radius={120}
+        depth={60}
+        count={1200}
+        factor={1.5}
+        saturation={0}
         fade
-        speed={0.2}
+        speed={0.1}
       />
 
-      {/* Camera animation */}
       <CameraAnimator onProgress={handleProgress} />
 
-      {/* Globe + all surface elements rotate together */}
       <group ref={globeGroupRef}>
-        {/* The Earth globe */}
         <Globe />
-
-        {/* Central SCA Star (on globe surface) */}
         <CentralStar animationProgress={zoomProgress} />
 
-        {/* Constellation lines and nodes */}
         {timedNodes.map((node) => (
           <ConstellationNodeWithLine
             key={node.id}
@@ -206,7 +192,7 @@ function ConstellationNodeWithLine({ node, clockRef }) {
     }
 
     if (t >= node.nodeRevealTime) {
-      const revealDuration = 1.2;
+      const revealDuration = 1.0;
       const np = Math.min(1, (t - node.nodeRevealTime) / revealDuration);
       setNodeReveal(np);
     }
@@ -228,7 +214,7 @@ function ConstellationNodeWithLine({ node, clockRef }) {
         lng={node.lng}
         label={node.label}
         color="#d3b840"
-        size={0.09}
+        size={0.07}
         revealProgress={nodeReveal}
       />
     </>

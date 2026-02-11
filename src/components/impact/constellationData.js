@@ -95,19 +95,19 @@ export const constellationNodes = [
 // ─────────────────────────────────────────────────────────────
 export const ANIMATION = {
   // Camera zoom
-  ZOOM_START_DELAY: 0.8,        // seconds before zoom begins
-  ZOOM_DURATION: 7.0,           // total zoom-out duration (slow & cinematic)
-  CAMERA_START_DISTANCE: 6.2,   // starting distance from globe center (tight on SCA star)
+  ZOOM_START_DELAY: 0.6,        // seconds before zoom begins
+  ZOOM_DURATION: 8.0,           // total zoom-out duration (slow & cinematic)
+  CAMERA_START_DISTANCE: 5.45,  // very tight on Michigan — see local nodes up close
   CAMERA_END_DISTANCE: 14.5,    // ending distance (see full globe)
 
   // Line drawing
-  LINE_START_DELAY: 1.5,        // seconds after mount before first line starts
-  LINE_STAGGER: 0.12,           // delay between each line starting
-  LINE_DRAW_DURATION: 1.8,      // how long each line takes to draw
+  LINE_START_DELAY: 0.8,        // lines start sooner since we're already close
+  LINE_STAGGER: 0.1,            // slightly tighter stagger
+  LINE_DRAW_DURATION: 1.5,      // slightly snappier draws
 
   // Node reveal
-  NODE_REVEAL_OFFSET: 0.5,      // node appears this many seconds before its line finishes
+  NODE_REVEAL_OFFSET: 0.4,      // node appears this many seconds before its line finishes
 
   // Globe rotation
-  GLOBE_AUTO_ROTATE_SPEED: 0.03, // radians per second after animation completes
+  GLOBE_AUTO_ROTATE_SPEED: 0.025, // slightly slower rotation
 };
