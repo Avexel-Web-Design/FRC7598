@@ -94,20 +94,28 @@ export const constellationNodes = [
 // Timing constants for animation orchestration
 // ─────────────────────────────────────────────────────────────
 export const ANIMATION = {
-  // Camera zoom
-  ZOOM_START_DELAY: 0.6,        // seconds before zoom begins
-  ZOOM_DURATION: 8.0,           // total zoom-out duration (slow & cinematic)
-  CAMERA_START_DISTANCE: 5.45,  // very tight on Michigan — see local nodes up close
+  // Camera zoom — three phases: close-up → hold at Michigan → zoom to full globe
+  CAMERA_START_DISTANCE: 5.45,  // very tight on Michigan
   CAMERA_END_DISTANCE: 14.5,    // ending distance (see full globe)
 
+  // Phase 1: Initial delay before anything starts
+  ZOOM_START_DELAY: 0.5,
+
+  // Phase 2: Hold at Michigan while local nodes draw
+  // Camera stays still at start position during this phase
+  MICHIGAN_HOLD_DURATION: 3.5,  // seconds to stay zoomed in on Michigan
+
+  // Phase 3: Zoom out to full globe
+  ZOOM_OUT_DURATION: 7.0,       // duration of the zoom-out after the hold
+
   // Line drawing
-  LINE_START_DELAY: 0.8,        // lines start sooner since we're already close
-  LINE_STAGGER: 0.1,            // slightly tighter stagger
-  LINE_DRAW_DURATION: 1.5,      // slightly snappier draws
+  LINE_START_DELAY: 0.6,        // lines start quickly
+  LINE_STAGGER: 0.1,            // stagger between each line
+  LINE_DRAW_DURATION: 1.5,      // how long each line takes to draw
 
   // Node reveal
   NODE_REVEAL_OFFSET: 0.4,      // node appears this many seconds before its line finishes
 
   // Globe rotation
-  GLOBE_AUTO_ROTATE_SPEED: 0.025, // slightly slower rotation
+  GLOBE_AUTO_ROTATE_SPEED: 0.025,
 };

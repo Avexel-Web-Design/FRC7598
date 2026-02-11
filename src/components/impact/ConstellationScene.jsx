@@ -15,15 +15,20 @@ import {
 } from "./constellationData";
 
 // ────────────────────────────────────────────
-// Cinematic ease-out curve
+// Cinematic ease curves
 // ────────────────────────────────────────────
-function cinematicEase(t) {
-  return 1 - Math.pow(1 - t, 3.5);
+function easeOutCubic(t) {
+  return 1 - Math.pow(1 - t, 3);
+}
+
+function easeInOutCubic(t) {
+  return t < 0.5
+    ? 4 * t * t * t
+    : 1 - Math.pow(-2 * t + 2, 3) / 2;
 }
 
 // ────────────────────────────────────────────
-// Compute initial camera position looking at SCA (Wixom, MI)
-// Start much closer to see Michigan nodes clearly
+// Camera positions
 // ────────────────────────────────────────────
 function getInitialCameraPosition() {
   const scaPos = latLngToVector3(SCA_HOME.lat, SCA_HOME.lng, GLOBE_RADIUS, 0);
@@ -44,11 +49,13 @@ function getFinalCameraPosition() {
 }
 
 // ────────────────────────────────────────────
-// Camera Animator
+// 3-Phase Camera Animator
+//   Phase 1: Hold at Michigan (close-up) while local nodes draw
+//   Phase 2: Zoom out to full globe
 // ────────────────────────────────────────────
 function CameraAnimator({ onProgress }) {
   const { camera } = useThree();
-  const startTime = useRef(null);
+  const phaseStartTime = useRef(null);
   const started = useRef(false);
 
   const startPos = useMemo(() => getInitialCameraPosition(), []);
@@ -57,8 +64,9 @@ function CameraAnimator({ onProgress }) {
   useFrame((state) => {
     const elapsed = state.clock.getElapsedTime();
 
+    // Wait for initial delay
     if (!started.current && elapsed >= ANIMATION.ZOOM_START_DELAY) {
-      startTime.current = elapsed;
+      phaseStartTime.current = elapsed;
       started.current = true;
     }
 
@@ -69,11 +77,20 @@ function CameraAnimator({ onProgress }) {
       return;
     }
 
-    const t = Math.min(
-      1,
-      (elapsed - startTime.current) / ANIMATION.ZOOM_DURATION
-    );
-    const eased = cinematicEase(t);
+    const timeSinceStart = elapsed - phaseStartTime.current;
+
+    // Phase 1: Hold at Michigan
+    if (timeSinceStart < ANIMATION.MICHIGAN_HOLD_DURATION) {
+      camera.position.copy(startPos);
+      camera.lookAt(0, 0, 0);
+      onProgress(0);
+      return;
+    }
+
+    // Phase 2: Zoom out to full globe
+    const zoomElapsed = timeSinceStart - ANIMATION.MICHIGAN_HOLD_DURATION;
+    const t = Math.min(1, zoomElapsed / ANIMATION.ZOOM_OUT_DURATION);
+    const eased = easeInOutCubic(t);
 
     camera.position.lerpVectors(startPos, endPos, eased);
     camera.lookAt(0, 0, 0);
@@ -140,11 +157,11 @@ function SceneContent() {
 
   return (
     <>
-      {/* Minimal lighting — globe uses meshBasicMaterial, but nodes/lines may benefit */}
+      {/* Minimal lighting */}
       <ambientLight intensity={0.3} />
       <directionalLight position={[10, 8, 5]} intensity={0.6} color="#ffffff" />
 
-      {/* Subtle background starfield — small, dim, no bloom */}
+      {/* Subtle background starfield */}
       <Stars
         radius={120}
         depth={60}
