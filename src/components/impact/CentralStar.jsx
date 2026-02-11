@@ -40,13 +40,17 @@ const glowFragmentShader = `
   }
 `;
 
+// Altitude above globe surface for the central star
+const CENTRAL_ALTITUDE = 0.18;
+
 const CentralStar = ({ animationProgress = 0, globeRotationY = 0 }) => {
   const groupRef = useRef();
   const meshRef = useRef();
+  const haloRef = useRef();
 
   // Position on globe surface: Wixom, MI
   const basePosition = useMemo(
-    () => latLngToVector3(42.5248, -83.5363, GLOBE_RADIUS, 0.08),
+    () => latLngToVector3(42.5248, -83.5363, GLOBE_RADIUS, CENTRAL_ALTITUDE),
     []
   );
 
@@ -70,19 +74,20 @@ const CentralStar = ({ animationProgress = 0, globeRotationY = 0 }) => {
       const breathe = 1.0 + 0.06 * Math.sin(t * 1.2);
       meshRef.current.scale.setScalar(breathe);
     }
+
+    // Billboard the outer halo too
+    if (haloRef.current) {
+      haloRef.current.quaternion.copy(state.camera.quaternion);
+    }
   });
 
   const labelOpacity = Math.min(1, animationProgress * 4);
 
-  // We position this in the globe's local space — the parent group
-  // in ConstellationScene applies the globe rotation
   return (
     <group ref={groupRef} position={basePosition}>
       {/* Outer purple halo — billboard */}
-      <mesh
-        onUpdate={(self) => self.lookAt && null}
-      >
-        <planeGeometry args={[1.8, 1.8]} />
+      <mesh ref={haloRef}>
+        <planeGeometry args={[0.7, 0.7]} />
         <shaderMaterial
           vertexShader={glowVertexShader}
           fragmentShader={glowFragmentShader}
@@ -94,32 +99,39 @@ const CentralStar = ({ animationProgress = 0, globeRotationY = 0 }) => {
           }}
           transparent
           depthWrite={false}
+          depthTest={false}
           blending={THREE.AdditiveBlending}
         />
       </mesh>
 
       {/* Main gold glow — billboard */}
       <mesh ref={meshRef}>
-        <planeGeometry args={[1.2, 1.2]} />
+        <planeGeometry args={[0.5, 0.5]} />
         <shaderMaterial
           vertexShader={glowVertexShader}
           fragmentShader={glowFragmentShader}
           uniforms={uniforms}
           transparent
           depthWrite={false}
+          depthTest={false}
           blending={THREE.AdditiveBlending}
         />
       </mesh>
 
       {/* Bright core */}
       <mesh>
-        <sphereGeometry args={[0.06, 16, 16]} />
-        <meshBasicMaterial color="#fffef0" transparent opacity={0.95} />
+        <sphereGeometry args={[0.035, 16, 16]} />
+        <meshBasicMaterial
+          color="#fffef0"
+          transparent
+          opacity={0.95}
+          depthTest={false}
+        />
       </mesh>
 
       {/* Label */}
       <Html
-        position={[0, -0.7, 0]}
+        position={[0, -0.45, 0]}
         center
         distanceFactor={8}
         style={{

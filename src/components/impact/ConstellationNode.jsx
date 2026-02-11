@@ -34,19 +34,22 @@ const glowFragmentShader = `
   }
 `;
 
+// Altitude above globe surface for nodes
+const NODE_ALTITUDE = 0.15;
+
 const ConstellationNode = ({
   lat,
   lng,
   label,
   color = "#d3b840",
-  size = 0.22,
+  size = 0.09,
   revealProgress = 0,
 }) => {
   const meshRef = useRef();
   const groupRef = useRef();
 
   const position = useMemo(
-    () => latLngToVector3(lat, lng, GLOBE_RADIUS, 0.06),
+    () => latLngToVector3(lat, lng, GLOBE_RADIUS, NODE_ALTITUDE),
     [lat, lng]
   );
 
@@ -90,7 +93,7 @@ const ConstellationNode = ({
 
   // Label position: offset along surface normal
   const labelPos = useMemo(
-    () => [normal.x * 0.45, normal.y * 0.45, normal.z * 0.45],
+    () => [normal.x * 0.35, normal.y * 0.35, normal.z * 0.35],
     [normal]
   );
 
@@ -98,24 +101,26 @@ const ConstellationNode = ({
     <group ref={groupRef} position={position} scale={0}>
       {/* Glow sprite (billboard) */}
       <mesh ref={meshRef}>
-        <planeGeometry args={[size * 4, size * 4]} />
+        <planeGeometry args={[size * 3, size * 3]} />
         <shaderMaterial
           vertexShader={glowVertexShader}
           fragmentShader={glowFragmentShader}
           uniforms={uniforms}
           transparent
           depthWrite={false}
+          depthTest={false}
           blending={THREE.AdditiveBlending}
         />
       </mesh>
 
       {/* Bright core dot */}
       <mesh>
-        <sphereGeometry args={[size * 0.25, 12, 12]} />
+        <sphereGeometry args={[size * 0.2, 12, 12]} />
         <meshBasicMaterial
           color="#fffef0"
           transparent
           opacity={revealProgress * 0.9}
+          depthTest={false}
         />
       </mesh>
 

@@ -147,10 +147,10 @@ function SceneContent() {
 
   return (
     <>
-      {/* Ambient + directional lighting */}
-      <ambientLight intensity={0.08} />
-      <directionalLight position={[10, 8, 5]} intensity={0.3} color="#e4d5ff" />
-      <pointLight position={[-8, -5, 10]} intensity={0.15} color="#d3b840" />
+      {/* Lighting — bright enough to show Earth texture clearly */}
+      <ambientLight intensity={0.5} />
+      <directionalLight position={[10, 8, 5]} intensity={1.2} color="#ffffff" />
+      <pointLight position={[-8, -5, 10]} intensity={0.3} color="#d3b840" />
 
       {/* Background starfield */}
       <Stars
@@ -228,7 +228,7 @@ function ConstellationNodeWithLine({ node, clockRef }) {
         lng={node.lng}
         label={node.label}
         color="#d3b840"
-        size={0.18}
+        size={0.09}
         revealProgress={nodeReveal}
       />
     </>

@@ -21,8 +21,8 @@ const ConstellationLine = ({
 
   // Build a great-circle arc from start to end, elevated above the globe
   const positions = useMemo(() => {
-    const startVec = latLngToVector3(startLat, startLng, GLOBE_RADIUS, 0.06);
-    const endVec = latLngToVector3(endLat, endLng, GLOBE_RADIUS, 0.06);
+    const startVec = latLngToVector3(startLat, startLng, GLOBE_RADIUS, 0.15);
+    const endVec = latLngToVector3(endLat, endLng, GLOBE_RADIUS, 0.15);
 
     // Angular distance between the two points
     const angle = startVec.angleTo(endVec);
@@ -37,7 +37,7 @@ const ConstellationLine = ({
       const point = new THREE.Vector3().copy(startVec).lerp(endVec, t).normalize();
 
       // Elevation: parabolic arc peaking at midpoint
-      const elevation = GLOBE_RADIUS + 0.06 + arcHeight * 4.0 * t * (1 - t);
+      const elevation = GLOBE_RADIUS + 0.15 + arcHeight * 4.0 * t * (1 - t);
       point.multiplyScalar(elevation);
 
       arr[i * 3] = point.x;
