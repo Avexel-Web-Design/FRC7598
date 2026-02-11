@@ -6,6 +6,8 @@ import { latLngToVector3, GLOBE_RADIUS } from "./constellationData";
 const ARC_SEGMENTS = 80;
 // How high above the globe surface the arc peaks (proportional to distance)
 const ARC_HEIGHT_FACTOR = 0.15;
+// Tube radius for thick lines
+const LINE_RADIUS = 0.012;
 
 const ConstellationLine = ({
   startLat,
@@ -16,11 +18,11 @@ const ConstellationLine = ({
   color = "#d3b840",
   pulseEnabled = false,
 }) => {
-  const lineRef = useRef();
+  const meshRef = useRef();
   const materialRef = useRef();
 
-  // Build a great-circle arc from start to end, elevated above the globe
-  const positions = useMemo(() => {
+  // Build a great-circle arc path from start to end, elevated above the globe
+  const arcCurve = useMemo(() => {
     const startVec = latLngToVector3(startLat, startLng, GLOBE_RADIUS, 0.15);
     const endVec = latLngToVector3(endLat, endLng, GLOBE_RADIUS, 0.15);
 
@@ -28,61 +30,74 @@ const ConstellationLine = ({
     const angle = startVec.angleTo(endVec);
     const arcHeight = GLOBE_RADIUS * ARC_HEIGHT_FACTOR * (angle / Math.PI);
 
-    const arr = new Float32Array((ARC_SEGMENTS + 1) * 3);
+    const points = [];
 
     for (let i = 0; i <= ARC_SEGMENTS; i++) {
       const t = i / ARC_SEGMENTS;
 
       // Spherical interpolation (great circle path)
-      const point = new THREE.Vector3().copy(startVec).lerp(endVec, t).normalize();
+      const point = new THREE.Vector3()
+        .copy(startVec)
+        .lerp(endVec, t)
+        .normalize();
 
       // Elevation: parabolic arc peaking at midpoint
       const elevation = GLOBE_RADIUS + 0.15 + arcHeight * 4.0 * t * (1 - t);
       point.multiplyScalar(elevation);
 
-      arr[i * 3] = point.x;
-      arr[i * 3 + 1] = point.y;
-      arr[i * 3 + 2] = point.z;
+      points.push(point);
     }
 
-    return arr;
+    return new THREE.CatmullRomCurve3(points);
   }, [startLat, startLng, endLat, endLng]);
 
+  // Full tube geometry for the arc
+  const fullGeometry = useMemo(() => {
+    return new THREE.TubeGeometry(arcCurve, ARC_SEGMENTS, LINE_RADIUS, 6, false);
+  }, [arcCurve]);
+
   useFrame((state) => {
-    if (!lineRef.current) return;
+    if (!meshRef.current || !materialRef.current) return;
 
-    const geom = lineRef.current.geometry;
+    const geom = meshRef.current.geometry;
 
-    // Animate draw range
-    const vertexCount = Math.floor(drawProgress * (ARC_SEGMENTS + 1));
-    geom.setDrawRange(0, Math.max(0, vertexCount));
+    // Each ring of the tube has 7 vertices (6 radial segments + 1 to close).
+    // There are (ARC_SEGMENTS + 1) rings along the tube.
+    const vertsPerRing = 7; // radialSegments + 1
+    const totalRings = ARC_SEGMENTS + 1;
+    const totalVerts = totalRings * vertsPerRing;
+
+    // Reveal vertices proportionally to drawProgress
+    const visibleRings = Math.floor(drawProgress * totalRings);
+    const visibleVerts = visibleRings * vertsPerRing;
+
+    geom.setDrawRange(0, Math.max(0, visibleVerts * 2)); // *2 rough estimate for index count
+
+    // For indexed geometry, control via index draw range instead
+    if (geom.index) {
+      // Each segment between rings generates radialSegments * 2 triangles = radialSegments * 6 indices
+      const indicesPerSegment = 6 * 6; // radialSegments * 6
+      const visibleSegments = Math.max(0, visibleRings - 1);
+      const visibleIndices = visibleSegments * indicesPerSegment;
+      geom.setDrawRange(0, visibleIndices);
+    }
 
     // Material opacity
-    if (materialRef.current) {
-      materialRef.current.opacity = Math.min(1, drawProgress * 2.5) * 0.55;
+    materialRef.current.opacity = Math.min(1, drawProgress * 2.5) * 0.7;
 
-      // Pulse when complete
-      if (pulseEnabled && drawProgress >= 1.0) {
-        const t = state.clock.getElapsedTime();
-        materialRef.current.opacity =
-          0.25 + 0.3 * (0.5 + 0.5 * Math.sin(t * 1.5));
-      }
+    // Pulse when complete
+    if (pulseEnabled && drawProgress >= 1.0) {
+      const t = state.clock.getElapsedTime();
+      materialRef.current.opacity =
+        0.35 + 0.35 * (0.5 + 0.5 * Math.sin(t * 1.5));
     }
   });
 
   const lineColor = useMemo(() => new THREE.Color(color), [color]);
 
   return (
-    <line ref={lineRef}>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          count={ARC_SEGMENTS + 1}
-          array={positions}
-          itemSize={3}
-        />
-      </bufferGeometry>
-      <lineBasicMaterial
+    <mesh ref={meshRef} geometry={fullGeometry}>
+      <meshBasicMaterial
         ref={materialRef}
         color={lineColor}
         transparent
@@ -90,7 +105,7 @@ const ConstellationLine = ({
         depthWrite={false}
         blending={THREE.AdditiveBlending}
       />
-    </line>
+    </mesh>
   );
 };
 
