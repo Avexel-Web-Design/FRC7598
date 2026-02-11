@@ -21,6 +21,7 @@ const AdminUsers = lazy(() => import("./pages/AdminUsers"));
 const Calendar = lazy(() => import("./pages/Calendar"));
 const Planner = lazy(() => import("./pages/Planner"));
 const Profile = lazy(() => import("./pages/Profile"));
+const Impact = lazy(() => import("./pages/Impact"));
 import DashboardSidebar from './components/dashboard/DashboardSidebar';
 import MobileDashboardNav from './components/dashboard/MobileDashboardNav';
 
@@ -137,6 +138,7 @@ function App() {
           <Route path="/schedule" element={<Schedule />} />
           <Route path="/photos" element={<Photos />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/impact" element={<Impact />} />
         </Route>
         {/* Dashboard routes (no Navbar/Footer) */}
         <Route element={<DashboardLayout />}>
