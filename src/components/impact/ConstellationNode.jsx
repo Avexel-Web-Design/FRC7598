@@ -36,7 +36,7 @@ const glowFragmentShader = `
   }
 `;
 
-const NODE_ALTITUDE = 0.1;
+const NODE_ALTITUDE = 0.02;
 
 const ConstellationNode = ({
   lat,
@@ -45,6 +45,9 @@ const ConstellationNode = ({
   color = "#d3b840",
   size = 0.07,
   revealProgress = 0,
+  sizeFactor = 1,
+  isMichigan = false,
+  labelVisible = 1,
 }) => {
   const meshRef = useRef();
   const groupRef = useRef();
@@ -54,8 +57,6 @@ const ConstellationNode = ({
     [lat, lng]
   );
 
-  const normal = useMemo(() => position.clone().normalize(), [position]);
-
   const uniforms = useMemo(
     () => ({
       uColor: { value: new THREE.Color(color) },
@@ -64,40 +65,40 @@ const ConstellationNode = ({
     [color]
   );
 
+  const effectiveSize = size * sizeFactor;
+
   useFrame((state) => {
-    // Smooth reveal
     uniforms.uOpacity.value = THREE.MathUtils.lerp(
       uniforms.uOpacity.value,
       revealProgress,
       0.1
     );
 
-    if (groupRef.current) {
-      const targetScale = revealProgress > 0.05 ? 1 : 0;
-      const currentScale = groupRef.current.scale.x;
-      groupRef.current.scale.setScalar(
-        THREE.MathUtils.lerp(currentScale, targetScale, 0.08)
-      );
-    }
-
-    // Billboard
     if (meshRef.current) {
       meshRef.current.quaternion.copy(state.camera.quaternion);
     }
   });
 
-  const labelOpacity = Math.max(0, (revealProgress - 0.4) / 0.6);
+  // Label opacity: combines reveal progress with region-based visibility
+  const baseLabel = Math.max(0, (revealProgress - 0.4) / 0.6);
+  const labelOpacity = baseLabel * labelVisible;
 
-  const labelPos = useMemo(
-    () => [normal.x * 0.25, normal.y * 0.25, normal.z * 0.25],
-    [normal]
-  );
+  const labelPos = [0, 0, 0];
+
+  // Michigan: fixed tiny size, no distanceFactor (screen-pixel size).
+  // World: uses distanceFactor so labels scale naturally with globe distance.
+  const htmlProps = isMichigan
+    ? {} // no distanceFactor = fixed screen pixels
+    : { distanceFactor: 12 };
+
+  const fontSize = isMichigan ? "8px" : "8px";
+  const letterSpacing = isMichigan ? "0.4px" : "0.5px";
 
   return (
-    <group ref={groupRef} position={position} scale={0}>
+    <group ref={groupRef} position={position}>
       {/* Clean glow sprite */}
       <mesh ref={meshRef}>
-        <planeGeometry args={[size * 2.5, size * 2.5]} />
+        <planeGeometry args={[effectiveSize * 2.5, effectiveSize * 2.5]} />
         <shaderMaterial
           vertexShader={glowVertexShader}
           fragmentShader={glowFragmentShader}
@@ -108,21 +109,23 @@ const ConstellationNode = ({
         />
       </mesh>
 
-      {/* Crisp core dot */}
-      <mesh>
-        <sphereGeometry args={[size * 0.18, 10, 10]} />
-        <meshBasicMaterial
-          color="#fff"
-          transparent
-          opacity={revealProgress * 0.95}
-        />
-      </mesh>
+      {/* Crisp core dot — fades in with reveal */}
+      {revealProgress > 0.01 && (
+        <mesh>
+          <sphereGeometry args={[effectiveSize * 0.18, 10, 10]} />
+          <meshBasicMaterial
+            color="#fff"
+            transparent
+            opacity={revealProgress * 0.95}
+          />
+        </mesh>
+      )}
 
       {/* Label */}
       <Html
         position={labelPos}
         center
-        distanceFactor={10}
+        {...htmlProps}
         style={{
           opacity: labelOpacity,
           transition: "opacity 0.3s ease",
@@ -133,9 +136,9 @@ const ConstellationNode = ({
         <div
           style={{
             fontFamily: "'Inter', sans-serif",
-            fontSize: "8px",
+            fontSize,
             fontWeight: 600,
-            letterSpacing: "0.5px",
+            letterSpacing,
             color: "rgba(255,255,255,0.85)",
             textTransform: "uppercase",
             whiteSpace: "nowrap",

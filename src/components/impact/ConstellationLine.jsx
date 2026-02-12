@@ -5,7 +5,7 @@ import { latLngToVector3, GLOBE_RADIUS } from "./constellationData";
 
 const ARC_SEGMENTS = 64;
 const ARC_HEIGHT_FACTOR = 0.12;
-const LINE_RADIUS = 0.008;
+const LINE_RADIUS = 0.0008;
 
 const ConstellationLine = ({
   startLat,
@@ -15,32 +15,36 @@ const ConstellationLine = ({
   drawProgress = 0,
   color = "#d3b840",
   pulseEnabled = false,
+  sizeFactor = 1,
+  fadeOpacity = 1,
 }) => {
   const meshRef = useRef();
   const materialRef = useRef();
 
   // Build great-circle arc from start to end
+  // Start altitude matches CentralStar (0.02), end matches ConstellationNode (0.02)
   const arcCurve = useMemo(() => {
-    const startVec = latLngToVector3(startLat, startLng, GLOBE_RADIUS, 0.08);
-    const endVec = latLngToVector3(endLat, endLng, GLOBE_RADIUS, 0.08);
+    const START_ALT = 0.02;
+    const END_ALT = 0.02;
 
-    const angle = startVec.angleTo(endVec);
+    // Get unit-sphere directions for proper great-circle interpolation
+    const startDir = latLngToVector3(startLat, startLng, 1, 0).normalize();
+    const endDir = latLngToVector3(endLat, endLng, 1, 0).normalize();
+
+    const angle = startDir.angleTo(endDir);
     const arcHeight = GLOBE_RADIUS * ARC_HEIGHT_FACTOR * (angle / Math.PI);
 
     const points = [];
     for (let i = 0; i <= ARC_SEGMENTS; i++) {
       const t = i / ARC_SEGMENTS;
 
-      // Spherical interpolation
-      const point = new THREE.Vector3()
-        .copy(startVec)
-        .lerp(endVec, t)
-        .normalize();
+      // Spherical interpolation on unit sphere
+      const dir = new THREE.Vector3().copy(startDir).lerp(endDir, t).normalize();
 
-      // Parabolic elevation
-      const elevation = GLOBE_RADIUS + 0.08 + arcHeight * 4.0 * t * (1 - t);
-      point.multiplyScalar(elevation);
-      points.push(point);
+      // Interpolate base altitude from start to end, plus parabolic arc
+      const baseAlt = START_ALT * (1 - t) + END_ALT * t;
+      const elevation = GLOBE_RADIUS + baseAlt + arcHeight * 4.0 * t * (1 - t);
+      points.push(dir.multiplyScalar(elevation));
     }
 
     return new THREE.CatmullRomCurve3(points);
@@ -65,13 +69,14 @@ const ConstellationLine = ({
       geom.setDrawRange(0, visibleSegments * indicesPerSegment);
     }
 
-    // Clean opacity — no bloomy over-brightness
-    materialRef.current.opacity = Math.min(1, drawProgress * 2) * 0.55;
+    // Opacity: includes fadeOpacity for Michigan fade-out
+    const opacityScale = (0.5 + 0.5 * sizeFactor) * fadeOpacity;
+    materialRef.current.opacity = Math.min(1, drawProgress * 2) * opacityScale;
 
     // Subtle steady-state pulse
     if (pulseEnabled && drawProgress >= 1.0) {
       const t = state.clock.getElapsedTime();
-      materialRef.current.opacity = 0.3 + 0.15 * (0.5 + 0.5 * Math.sin(t * 1.2));
+      materialRef.current.opacity = (0.7 + 0.3 * (0.5 + 0.5 * Math.sin(t * 1.2))) * opacityScale;
     }
   });
 
