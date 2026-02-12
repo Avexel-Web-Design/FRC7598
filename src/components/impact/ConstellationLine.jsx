@@ -5,7 +5,7 @@ import { latLngToVector3, GLOBE_RADIUS } from "./constellationData";
 
 const ARC_SEGMENTS = 64;
 const ARC_HEIGHT_FACTOR = 0.12;
-const LINE_RADIUS = 0.0008;
+const LINE_RADIUS = 0.0012;
 
 const ConstellationLine = ({
   startLat,
@@ -76,7 +76,7 @@ const ConstellationLine = ({
     // Subtle steady-state pulse
     if (pulseEnabled && drawProgress >= 1.0) {
       const t = state.clock.getElapsedTime();
-      materialRef.current.opacity = (0.7 + 0.3 * (0.5 + 0.5 * Math.sin(t * 1.2))) * opacityScale;
+      materialRef.current.opacity = (0.85 + 0.15 * (0.5 + 0.5 * Math.sin(t * 1.2))) * opacityScale;
     }
   });
 

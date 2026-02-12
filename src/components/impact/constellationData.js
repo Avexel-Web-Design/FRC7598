@@ -60,31 +60,31 @@ export const constellationNodes = [
 
   // ── United States ──
   { id: "mountain-view", label: "Mountain View, CA", lat: 37.3861, lng: -122.0839, region: "world" },
-  { id: "winter-park", label: "Winter Park, FL", lat: 28.6000, lng: -81.3392, region: "world" },
+  { id: "winter-park", label: "Winter Park, FL", lat: 28.6000, lng: -81.3392, region: "world", labelOffset: [30, -14] },
   { id: "houston", label: "Houston, TX", lat: 29.7604, lng: -95.3698, region: "world" },
-  { id: "dallas-ft-worth", label: "Dallas/Ft. Worth, TX", lat: 32.7767, lng: -96.7970, region: "world" },
+  { id: "dallas-ft-worth", label: "Dallas/Ft. Worth, TX", lat: 32.7767, lng: -96.7970, region: "world", labelOffset: [-30, -12] },
   { id: "denver", label: "Denver, CO", lat: 39.7392, lng: -104.9903, region: "world" },
-  { id: "naples-fl", label: "Naples, FL", lat: 26.1420, lng: -81.7948, region: "world" },
-  { id: "miami", label: "Miami, FL", lat: 25.7617, lng: -80.1918, region: "world" },
+  { id: "naples-fl", label: "Naples, FL", lat: 26.1420, lng: -81.7948, region: "world", labelOffset: [-40, -14] },
+  { id: "miami", label: "Miami, FL", lat: 25.7617, lng: -80.1918, region: "world", labelOffset: [0, 4] },
   { id: "north-carolina", label: "North Carolina", lat: 35.7596, lng: -79.0193, region: "world" },
   { id: "new-jersey", label: "New Jersey", lat: 40.0583, lng: -74.4057, region: "world" },
-  { id: "georgia", label: "Georgia", lat: 33.7490, lng: -84.3880, region: "world" },
+  { id: "georgia", label: "Georgia", lat: 33.7490, lng: -84.3880, region: "world", labelOffset: [-10, 0] },
   { id: "minnesota", label: "Minnesota", lat: 46.7296, lng: -94.6859, region: "world" },
 
   // ── Europe ──
   { id: "turin", label: "Turin, Italy", lat: 45.0703, lng: 7.6869, region: "world" },
   { id: "athens", label: "Athens, Greece", lat: 37.9838, lng: 23.7275, region: "world" },
-  { id: "london", label: "London, United Kingdom", lat: 51.5074, lng: -0.1278, region: "world" },
-  { id: "east-midlands", label: "East Midlands", lat: 52.8311, lng: -1.3278, region: "world" },
-  { id: "wales", label: "Wales", lat: 52.1307, lng: -3.7837, region: "world" },
+  { id: "london", label: "London, United Kingdom", lat: 51.5074, lng: -0.1278, region: "world", labelOffset: [-10, -4] },
+  { id: "east-midlands", label: "East Midlands, United Kingdom", lat: 52.8311, lng: -1.3278, region: "world", labelOffset: [0, -18] },
+  { id: "wales", label: "Wales, United Kingdom", lat: 52.1307, lng: -3.7837, region: "world", labelOffset: [-80, -10] },
   { id: "switzerland", label: "Switzerland", lat: 46.8182, lng: 8.2275, region: "world" },
   { id: "spain", label: "Spain", lat: 40.4637, lng: -3.7492, region: "world" },
 
   // ── Asia & Pacific ──
-  { id: "chiba", label: "Chiba, Japan", lat: 35.6074, lng: 140.1065, region: "world" },
+  { id: "chiba", label: "Chiba, Japan", lat: 35.6074, lng: 140.1065, region: "world", labelOffset: [0, -14] },
   { id: "india", label: "India", lat: 20.5937, lng: 78.9629, region: "world" },
   { id: "malaysia", label: "Malaysia", lat: 4.2105, lng: 101.9758, region: "world" },
-  { id: "busan", label: "Busan, South Korea", lat: 35.1796, lng: 129.0756, region: "world" },
+  { id: "busan", label: "Busan, South Korea", lat: 35.1796, lng: 129.0756, region: "world", labelOffset: [-20, 0] },
   { id: "sydney", label: "Sydney, Australia", lat: -33.8688, lng: 151.2093, region: "world" },
 
   // ── Other ──
@@ -134,8 +134,8 @@ export const ANIMATION = {
   ASIA_HOLD_DURATION: 1.0,        // hold at Asia/Pacific
   ORBIT_TO_EUROPE_DURATION: 3.0,  // orbit from Asia to Europe
   EUROPE_HOLD_DURATION: 1.0,      // hold at Europe
-  ORBIT_TO_NA_DURATION: 3.0,      // orbit from Europe back to NA
-  FINAL_ZOOM_DURATION: 3.0,       // zoom from globe into SCA star
+  ORBIT_TO_NA_DURATION: 2.0,      // orbit from Europe back to NA (merged with zoom)
+  FINAL_ZOOM_DURATION: 2.0,       // zoom from globe into SCA star (merged with orbit)
 
   // Tour camera targets (lat, lng for orbit stops)
   ASIA_CENTER: { lat: 0, lng: 110 },

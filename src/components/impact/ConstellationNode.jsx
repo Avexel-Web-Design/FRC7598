@@ -48,6 +48,8 @@ const ConstellationNode = ({
   sizeFactor = 1,
   isMichigan = false,
   labelVisible = 1,
+  fadeOpacity = 1,
+  labelOffset = [0, 0],
 }) => {
   const meshRef = useRef();
   const groupRef = useRef();
@@ -70,7 +72,7 @@ const ConstellationNode = ({
   useFrame((state) => {
     uniforms.uOpacity.value = THREE.MathUtils.lerp(
       uniforms.uOpacity.value,
-      revealProgress,
+      revealProgress * fadeOpacity,
       0.1
     );
 
@@ -116,7 +118,7 @@ const ConstellationNode = ({
           <meshBasicMaterial
             color="#fff"
             transparent
-            opacity={revealProgress * 0.95}
+            opacity={revealProgress * 0.95 * fadeOpacity}
           />
         </mesh>
       )}
@@ -131,6 +133,7 @@ const ConstellationNode = ({
           transition: "opacity 0.3s ease",
           pointerEvents: "none",
           userSelect: "none",
+          transform: `translate(${labelOffset[0]}px, ${labelOffset[1]}px)`,
         }}
       >
         <div

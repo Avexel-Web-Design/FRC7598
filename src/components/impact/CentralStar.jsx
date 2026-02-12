@@ -23,43 +23,10 @@ function createStarShape(outerRadius = 1, innerRadius = 0.4, points = 5) {
   return shape;
 }
 
-// Glow shader for the brightening aura during final zoom
-const glowVertexShader = `
-  varying vec2 vUv;
-  void main() {
-    vUv = uv;
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-  }
-`;
-
-const glowFragmentShader = `
-  uniform float uOpacity;
-  uniform float uBrightness;
-  uniform vec3 uColorInner;
-  uniform vec3 uColorOuter;
-  varying vec2 vUv;
-
-  void main() {
-    vec2 center = vUv - 0.5;
-    float dist = length(center) * 2.0;
-
-    float core = smoothstep(0.5, 0.0, dist);
-    float glow = smoothstep(1.0, 0.1, dist) * 0.4;
-
-    vec3 color = mix(uColorOuter, uColorInner, core);
-    color = mix(color, vec3(1.0), uBrightness * 0.8);
-    float alpha = (core + glow) * uOpacity;
-    alpha *= smoothstep(1.0, 0.5, dist);
-
-    gl_FragColor = vec4(color, alpha);
-  }
-`;
-
 const CENTRAL_ALTITUDE = 0.02;
 
 const CentralStar = ({ phaseInfo = { phase: 0, miZoom: 0, globeZoom: 0, finalZoom: 0 } }) => {
-  const starRef = useRef();
-  const glowRef = useRef();
+  const groupRef = useRef();
 
   const basePosition = useMemo(
     () => latLngToVector3(42.5248, -83.5363, GLOBE_RADIUS, CENTRAL_ALTITUDE),
@@ -68,72 +35,47 @@ const CentralStar = ({ phaseInfo = { phase: 0, miZoom: 0, globeZoom: 0, finalZoo
 
   const starShape = useMemo(() => createStarShape(1, 0.42, 5), []);
 
-  const glowUniforms = useMemo(
-    () => ({
-      uColorInner: { value: new THREE.Color("#fffbe6") },
-      uColorOuter: { value: new THREE.Color("#d3b840") },
-      uOpacity: { value: 0 },
-      uBrightness: { value: 0 },
-    }),
-    []
-  );
-
   // Scale: tiny at Michigan close-up, grows at globe view
   const sizeFactor = 0.04 + 0.96 * phaseInfo.globeZoom;
   const starScale = sizeFactor * 0.06;
 
-  // During final zoom, the camera zooms INTO the star — no scale change needed.
-  // Just shift color toward white as it gets brighter (delayed to last 50%).
   const finalZoom = phaseInfo.finalZoom || 0;
-  const brighten = Math.max(0, (finalZoom - 0.5) / 0.5);
+
+  // Shift color toward white as camera zooms in
+  const brighten = Math.max(0, (finalZoom - 0.3) / 0.7);
   const starColor = brighten > 0
     ? new THREE.Color("#d4a843").lerp(new THREE.Color("#ffffff"), brighten)
     : new THREE.Color("#d4a843");
 
-  // Glow: appears late in final zoom to add a brightening aura
-  const glowScale = starScale * 5;
-  const glowOpacity = Math.max(0, (finalZoom - 0.5) / 0.5);
-
   // Billboard: always face the camera
   useFrame((state) => {
-    if (starRef.current) {
-      starRef.current.quaternion.copy(state.camera.quaternion);
-    }
-    if (glowRef.current) {
-      glowRef.current.quaternion.copy(state.camera.quaternion);
-      glowUniforms.uOpacity.value = glowOpacity;
-      glowUniforms.uBrightness.value = finalZoom;
+    if (groupRef.current) {
+      groupRef.current.quaternion.copy(state.camera.quaternion);
     }
   });
 
   return (
     <group position={basePosition}>
-      {/* Star shape — constant size, camera zooms into it */}
-      <mesh ref={starRef} scale={starScale}>
-        <shapeGeometry args={[starShape]} />
-        <meshBasicMaterial
-          color={starColor}
-          side={THREE.DoubleSide}
-          depthWrite={false}
-          transparent
-          opacity={1}
-        />
-      </mesh>
-
-      {/* Brightening glow during final zoom */}
-      {finalZoom > 0 && (
-        <mesh ref={glowRef} scale={glowScale}>
-          <planeGeometry args={[1, 1]} />
-          <shaderMaterial
-            vertexShader={glowVertexShader}
-            fragmentShader={glowFragmentShader}
-            uniforms={glowUniforms}
-            transparent
+      <group ref={groupRef}>
+        {/* Star shape — stays visible, camera zooms into it */}
+        <mesh scale={starScale}>
+          <shapeGeometry args={[starShape]} />
+          <meshBasicMaterial
+            color={starColor}
+            side={THREE.DoubleSide}
             depthWrite={false}
-            blending={THREE.AdditiveBlending}
           />
         </mesh>
-      )}
+        {/* Tiny circle to cover the center seam artifact */}
+        <mesh scale={starScale * 0.15} renderOrder={1}>
+          <circleGeometry args={[1, 16]} />
+          <meshBasicMaterial
+            color={starColor}
+            depthTest={false}
+            depthWrite={false}
+          />
+        </mesh>
+      </group>
     </group>
   );
 };

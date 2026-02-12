@@ -59,6 +59,7 @@ function getGlobeCameraPosition(lat, lng, upBias = 0.2) {
 }
 
 // Spherical interpolation for camera positions (orbit around globe)
+// Uses quaternion slerp — follows a great-circle arc (can go far north/south)
 function slerpCameraPositions(from, to, t) {
   const fromDir = from.clone().normalize();
   const toDir = to.clone().normalize();
@@ -77,6 +78,40 @@ function slerpCameraPositions(from, to, t) {
   const interpDir = new THREE.Vector3(0, 0, 1).applyQuaternion(qInterp);
 
   return interpDir.multiplyScalar(radius);
+}
+
+// Lat/lng interpolation for camera positions — more direct path that
+// doesn't arc toward the poles. Better for Asia→Europe orbit.
+function lerpCameraPositionsLatLng(from, to, t) {
+  const radius = from.length() + (to.length() - from.length()) * t;
+
+  // Convert 3D positions back to lat/lng
+  const fromDir = from.clone().normalize();
+  const toDir = to.clone().normalize();
+
+  const fromLat = Math.asin(fromDir.y) * (180 / Math.PI);
+  const fromLng = Math.atan2(fromDir.z, -fromDir.x) * (180 / Math.PI) - 180;
+
+  const toLat = Math.asin(toDir.y) * (180 / Math.PI);
+  const toLng = Math.atan2(toDir.z, -toDir.x) * (180 / Math.PI) - 180;
+
+  // Interpolate lat directly
+  const lat = fromLat + (toLat - fromLat) * t;
+
+  // Interpolate lng, choosing the shorter path around the globe
+  let dLng = toLng - fromLng;
+  if (dLng > 180) dLng -= 360;
+  if (dLng < -180) dLng += 360;
+  const lng = fromLng + dLng * t;
+
+  // Convert back to 3D — use the same math as latLngToVector3 but with our interpolated radius
+  const phi = (90 - lat) * (Math.PI / 180);
+  const theta = (lng + 180) * (Math.PI / 180);
+  return new THREE.Vector3(
+    -(radius * Math.sin(phi) * Math.cos(theta)),
+    radius * Math.cos(phi),
+    radius * Math.sin(phi) * Math.sin(theta)
+  );
 }
 
 // ────────────────────────────────────────────
@@ -146,10 +181,8 @@ function CameraAnimator({ onPhaseInfo }) {
     t += ANIMATION.ORBIT_TO_EUROPE_DURATION;
     p.europeHoldStart = t; // phase 8 start
     t += ANIMATION.EUROPE_HOLD_DURATION;
-    p.orbitNaStart = t; // phase 9 start
-    t += ANIMATION.ORBIT_TO_NA_DURATION;
-    p.finalZoomStart = t; // phase 10 start
-    t += ANIMATION.FINAL_ZOOM_DURATION;
+    p.orbitNaStart = t; // phase 9+10 start (merged: orbit to NA + zoom into SCA)
+    t += ANIMATION.ORBIT_TO_NA_DURATION + ANIMATION.FINAL_ZOOM_DURATION;
     p.doneStart = t; // phase 11
     return p;
   }, []);
@@ -216,6 +249,8 @@ function CameraAnimator({ onPhaseInfo }) {
       const eased = easeInOutCubic(raw);
       camera.position.lerpVectors(miPos, naGlobePos, eased);
       camera.lookAt(0, 0, 0);
+      // Michigan labels fade out over the first 40% of the globe zoom
+      const miLabelFade = Math.max(0, 1 - eased / 0.4);
       onPhaseInfo({
         phase: 3,
         miZoom: 1,
@@ -223,6 +258,7 @@ function CameraAnimator({ onPhaseInfo }) {
         finalZoom: 0,
         viewRegion: "americas",
         labelsOff: false,
+        miLabelFade,
       });
       return;
     }
@@ -275,12 +311,12 @@ function CameraAnimator({ onPhaseInfo }) {
       return;
     }
 
-    // Phase 7: Orbit to Europe
+    // Phase 7: Orbit to Europe (lat/lng interpolation for a more direct path)
     if (t < phaseTimes.europeHoldStart) {
       const raw =
         (t - phaseTimes.orbitEuropeStart) / ANIMATION.ORBIT_TO_EUROPE_DURATION;
       const eased = easeInOutCubic(raw);
-      camera.position.copy(slerpCameraPositions(asiaPos, euroPos, eased));
+      camera.position.copy(lerpCameraPositionsLatLng(asiaPos, euroPos, eased));
       camera.lookAt(0, 0, 0);
       onPhaseInfo({
         phase: 7,
@@ -308,37 +344,35 @@ function CameraAnimator({ onPhaseInfo }) {
       return;
     }
 
-    // Phase 9: Orbit back to NA
-    if (t < phaseTimes.finalZoomStart) {
-      const raw =
-        (t - phaseTimes.orbitNaStart) / ANIMATION.ORBIT_TO_NA_DURATION;
-      const eased = easeInOutCubic(raw);
-      camera.position.copy(slerpCameraPositions(euroPos, naGlobePos, eased));
-      camera.lookAt(0, 0, 0);
-      onPhaseInfo({
-        phase: 9,
-        miZoom: 1,
-        globeZoom: 1,
-        finalZoom: 0,
-        viewRegion: null,
-        labelsOff: true,
-      });
-      return;
-    }
+    // Phases 9+10 MERGED: Orbit back to NA and zoom into SCA as one fluid motion.
+    // Uses a quadratic Bezier: euroPos → naGlobePos (control) → scaSurface.
+    // The camera never stops at the NA globe position — it curves through it.
+    const combinedEnd = phaseTimes.orbitNaStart + ANIMATION.ORBIT_TO_NA_DURATION + ANIMATION.FINAL_ZOOM_DURATION;
+    if (t < combinedEnd) {
+      const combinedDuration = ANIMATION.ORBIT_TO_NA_DURATION + ANIMATION.FINAL_ZOOM_DURATION;
+      const raw = (t - phaseTimes.orbitNaStart) / combinedDuration;
+      const eased = raw * raw; // easeInQuad — accelerates from Europe through NA into SCA
 
-    // Phase 10: Zoom into SCA star
-    if (t < phaseTimes.doneStart) {
-      const raw =
-        (t - phaseTimes.finalZoomStart) / ANIMATION.FINAL_ZOOM_DURATION;
-      const eased = easeInCubic(raw); // accelerating zoom-in
-      // Interpolate from globe position toward SCA surface
-      camera.position.lerpVectors(naGlobePos, scaSurface, eased);
+      // Quadratic Bezier: P = (1-t)^2 * P0 + 2(1-t)t * P1 + t^2 * P2
+      // P0 = euroPos, P1 = naGlobePos (control point), P2 = scaSurface
+      const oneMinusT = 1 - eased;
+      const bezierPos = new THREE.Vector3()
+        .addScaledVector(euroPos, oneMinusT * oneMinusT)
+        .addScaledVector(naGlobePos, 2 * oneMinusT * eased)
+        .addScaledVector(scaSurface, eased * eased);
+      camera.position.copy(bezierPos);
       camera.lookAt(0, 0, 0);
+
+      // finalZoom ramps 0→1 over the last portion (once past the NA midpoint)
+      // The "midpoint" in eased space is roughly when the camera is near NA
+      const zoomProgress = Math.max(0, (eased - 0.3) / 0.7);
+      const finalZoom = zoomProgress * zoomProgress; // quadratic ramp for smooth glow/overlay
+
       onPhaseInfo({
-        phase: 10,
+        phase: eased < 0.4 ? 9 : 10,
         miZoom: 1,
         globeZoom: 1,
-        finalZoom: eased,
+        finalZoom,
         viewRegion: null,
         labelsOff: true,
       });
@@ -421,6 +455,38 @@ function computeTimings(nodes) {
 }
 
 // ────────────────────────────────────────────
+// Background starfield with fade support
+// ────────────────────────────────────────────
+function FadingStars({ opacity }) {
+  const groupRef = useRef();
+
+  useFrame(() => {
+    if (groupRef.current) {
+      groupRef.current.traverse((child) => {
+        if (child.material) {
+          child.material.opacity = opacity;
+          child.material.transparent = true;
+        }
+      });
+    }
+  });
+
+  return (
+    <group ref={groupRef}>
+      <Stars
+        radius={120}
+        depth={60}
+        count={1200}
+        factor={1.5}
+        saturation={0}
+        fade
+        speed={0.1}
+      />
+    </group>
+  );
+}
+
+// ────────────────────────────────────────────
 // Scene content
 // ────────────────────────────────────────────
 function SceneContent() {
@@ -467,16 +533,8 @@ function SceneContent() {
       <ambientLight intensity={0.3} />
       <directionalLight position={[10, 8, 5]} intensity={0.6} color="#ffffff" />
 
-      {/* Subtle background starfield */}
-      <Stars
-        radius={120}
-        depth={60}
-        count={1200}
-        factor={1.5}
-        saturation={0}
-        fade
-        speed={0.1}
-      />
+      {/* Subtle background starfield — fades out during final zoom */}
+      <FadingStars opacity={Math.max(0, 1 - phaseInfo.finalZoom / 0.15)} />
 
       <CameraAnimator onPhaseInfo={handlePhaseInfo} />
 
@@ -518,8 +576,8 @@ function WhiteOutOverlay({ progress }) {
     }
   });
 
-  // Opacity ramps up in the last 25% of the zoom
-  const opacity = Math.max(0, (progress - 0.75) / 0.25);
+  // Opacity ramps up in the last 12% of the zoom (starts at 88%)
+  const opacity = Math.max(0, (progress - 0.88) / 0.12);
 
   return (
     <mesh ref={meshRef}>
@@ -546,14 +604,23 @@ function ConstellationNodeWithLine({ node, clockRef, phaseInfo, globeZoomStart }
 
   const sizeFactor = isMichigan ? 0.12 : 1.0;
 
+  // Fade lines and nodes out during the final zoom so they don't show through the star glow
+  // Fully gone by finalZoom 0.15 (very early in zoom)
+  const contentFade = Math.max(0, 1 - phaseInfo.finalZoom / 0.15);
+
   // Label visibility: based on whether this node's geoRegion matches the current viewRegion
-  // Michigan nodes show labels during michigan viewRegion only (phases 0-2)
+  // Michigan nodes: visible during michigan viewRegion (phases 0-2), then fade during early phase 3
   // World nodes show labels when their geoRegion matches viewRegion
   // labelsOff overrides everything (final NA return + zoom)
   let labelVisible = 0;
   if (!phaseInfo.labelsOff) {
     if (isMichigan) {
-      labelVisible = phaseInfo.viewRegion === "michigan" ? 1 : 0;
+      if (phaseInfo.viewRegion === "michigan") {
+        labelVisible = 1;
+      } else if (phaseInfo.miLabelFade !== undefined && phaseInfo.miLabelFade > 0) {
+        // Fading out during early globe zoom-out
+        labelVisible = phaseInfo.miLabelFade;
+      }
     } else {
       labelVisible = node.geoRegion === phaseInfo.viewRegion ? 1 : 0;
     }
@@ -595,21 +662,23 @@ function ConstellationNodeWithLine({ node, clockRef, phaseInfo, globeZoomStart }
         endLat={node.lat}
         endLng={node.lng}
         drawProgress={lineProgress}
-        color="#d3b840"
+        color="#e8cc50"
         pulseEnabled={lineProgress >= 1}
         sizeFactor={sizeFactor}
-        fadeOpacity={1}
+        fadeOpacity={contentFade}
       />
       <ConstellationNode
         lat={node.lat}
         lng={node.lng}
         label={node.label}
-        color="#d3b840"
+        color="#e8cc50"
         size={0.07}
         revealProgress={nodeReveal}
         sizeFactor={sizeFactor}
         isMichigan={isMichigan}
         labelVisible={labelVisible}
+        fadeOpacity={contentFade}
+        labelOffset={node.labelOffset}
       />
     </>
   );
