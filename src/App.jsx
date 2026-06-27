@@ -50,7 +50,7 @@ const SiteLayout = () => {
   const isImpact = loc.pathname === '/impact';
   const hasNavbar = !isImpact;
   return (
-    <div className={`relative text-white overflow-x-hidden min-h-screen ${isImpact ? 'bg-black' : 'bg-gradient-to-b from-sca-purple-dark via-sca-purple to-sca-purple-dark'}`}>
+    <div className={`relative text-white overflow-x-hidden min-h-screen min-h-lvh ${isImpact ? 'bg-black' : 'bg-gradient-to-b from-sca-purple-dark via-sca-purple to-sca-purple-dark'}`}>
       {!isImpact && <ParticleBackground />}
       {hasNavbar && (
         <div className="sticky top-0 z-50">
