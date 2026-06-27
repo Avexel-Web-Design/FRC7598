@@ -99,6 +99,16 @@ const About = () => {
                       <p className="text-sm text-gray-400">Won a competition for the first time</p>
                     </div>
                   </div>
+
+                  <div className="flex group">
+                    <div className="flex-shrink-0 h-12 w-12 rounded-full bg-gradient-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12">
+                      <span className="font-bold text-[#d3b840] transition-colors duration-300">2026</span>
+                    </div>
+                    <div className="ml-6 transform hover:-translate-y-1 transition-transform duration-300">
+                      <h4 className="text-lg font-medium text-white">First Impact Award</h4>
+                      <p className="text-sm text-gray-400">Won our first Impact Award banner</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
