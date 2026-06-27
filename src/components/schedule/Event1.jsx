@@ -9,6 +9,13 @@ const Event1 = () => {
   const [teamEvents, setTeamEvents] = useState([]);
   const [divisionNumber, setDivisionNumber] = useState(null);
 
+  // 2026 season performance data for this event
+  const seasonPerformance = {
+    ranking: "21 of 38",
+    record: "5-7-0",
+    awards: "District FIRST Impact Award"
+  };
+
   useEffect(() => {
     const fetchEventData = async () => {
       try {
@@ -176,6 +183,23 @@ const Event1 = () => {
             </div>
           ) : eventData ? (
             <div className="modern-card p-8">
+              <div className="mb-8 p-6 bg-gradient-to-r from-sca-purple/20 to-sca-gold/10 rounded-lg border border-sca-gold/20">
+                <h3 className="text-xl font-bold text-white mb-4">Event Results</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="bg-white/5 p-4 rounded-lg">
+                    <h4 className="text-sca-gold font-medium mb-1 text-sm uppercase tracking-wide">Ranking</h4>
+                    <p className="text-white text-lg font-bold">{seasonPerformance.ranking}</p>
+                  </div>
+                  <div className="bg-white/5 p-4 rounded-lg">
+                    <h4 className="text-sca-gold font-medium mb-1 text-sm uppercase tracking-wide">Record</h4>
+                    <p className="text-white text-lg font-bold">{seasonPerformance.record}</p>
+                  </div>
+                  <div className="bg-white/5 p-4 rounded-lg">
+                    <h4 className="text-sca-gold font-medium mb-1 text-sm uppercase tracking-wide">Awards</h4>
+                    <p className="text-white text-base">{seasonPerformance.awards}</p>
+                  </div>
+                </div>
+              </div>
               <div className="grid md:grid-cols-2 gap-6 mb-6">
                 <div>
                   <h3 className="text-xl font-bold text-white mb-4">Event Details</h3>

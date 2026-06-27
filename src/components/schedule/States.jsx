@@ -9,6 +9,14 @@ const States = () => {
   const [teamEvents, setTeamEvents] = useState([]);
   const [divisionNumber, setDivisionNumber] = useState(null);
 
+  // 2026 season performance data for this event
+  const seasonPerformance = {
+    division: "Consumers Energy Foundation Division",
+    ranking: "28 of 40",
+    record: "6-6-0",
+    awards: "Team Spirit Award"
+  };
+
   useEffect(() => {
     const fetchEventData = async () => {
       try {
@@ -165,10 +173,22 @@ const States = () => {
             </div>
           ) : eventData ? (
             <div className="modern-card p-8">
-              <div className="p-3 rounded-full mb-6 border border-[#d3b840]/30">
-                <p className="text-center text-gray-200 font-medium">
-                  <span className="text-sca-gold">⚠</span> Qualification Dependent
-                </p>
+              <div className="mb-8 p-6 bg-gradient-to-r from-sca-purple/20 to-sca-gold/10 rounded-lg border border-sca-gold/20">
+                <h3 className="text-xl font-bold text-white mb-4">Event Results</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="bg-white/5 p-4 rounded-lg">
+                    <h4 className="text-sca-gold font-medium mb-1 text-sm uppercase tracking-wide">Ranking</h4>
+                    <p className="text-white text-lg font-bold">{seasonPerformance.ranking}</p>
+                  </div>
+                  <div className="bg-white/5 p-4 rounded-lg">
+                    <h4 className="text-sca-gold font-medium mb-1 text-sm uppercase tracking-wide">Record</h4>
+                    <p className="text-white text-lg font-bold">{seasonPerformance.record}</p>
+                  </div>
+                  <div className="bg-white/5 p-4 rounded-lg">
+                    <h4 className="text-sca-gold font-medium mb-1 text-sm uppercase tracking-wide">Awards</h4>
+                    <p className="text-white text-base">{seasonPerformance.awards}</p>
+                  </div>
+                </div>
               </div>
               
               <div className="grid md:grid-cols-2 gap-6 mb-6">
@@ -179,12 +199,10 @@ const States = () => {
                       <span className="text-sca-gold mr-2">•</span>
                       <span><strong>Dates:</strong> {formatDate(eventData.start_date)} - {formatDate(eventData.end_date)}</span>
                     </li>
-                    {getDivisionInfo() && (
-                      <li className="flex items-start">
-                        <span className="text-sca-gold mr-2">•</span>
-                        <span><strong>Our Division:</strong> Division {getDivisionInfo()}</span>
-                      </li>
-                    )}
+                    <li className="flex items-start">
+                      <span className="text-sca-gold mr-2">•</span>
+                      <span><strong>Our Division:</strong> {seasonPerformance.division}</span>
+                    </li>
                   </ul>
                 </div>
                 
