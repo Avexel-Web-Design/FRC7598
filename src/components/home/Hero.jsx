@@ -79,6 +79,9 @@ const Hero = () => {
               <span className="text-lg sm:text-xl md:text-2xl text-[#d3b840]">
                 2025 Traverse City Event Champions
               </span>
+              <span className="text-lg sm:text-xl md:text-2xl text-[#d3b840]">
+                2026 Traverse City Event Impact Award Winner
+              </span>
             </HashLink>
           </div>
         </div>
