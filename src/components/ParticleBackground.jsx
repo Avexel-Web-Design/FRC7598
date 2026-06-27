@@ -12,8 +12,12 @@ const ParticleBackground = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    // Setup canvas with device pixel ratio handling
-    const dpr = window.devicePixelRatio || 1;
+    const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+    const isSmallScreen = window.innerWidth < 768;
+    if (reducedMotion || isSmallScreen) return;
+
+    // Setup canvas with capped device pixel ratio handling
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     const rect = canvas.getBoundingClientRect();
     canvas.width = rect.width * dpr;
     canvas.height = rect.height * dpr;
@@ -23,7 +27,7 @@ const ParticleBackground = () => {
     contextRef.current = ctx;
 
     const initParticles = () => {
-      const particleCount = Math.min(window.innerWidth / 10, 120);
+      const particleCount = Math.min(window.innerWidth / 22, 60);
       particlesRef.current = Array.from({ length: particleCount }, () =>
         createParticle()
       );
@@ -51,7 +55,13 @@ const ParticleBackground = () => {
       });
     };
 
-    const animate = () => {
+    let lastFrame = 0;
+    const animate = (timestamp = 0) => {
+      if (timestamp - lastFrame < 33) {
+        rafRef.current = requestAnimationFrame(animate);
+        return;
+      }
+      lastFrame = timestamp;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       // Update and draw ripples
@@ -93,9 +103,11 @@ const ParticleBackground = () => {
         if (mouseRef.current.x !== null && mouseRef.current.y !== null) {
           const dx = mouseRef.current.x - particle.x;
           const dy = mouseRef.current.y - particle.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
+          const distanceSq = dx * dx + dy * dy;
+          const radiusSq = mouseRef.current.radius * mouseRef.current.radius;
 
-          if (distance < mouseRef.current.radius) {
+          if (distanceSq < radiusSq) {
+            const distance = Math.sqrt(distanceSq);
             const force = (1 - distance / mouseRef.current.radius) * 0.2;
             particle.x -= dx * force * particle.depth;
             particle.y -= dy * force * particle.depth;
@@ -137,9 +149,10 @@ const ParticleBackground = () => {
         particlesRef.current.slice(i + 1).forEach((p2) => {
           const dx = p1.x - p2.x;
           const dy = p1.y - p2.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
+          const distanceSq = dx * dx + dy * dy;
 
-          if (distance < 150) {
+          if (distanceSq < 22500) {
+            const distance = Math.sqrt(distanceSq);
             const opacity = (1 - distance / 150) * 0.15;
             ctx.strokeStyle = `rgba(71, 26, 103, ${opacity})`;
             ctx.lineWidth = Math.min(p1.depth, p2.depth);
@@ -206,8 +219,7 @@ const ParticleBackground = () => {
       ref={canvasRef}
       className="fixed top-0 left-0 w-full h-full h-lvh bg-black"
       style={{ 
-        WebkitBackdropFilter: "blur(2px)", 
-        backdropFilter: "blur(2px)",
+        pointerEvents: "none",
         margin: 0,
         padding: 0,
         border: "none",

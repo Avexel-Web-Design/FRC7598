@@ -15,9 +15,9 @@ const Hero = () => {
         // Staggered animation
         setTimeout(() => {
           element.classList.add('animation-ready');
-        }, index * 150);
+        }, index * 50);
       });
-    }, 200);
+    }, 50);
   }, []);
 
   return (

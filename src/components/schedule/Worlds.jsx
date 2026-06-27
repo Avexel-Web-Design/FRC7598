@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import useScrollReveal from "../../hooks/useScrollReveal";
+import { getEvent, getTeamEvents } from "../../utils/tbaEvents";
 
 const Worlds = () => {
   useScrollReveal();
@@ -23,21 +24,8 @@ const Worlds = () => {
         // Get the current year
         const currentYear = new Date().getFullYear();
         
-        // Fetch all team events to detect division
-        const teamResponse = await fetch(
-          `https://www.thebluealliance.com/api/v3/team/frc7598/events/${currentYear}`,
-          {
-            headers: {
-              'X-TBA-Auth-Key': 'gdgkcwgh93dBGQjVXlh0ndD4GIkiQlzzbaRu9NUHGfk72tPVG2a69LF2BoYB1QNf'
-            }
-          }
-        );
-        
-        if (!teamResponse.ok) {
-          throw new Error(`Team API response error: ${teamResponse.status}`);
-        }
-        
-        const events = await teamResponse.json();
+        // Fetch all team events through shared cache to detect division
+        const events = await getTeamEvents(currentYear);
         setTeamEvents(events);
         
         // Check for world championship division
@@ -65,21 +53,7 @@ const Worlds = () => {
           }
         }
         
-        // Direct API call to championship event using the event key pattern
-        const response = await fetch(
-          `https://www.thebluealliance.com/api/v3/event/${currentYear}cmptx`,
-          {
-            headers: {
-              'X-TBA-Auth-Key': 'gdgkcwgh93dBGQjVXlh0ndD4GIkiQlzzbaRu9NUHGfk72tPVG2a69LF2BoYB1QNf'
-            }
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error(`API response error: ${response.status}`);
-        }
-
-        const data = await response.json();
+        const data = await getEvent(`${currentYear}cmptx`);
         setEventData(data);
         setLoading(false);
       } catch (err) {

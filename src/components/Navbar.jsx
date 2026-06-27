@@ -59,6 +59,8 @@ const Navbar = () => {
                   <img
                     src={logoImage}
                     alt="SCA Constellations"
+                    fetchPriority="high"
+                    decoding="async"
                     className="relative w-full h-full drop-shadow-md"
                   />
                 </div>

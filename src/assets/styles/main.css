@@ -46,14 +46,23 @@ body {
   overflow-x: hidden;
 }
 
-/* Hero animation styles for smooth transition without flickering */
-.hero-animate {
-    opacity: 0;
-    transition: opacity 0.8s ease-out;
+/* Hero content animates immediately on route changes; no delayed reveal. */
+@keyframes heroFadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
+.hero-animate,
 .hero-animate.animation-ready {
-    opacity: 1;
+    opacity: 0;
+    animation: heroFadeInUp 0.35s ease-out forwards;
+    transition: none;
 }
 
 /* Section styling and spacing */

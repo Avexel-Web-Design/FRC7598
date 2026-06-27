@@ -17,9 +17,9 @@ const Hero = () => {
         // Staggered animation
         setTimeout(() => {
           element.classList.add('animation-ready');
-        }, index * 150);
+        }, index * 50);
       });
-    }, 200);
+    }, 50);
   }, []);
 
   return (
@@ -44,7 +44,9 @@ const Hero = () => {
               <div className="absolute -inset-6 bg-gradient-to-r from-[#471a67]/40 to-[#d3b840]/40 rounded-full blur-xl opacity-70 animate-pulse-slow"></div>
               <img 
                 src={logoImage} 
-                alt="SCA Constellations Logo" 
+                alt="SCA Constellations Logo"
+                fetchPriority="high"
+                decoding="async"
                 className="h-24 md:h-32 w-auto relative drop-shadow-glow-lg"
               />
             </div>
@@ -66,20 +68,28 @@ const Hero = () => {
           </p>
 
           <div 
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 hero-animate hover-pointer" 
+            className="flex flex-col items-center justify-center gap-3 sm:gap-4 hero-animate hover-pointer" 
             style={{ transitionDelay: '0.5s' }}
           >
             <HashLink
               smooth
               to="https://frc7790.com/event.html?event=2025mitvc"
-              className="btn-modern w-full sm:w-auto px-6 xs:px-8 sm:px-10 py-3 sm:py-4 text-white font-bold transition-all duration-300"
+              className="btn-modern w-full max-w-3xl px-6 xs:px-8 sm:px-10 py-2.5 sm:py-3 text-white font-bold transition-all duration-300"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <span className="text-lg sm:text-xl md:text-2xl text-[#d3b840]">
+              <span className="text-base sm:text-lg md:text-xl text-[#d3b840]">
                 2025 Traverse City Event Champions
               </span>
-              <span className="text-lg sm:text-xl md:text-2xl text-[#d3b840]">
+            </HashLink>
+            <HashLink
+              smooth
+              to="https://frc7790.com/event.html?event=2026mitvc"
+              className="btn-modern w-full max-w-3xl px-6 xs:px-8 sm:px-10 py-2.5 sm:py-3 text-white font-bold transition-all duration-300"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span className="text-base sm:text-lg md:text-xl text-[#d3b840]">
                 2026 Traverse City Event Impact Award Winner
               </span>
             </HashLink>

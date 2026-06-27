@@ -49,7 +49,9 @@ const Sponsors = () => {
                   <div className="h-28 w-full flex items-center justify-center mb-4">
                     <img 
                       src={sponsor.logo} 
-                      alt={`${sponsor.name} logo`} 
+                      alt={`${sponsor.name} logo`}
+                      loading="lazy"
+                      decoding="async"
                       className="max-h-full max-w-full object-contain" 
                     />
                   </div>

@@ -70,7 +70,7 @@ const TeamMemberCard = ({ name, role, image, bio, revealDirection }) => (
   <div className={`bg-white/5 backdrop-blur-sm p-6 rounded-xl transition-all duration-300 hover:bg-white/10 reveal-${revealDirection}`}>
     <div className="flex flex-col items-center">
       <div className="w-24 h-24 mb-4 rounded-full overflow-hidden p-1 bg-gradient-to-br from-blue-500/20 to-purple-500/20">
-        <img src={image} alt={name} className="rounded-full w-full h-full object-cover" />
+        <img src={image} alt={name} loading="lazy" decoding="async" className="rounded-full w-full h-full object-cover" />
       </div>
       <h4 className="text-xl font-bold text-white mb-1">{name}</h4>
       <p className="text-blue-300 text-sm mb-3">{role}</p>

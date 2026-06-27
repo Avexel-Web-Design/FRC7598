@@ -17,9 +17,9 @@ const Gallery = ({ id, title, subtitle, year, description }) => {
       galleryElements.forEach((element, index) => {
         setTimeout(() => {
           element.classList.add('animation-ready');
-        }, index * 150);
+        }, index * 50);
       });
-    }, 200);
+    }, 50);
   }, [id]);
 
   const loadPhotos = async () => {
@@ -71,7 +71,9 @@ const Gallery = ({ id, title, subtitle, year, description }) => {
               >
                 <img 
                   src={photo.src} 
-                  alt={photo.alt} 
+                  alt={photo.alt}
+                  loading="lazy"
+                  decoding="async"
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
                 />
                 <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
@@ -109,6 +111,7 @@ const Gallery = ({ id, title, subtitle, year, description }) => {
               <img 
                 src={photos[activePhoto].src} 
                 alt={photos[activePhoto].alt}
+                decoding="async"
                 className="max-h-[80vh] max-w-full object-contain" 
               />
               

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import useScrollReveal from "../../hooks/useScrollReveal";
+import { getEvent, getTeamEvents } from "../../utils/tbaEvents";
 
 const Event1 = () => {
   useScrollReveal();
@@ -22,21 +23,8 @@ const Event1 = () => {
         // Get the current year
         const currentYear = new Date().getFullYear();
         
-        // Fetch all events for team 7598 in the current year
-        const response = await fetch(
-          `https://www.thebluealliance.com/api/v3/team/frc7598/events/${currentYear}`,
-          {
-            headers: {
-              'X-TBA-Auth-Key': 'gdgkcwgh93dBGQjVXlh0ndD4GIkiQlzzbaRu9NUHGfk72tPVG2a69LF2BoYB1QNf'
-            }
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error(`API response error: ${response.status}`);
-        }
-
-        const events = await response.json();
+        // Fetch all events for team 7598 in the current year, shared/cached across schedule sections
+        const events = await getTeamEvents(currentYear);
         setTeamEvents(events);
         
         // Sort events by start date to get the first event

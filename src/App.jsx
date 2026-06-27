@@ -4,7 +4,6 @@ import Navbar from "./components/Navbar";
 import "./App.css";
 import "./assets/styles/main.css";
 import Footer from "./components/Footer";
-import Loader from "./components/Loader";
 import ParticleBackground from "./components/ParticleBackground";
 
 // Lazy load page components for better performance
@@ -22,15 +21,11 @@ const Calendar = lazy(() => import("./pages/Calendar"));
 const Planner = lazy(() => import("./pages/Planner"));
 const Profile = lazy(() => import("./pages/Profile"));
 const Impact = lazy(() => import("./pages/Impact"));
-import DashboardSidebar from './components/dashboard/DashboardSidebar';
-import MobileDashboardNav from './components/dashboard/MobileDashboardNav';
+const DashboardSidebar = lazy(() => import('./components/dashboard/DashboardSidebar'));
+const MobileDashboardNav = lazy(() => import('./components/dashboard/MobileDashboardNav'));
 
-// Enhanced loading component with animation
-const PageLoading = () => (
-  <div className="min-h-screen flex items-center justify-center bg-sca-purple">
-    <Loader />
-  </div>
-);
+// No route loading screen: keep navigation feeling instant instead of showing a spinner.
+const PageLoading = () => null;
 
 // Layout for public site pages (has Navbar + Footer)
 const SiteLayout = () => {
@@ -89,42 +84,27 @@ const DashboardLayout = () => {
 };
 
 function App() {
-  // Initialize scroll reveal animations when the page loads
+  // Initialize scroll reveal animations without per-scroll layout work
   useEffect(() => {
-    // Function to reveal elements as they enter the viewport
-    const revealElements = () => {
-      const elements = document.querySelectorAll(".reveal");
-      elements.forEach((element) => {
-        const windowHeight = window.innerHeight;
-        const elementTop = element.getBoundingClientRect().top;
-        const elementVisible = 150;
-        
-        if (elementTop < windowHeight - elementVisible) {
-          element.classList.add("active");
+    const elements = document.querySelectorAll(".reveal, .stagger-reveal");
+    if (!elements.length) return;
+
+    if (!("IntersectionObserver" in window)) {
+      elements.forEach((element) => element.classList.add("active"));
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("active");
+          observer.unobserve(entry.target);
         }
       });
-      
-      // Also handle staggered reveals
-      const staggeredElements = document.querySelectorAll(".stagger-reveal");
-      staggeredElements.forEach((element) => {
-        const windowHeight = window.innerHeight;
-        const elementTop = element.getBoundingClientRect().top;
-        const elementVisible = 150;
-        
-        if (elementTop < windowHeight - elementVisible) {
-          element.classList.add("active");
-        }
-      });
-    };
-    
-    // Run once on load
-    revealElements();
-    
-    // Add scroll event listener
-    window.addEventListener("scroll", revealElements);
-    
-    // Clean up the event listener on component unmount
-    return () => window.removeEventListener("scroll", revealElements);
+    }, { rootMargin: "0px 0px -120px 0px" });
+
+    elements.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
   }, []);
 
   return (

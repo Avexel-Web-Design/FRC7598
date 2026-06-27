@@ -14,9 +14,9 @@ const Lune = () => {
       elements.forEach((element, index) => {
         setTimeout(() => {
           element.classList.add('animation-ready');
-        }, index * 150);
+        }, index * 50);
       });
-    }, 200);
+    }, 50);
   }, []);
 
   return (
@@ -48,6 +48,8 @@ const Lune = () => {
                   <img 
                     src={robotImage} 
                     alt="Lune - 2025 REEFSCAPE Robot"
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>

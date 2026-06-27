@@ -6,31 +6,24 @@ import { useEffect } from "react";
 const useScrollReveal = () => {
   useEffect(() => {
     const revealElements = document.querySelectorAll(".reveal");
+    if (!revealElements.length) return;
 
-    const revealOnScroll = () => {
-      const windowHeight = window.innerHeight;
-      const revealPoint = 150;
+    if (!("IntersectionObserver" in window)) {
+      revealElements.forEach((element) => element.classList.add("active"));
+      return;
+    }
 
-      revealElements.forEach((element) => {
-        const revealTop = element.getBoundingClientRect().top;
-
-        if (revealTop < windowHeight - revealPoint) {
-          element.classList.add("active");
-        } else {
-          // Uncomment the line below if you want elements to hide again when scrolled away
-          // element.classList.remove('active');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("active");
+          observer.unobserve(entry.target);
         }
       });
-    };
+    }, { rootMargin: "0px 0px -120px 0px" });
 
-    // Run once on mount to reveal elements already in view
-    revealOnScroll();
-
-    window.addEventListener("scroll", revealOnScroll);
-
-    return () => {
-      window.removeEventListener("scroll", revealOnScroll);
-    };
+    revealElements.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
   }, []);
 };
 

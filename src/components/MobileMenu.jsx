@@ -35,7 +35,7 @@ const MobileMenu = ({ isOpen, closeMenu, links, currentPath }) => {
         <div className="flex justify-between items-center p-6 border-b border-sca-gold/30">
           <div className="flex items-center">
             <div className="w-10 h-10 mr-3">
-              <img src={logoImage} alt="SCA Constellations" className="w-full h-full" />
+              <img src={logoImage} alt="SCA Constellations" decoding="async" className="w-full h-full" />
             </div>
             <div>
               <h2 className="text-lg font-bold text-white">SCA Constellations</h2>
