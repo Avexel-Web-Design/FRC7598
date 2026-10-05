@@ -5,7 +5,7 @@
     "dependencies": {
         "@capacitor/camera": "^7.0.2",
         "@capacitor/core": "^7.4.3",
-        "@capacitor/push-notifications": "^7.0.2",
+        "@capacitor/push-notifications": "^8.1.2",
         "@fortawesome/fontawesome-svg-core": "^6.7.2",
         "@fortawesome/free-regular-svg-icons": "^6.7.2",
         "@fortawesome/free-solid-svg-icons": "^6.7.2",
