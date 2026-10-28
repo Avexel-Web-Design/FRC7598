@@ -44,7 +44,7 @@ const Lune = () => {
             <div className="grid md:grid-cols-2 gap-12 items-center">
               {/* Robot image */}
               <div className="relative">
-                <div className="aspect-square rounded-xl overflow-hidden border border-sca-gold/20 shadow-neon relative hover:scale-[1.02] transition-all duration-300">
+                <div className="aspect-auto rounded-xl overflow-hidden border border-sca-gold/20 shadow-neon relative hover:scale-[1.02] transition-all duration-300">
                   <img 
                     src={robotImage} 
                     alt="Lune - 2025 REEFSCAPE Robot"
