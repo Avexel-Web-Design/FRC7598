@@ -38,7 +38,7 @@ const Login = () => {
         <p className="text-white/70 mb-6">Use your full name and password</p>
 
         {error && (
-          <div className="mb-4 text-sm text-red-300 bg-red-900/30 border border-red-500/30 rounded p-3">
+          <div className="mb-4 text-sm text-red-300 bg-red-900/30 border border-red-500/30 rounded-sm p-3">
             {error}
           </div>
         )}
@@ -50,7 +50,7 @@ const Login = () => {
               type="text"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              className="w-full px-3 py-2 rounded bg-white/5 border border-white/20 focus:outline-none focus:ring-2 focus:ring-sca-gold"
+              className="w-full px-3 py-2 rounded-sm bg-white/5 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-sca-gold"
               placeholder="Jane Doe"
               required
             />
@@ -61,7 +61,7 @@ const Login = () => {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 rounded bg-white/5 border border-white/20 focus:outline-none focus:ring-2 focus:ring-sca-gold"
+              className="w-full px-3 py-2 rounded-sm bg-white/5 border border-white/20 focus:outline-hidden focus:ring-2 focus:ring-sca-gold"
               placeholder="••••••••"
               required
               minLength={6}
@@ -70,7 +70,7 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2.5 rounded-full bg-gradient-to-r from-sca-gold to-sca-gold-light text-sca-purple-dark font-semibold shadow-lg shadow-sca-gold/20 disabled:opacity-70"
+            className="w-full py-2.5 rounded-full bg-linear-to-r/srgb from-sca-gold to-sca-gold-light text-sca-purple-dark font-semibold shadow-lg shadow-sca-gold/20 disabled:opacity-70"
           >
             {loading ? 'Signing in…' : 'Sign In'}
           </button>

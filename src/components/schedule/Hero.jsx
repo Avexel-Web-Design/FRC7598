@@ -19,13 +19,13 @@ const Hero = () => {
 
   return (
     <section
-      className="relative min-h-[100vh] flex items-center justify-center overflow-hidden pt-28 sm:pt-32 md:pt-28 pb-8 sm:pb-12 hero-animate robots-hero"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-28 sm:pt-32 md:pt-28 pb-8 sm:pb-12 hero-animate robots-hero"
       aria-label="Robots Hero"
       style={{ margin: 0, padding: 0 }}
     >
       <div className="container mx-auto text-center relative z-10">
-        <h1 className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-5 sm:mb-6 tracking-tight leading-tight">
-          <span className="block bg-gradient-to-r from-[hsl(49,70%,20%)] to-[hsl(49,70%,70%)] bg-clip-text text-transparent hero-animate" style={{ transitionDelay: '0.3s' }}>
+        <h1 className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-5 sm:mb-6 tracking-tight leading-tight xs:leading-none">
+          <span className="block bg-linear-to-r/srgb from-[hsl(49,70%,20%)] to-[hsl(49,70%,70%)] bg-clip-text text-transparent hero-animate" style={{ transitionDelay: '0.3s' }}>
               2026 Season Performance
           </span>
         </h1>

@@ -7,7 +7,7 @@ This repository contains the source code for Avexel's website. Built with modern
 ## Technical Stack
 
 - **Frontend Framework**: HTML5, CSS3, JavaScript (ES6+)
-- **CSS Framework**: Tailwind CSS
+- **CSS Framework**: Tailwind CSS v4
 - **Performance Optimizations**: 
   - Lazy loading images
   - Optimized asset delivery
@@ -53,10 +53,11 @@ corporate-website/
 │   ├── assets/
 │   │   ├── images/     # Optimized images and graphics
 │   │   └── styles/     # Tailwind and custom CSS
+│   ├── index.css      # Tailwind v4 theme, plugins, and custom utilities
 │   ├── js/            # JavaScript modules
 │   └── pages/         # Static pages and templates
 ├── public/            # Static assets
-├── tailwind.config.js # Tailwind configuration
+├── postcss.config.js  # @tailwindcss/postcss integration
 └── package.json      
 ```
 
@@ -76,6 +77,9 @@ Before deploying:
 3. Validate markup: `npm run validate`
 
 ## Browser Support
+
+Tailwind v4 requires Safari 16.4+, Chrome/Edge 111+, or Firefox 128+.
+See the [Tailwind upgrade guide](https://tailwindcss.com/docs/upgrade-guide).
 
 - Chrome (latest 2 versions)
 - Firefox (latest 2 versions)

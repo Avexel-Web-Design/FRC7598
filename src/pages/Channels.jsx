@@ -685,7 +685,7 @@ const Channels = () => {
                               <div className="bg-gray-900 border border-gray-700 rounded-lg p-2 shadow-xl whitespace-nowrap">
                                 <div className="flex items-center gap-1">
                                   {quickIcons.map(({ key, icon, title }) => (
-                                    <button key={key} type="button" className="px-1.5 py-1 rounded hover:bg-gray-800" title={title} onClick={() => toggleReaction(message.id, key)}>
+                                    <button key={key} type="button" className="px-1.5 py-1 rounded-sm hover:bg-gray-800" title={title} onClick={() => toggleReaction(message.id, key)}>
                                       <FontAwesomeIcon icon={icon} className="w-4 h-4" />
                                     </button>
                                   ))}
@@ -709,14 +709,14 @@ const Channels = () => {
                         </div>
                       )}
 
-                      <div className={`max-w-[85%] px-3 py-2 ${bubbleRadius} shadow-sm ${isOwn ? 'bg-sca-purple text-white' : 'bg-gray-800 text-gray-100'}`}>
+                      <div className={`max-w-[85%] px-3 py-2 ${bubbleRadius} shadow-xs ${isOwn ? 'bg-sca-purple text-white' : 'bg-gray-800 text-gray-100'}`}>
                         {parsed.replyId && (
                           <button type="button" onClick={() => setThreadCenterId(message.id)} className={`mb-1 text-xs rounded-md px-2 py-1 border ${isOwn ? 'bg-white/10 border-white/30 text-white/90' : 'bg-black/20 border-white/10 text-gray-300'}`} title="View replied message">
                             <span className="opacity-80">Replying to {repliedMsg ? repliedMsg.sender_username : 'message'}: {repliedSnippet?.slice(0, 80)}{repliedSnippet && repliedSnippet.length > 80 ? '…' : ''}</span>
                           </button>
                         )}
                         {!isOwn && isFirst && (<div className="text-xs font-semibold mb-1 opacity-90">{message.sender_username}</div>)}
-                        <div className={`whitespace-pre-wrap break-words ${isOwn ? 'text-right' : ''}`}>
+                        <div className={`whitespace-pre-wrap wrap-break-word ${isOwn ? 'text-right' : ''}`}>
                           {parsed.text.startsWith('::image::') ? (
                             <img src={parsed.text.replace('::image::','')} alt="attachment" className="max-w-full rounded-lg border border-white/10" />
                           ) : (
@@ -770,7 +770,7 @@ const Channels = () => {
                               <div className="bg-gray-900 border border-gray-700 rounded-lg p-2 shadow-xl whitespace-nowrap">
                                 <div className="flex items-center gap-1">
                                   {quickIcons.map(({ key, icon, title }) => (
-                                    <button key={key} type="button" className="px-1.5 py-1 rounded hover:bg-gray-800" title={title} onClick={() => toggleReaction(message.id, key)}>
+                                    <button key={key} type="button" className="px-1.5 py-1 rounded-sm hover:bg-gray-800" title={title} onClick={() => toggleReaction(message.id, key)}>
                                       <FontAwesomeIcon icon={icon} className="w-4 h-4" />
                                     </button>
                                   ))}
@@ -779,7 +779,7 @@ const Channels = () => {
                             </div>
                           )}
                           {copiedFor === message.id && (
-                            <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-gray-900 border border-gray-700 text-white text-xs px-2 py-0.5 rounded shadow">Copied</div>
+                            <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-gray-900 border border-gray-700 text-white text-xs px-2 py-0.5 rounded-sm shadow-sm">Copied</div>
                           )}
                           {infoOpenFor === message.id && (
                             <div className="absolute bottom-full left-full ml-2 mb-2 z-20">
@@ -827,7 +827,7 @@ const Channels = () => {
               <button type="button" onClick={handleAttachClick} className="bg-gray-800 hover:bg-gray-700 text-white rounded-lg px-3">
                 <PaperclipIcon className="w-5 h-5" />
               </button>
-              <input type="text" ref={inputRef} value={messageInput} onChange={(e) => setMessageInput(e.target.value)} placeholder={selectedChannel ? `Message ${selectedChannel.name}` : 'Select a channel to type...'} className="flex-1 min-w-0 bg-gray-800 text-gray-100 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-sca-purple border border-gray-600" disabled={!selectedChannel} />
+              <input type="text" ref={inputRef} value={messageInput} onChange={(e) => setMessageInput(e.target.value)} placeholder={selectedChannel ? `Message ${selectedChannel.name}` : 'Select a channel to type...'} className="flex-1 min-w-0 bg-gray-800 text-gray-100 rounded-lg px-4 py-3 focus:outline-hidden focus:ring-2 focus:ring-sca-purple border border-gray-600" disabled={!selectedChannel} />
               <button type="submit" className="bg-sca-purple hover:bg-sca-purple/80 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed" disabled={!selectedChannel || !messageInput.trim()}>
                 <span className="hidden sm:inline">Send</span>
                 <svg className="w-5 h-5 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
@@ -838,7 +838,7 @@ const Channels = () => {
       </div>
 
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
           <div className="bg-gray-900 rounded-lg shadow-xl p-6 w-full max-w-md">
             <h3 className="text-xl font-bold mb-4">{modalType === 'create' ? 'Create New Channel' : 'Edit Channel'}</h3>
             <form onSubmit={(e) => { e.preventDefault(); handleCreateChannel(); }}>
@@ -846,14 +846,14 @@ const Channels = () => {
                 <label htmlFor="channelName" className="block text-sm font-medium mb-1">Channel Name</label>
                 <div className="flex">
                   <span className="inline-flex items-center px-3 bg-gray-700 text-gray-400 border border-r-0 border-gray-600 rounded-l-md">#</span>
-                  <input type="text" id="channelName" value={channelName} onChange={(e) => setChannelName(e.target.value)} className="flex-1 bg-gray-700 text-gray-100 border border-gray-600 rounded-r-md px-3 py-2 focus:outline-none" placeholder="channel-name" required />
+                  <input type="text" id="channelName" value={channelName} onChange={(e) => setChannelName(e.target.value)} className="flex-1 bg-gray-700 text-gray-100 border border-gray-600 rounded-r-md px-3 py-2 focus:outline-hidden" placeholder="channel-name" required />
                 </div>
               </div>
               <div className="mb-4">
                 <div className="flex items-center">
                   <div className="relative">
                     <input type="checkbox" id="isPrivate" checked={isPrivate} onChange={(e) => setIsPrivate(e.target.checked)} className="sr-only" />
-                    <label htmlFor="isPrivate" className={`w-4 h-4 border-2 rounded flex items-center justify-center cursor-pointer ${isPrivate ? 'bg-sca-purple border-sca-purple' : 'border-gray-300 bg-transparent'}`}>
+                    <label htmlFor="isPrivate" className={`w-4 h-4 border-2 rounded-sm flex items-center justify-center cursor-pointer ${isPrivate ? 'bg-sca-purple border-sca-purple' : 'border-gray-300 bg-transparent'}`}>
                       {isPrivate && (<svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>)}
                     </label>
                   </div>
@@ -869,7 +869,7 @@ const Channels = () => {
                       <div key={u.id} className="flex items-center space-x-2 py-1">
                         <div className="relative">
                           <input type="checkbox" id={`channel-user-${u.id}`} checked={selectedMembers.includes(u.id)} onChange={() => { setSelectedMembers((prev) => prev.includes(u.id) ? prev.filter((id) => id !== u.id) : [...prev, u.id]); }} className="sr-only" />
-                          <label htmlFor={`channel-user-${u.id}`} className={`w-4 h-4 border-2 rounded flex items-center justify-center cursor-pointer ${selectedMembers.includes(u.id) ? 'bg-sca-purple border-sca-purple' : 'border-gray-300 bg-transparent'}`}>
+                          <label htmlFor={`channel-user-${u.id}`} className={`w-4 h-4 border-2 rounded-sm flex items-center justify-center cursor-pointer ${selectedMembers.includes(u.id) ? 'bg-sca-purple border-sca-purple' : 'border-gray-300 bg-transparent'}`}>
                             {selectedMembers.includes(u.id) && (<svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>)}
                           </label>
                         </div>
@@ -879,7 +879,7 @@ const Channels = () => {
                   </div>
                 </div>
               )}
-              {error && (<div className="mb-4 bg-red-500/25 border border-red-500 text-red-100 p-2 rounded">{error}</div>)}
+              {error && (<div className="mb-4 bg-red-500/25 border border-red-500 text-red-100 p-2 rounded-sm">{error}</div>)}
               <div className="flex justify-end space-x-3">
                 <button type="button" onClick={() => setIsModalOpen(false)} className="px-4 py-2 bg-transparent hover:text-sca-purple text-white font-medium rounded-md transition-colors disabled:opacity-50">Cancel</button>
                 <button type="submit" disabled={!channelName.trim() || isLoading} className="px-4 py-2 bg-transparent hover:text-sca-purple text-white font-medium rounded-md transition-colors disabled:opacity-50">{isLoading ? 'Processing...' : modalType === 'create' ? 'Create' : 'Save'}</button>
@@ -892,7 +892,7 @@ const Channels = () => {
       {threadCenterId != null && (() => {
         const { items } = buildThread(threadCenterId);
         return (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" onClick={() => setThreadCenterId(null)}>
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs" onClick={() => setThreadCenterId(null)}>
             <div className="bg-gray-900 border border-gray-700 rounded-lg shadow-2xl w-full max-w-2xl max-h-[80vh] overflow-y-auto p-4" onClick={(e) => e.stopPropagation()}>
               <div className="flex items-center justify-between mb-3">
                 <h3 className="text-lg font-semibold">Thread</h3>
@@ -908,7 +908,7 @@ const Channels = () => {
                         <span className="font-medium text-gray-300">{m.sender_username}</span>
                         <span>{formatTimestamp(m.timestamp)}</span>
                       </div>
-                      <div className="whitespace-pre-wrap break-words">{p.text}</div>
+                      <div className="whitespace-pre-wrap wrap-break-word">{p.text}</div>
                     </div>
                   );
                 })}

@@ -43,7 +43,7 @@ const Sponsors = () => {
                   href={sponsor.website}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-6 bg-gradient-to-b from-purple-600/10 to-blue-600/5 backdrop-blur-sm rounded-lg border border-white/10 hover:border-purple-500/30 transition-all duration-300 hover:scale-105 flex flex-col items-center justify-center cursor-pointer"
+                  className="p-6 bg-linear-to-b/srgb from-purple-600/10 to-blue-600/5 backdrop-blur-xs rounded-lg border border-white/10 hover:border-purple-500/30 transition-all duration-300 hover:scale-105 flex flex-col items-center justify-center cursor-pointer"
                   aria-label={`Visit ${sponsor.name} website`}
                 >
                   <div className="h-28 w-full flex items-center justify-center mb-4">
@@ -69,7 +69,7 @@ const Sponsors = () => {
 };
 
 const SponsorshipOption = ({ title, description, icon }) => (
-  <div className="bg-white/5 backdrop-blur-sm rounded-lg border border-white/10 p-5 hover:border-purple-500/30 transition-all duration-300 flex flex-col items-center text-center">
+  <div className="bg-white/5 backdrop-blur-xs rounded-lg border border-white/10 p-5 hover:border-purple-500/30 transition-all duration-300 flex flex-col items-center text-center">
     <div className="text-purple-400 mb-4">
       {icon}
     </div>

@@ -54,7 +54,7 @@ const Gallery = ({ id, title, subtitle, year, description }) => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12 gallery-animate">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3">
-              <span className="bg-gradient-to-r from-[hsl(275,60%,20%)] to-[hsl(275,60%,80%)] bg-clip-text text-transparent">
+              <span className="bg-linear-to-r/srgb from-[hsl(275,60%,20%)] to-[hsl(275,60%,80%)] bg-clip-text text-transparent">
                 {title}
               </span>
             </h2>
@@ -65,7 +65,7 @@ const Gallery = ({ id, title, subtitle, year, description }) => {
             {photos.map((photo, index) => (
               <div 
                 key={index} 
-                className="group relative overflow-hidden rounded-xl bg-[#471a67]/20 border border-[#d3b840]/20 hover:border-[#d3b840]/60 transition-all duration-500 hover:shadow-lg hover:shadow-[#d3b840]/20 cursor-pointer gallery-animate h-64"
+                className="group relative overflow-hidden rounded-xl bg-sca-purple/20 border border-[#d3b840]/20 hover:border-[#d3b840]/60 transition-all duration-500 hover:shadow-lg hover:shadow-[#d3b840]/20 cursor-pointer gallery-animate h-64"
                 onClick={() => openModal(index)}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
@@ -99,7 +99,7 @@ const Gallery = ({ id, title, subtitle, year, description }) => {
         <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 animate-fade-in">
           <div className="relative max-w-7xl w-full max-h-[90vh] flex flex-col animate-scale-in">
             <button 
-              className="absolute top-4 right-4 bg-[#471a67]/50 hover:bg-[#471a67] rounded-full p-2 z-10"
+              className="absolute top-4 right-4 bg-sca-purple/50 hover:bg-sca-purple rounded-full p-2 z-10"
               onClick={closeModal}
             >
               <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -116,7 +116,7 @@ const Gallery = ({ id, title, subtitle, year, description }) => {
               />
               
               <button 
-                className="absolute left-4 bg-[#471a67]/50 hover:bg-[#471a67] rounded-full p-2"
+                className="absolute left-4 bg-sca-purple/50 hover:bg-sca-purple rounded-full p-2"
                 onClick={(e) => { e.stopPropagation(); prevPhoto(); }}
               >
                 <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -125,7 +125,7 @@ const Gallery = ({ id, title, subtitle, year, description }) => {
               </button>
               
               <button 
-                className="absolute right-4 bg-[#471a67]/50 hover:bg-[#471a67] rounded-full p-2"
+                className="absolute right-4 bg-sca-purple/50 hover:bg-sca-purple rounded-full p-2"
                 onClick={(e) => { e.stopPropagation(); nextPhoto(); }}
               >
                 <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -138,7 +138,7 @@ const Gallery = ({ id, title, subtitle, year, description }) => {
       )}
 
       {/* Decorative elements */}
-      <div className="absolute top-0 left-0 w-64 h-64 bg-gradient-radial from-[#471a67]/20 to-transparent rounded-full filter blur-3xl -z-10" aria-hidden="true"></div>
+      <div className="absolute top-0 left-0 w-64 h-64 bg-gradient-radial from-sca-purple/20 to-transparent rounded-full filter blur-3xl -z-10" aria-hidden="true"></div>
       <div className="absolute bottom-0 right-0 w-64 h-64 bg-gradient-radial from-[#d3b840]/10 to-transparent rounded-full filter blur-3xl -z-10" aria-hidden="true"></div>
     </section>
   );

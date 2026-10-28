@@ -20,7 +20,7 @@ export default function MobileDashboardNav() {
       <div className="relative">
         <Icon className="w-5 h-5" />
         {showDot ? (
-          <span className="absolute -top-1 -right-2 w-2.5 h-2.5 rounded-full bg-sca-gold shadow" />
+          <span className="absolute -top-1 -right-2 w-2.5 h-2.5 rounded-full bg-sca-gold shadow-sm" />
         ) : null}
       </div>
       <span className="text-[11px] mt-0.5">{label}</span>
@@ -28,8 +28,8 @@ export default function MobileDashboardNav() {
   );
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 border-t border-white/10 bg-black/90 backdrop-blur">
-      <div className="max-w-screen-sm mx-auto flex items-stretch">
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 border-t border-white/10 bg-black/90 backdrop-blur-sm">
+      <div className="max-w-(--breakpoint-sm) mx-auto flex items-stretch">
         <Item to="/channels" label="Channels" icon={Hash} showDot={channelsHaveUnread} />
         <Item to="/messages" label="Messages" icon={MessagesSquare} showDot={messagesHaveUnread} />
         <Item to="/calendar" label="Calendar" icon={CalendarIcon} />

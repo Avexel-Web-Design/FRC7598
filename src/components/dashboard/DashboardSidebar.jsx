@@ -21,7 +21,7 @@ const Item = React.forwardRef(({ to, title, icon: Icon, showDot }, ref) => {
             }`}
           />
           {showDot ? (
-            <span className="absolute -top-0.5 -right-0.5 inline-block w-4 h-4 rounded-full bg-sca-gold shadow" />
+            <span className="absolute -top-0.5 -right-0.5 inline-block w-4 h-4 rounded-full bg-sca-gold shadow-sm" />
           ) : null}
         </>
       )}

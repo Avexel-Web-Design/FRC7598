@@ -76,7 +76,7 @@ export default function CalendarPage() {
         <div>
           <label className="block text-sm font-medium text-gray-300 mb-2">Repeat</label>
           <select value={recurrence.type} onChange={(e)=>update({ type: e.target.value })}
-                  className="w-full bg-gray-800 border border-gray-600 text-gray-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sca-purple">
+                  className="w-full bg-gray-800 border border-gray-600 text-gray-100 rounded-md px-3 py-2 focus:outline-hidden focus:ring-2 focus:ring-sca-purple">
             <option value="daily">Daily</option>
             <option value="weekly">Weekly</option>
             <option value="monthly">Monthly</option>
@@ -88,7 +88,7 @@ export default function CalendarPage() {
           <div className="flex items-center gap-2">
             <input type="number" min="1" max="99" value={recurrence.interval}
                    onChange={(e)=>update({ interval: parseInt(e.target.value)||1 })}
-                   className="w-20 bg-gray-800 border border-gray-600 text-gray-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sca-purple"/>
+                   className="w-20 bg-gray-800 border border-gray-600 text-gray-100 rounded-md px-3 py-2 focus:outline-hidden focus:ring-2 focus:ring-sca-purple"/>
             <span className="text-gray-300">
               {recurrence.type === 'daily' && (recurrence.interval === 1 ? 'day' : 'days')}
               {recurrence.type === 'weekly' && (recurrence.interval === 1 ? 'week' : 'weeks')}
@@ -104,8 +104,8 @@ export default function CalendarPage() {
               {daysOfWeek.map(d => (
                 <button key={d.value} type="button" onClick={()=>toggleDay(d.value)}
                         className={(recurrence.daysOfWeek||[getEventDayOfWeek()]).includes(d.value)
-                          ? 'px-3 py-1 rounded text-sm font-medium bg-sca-purple text-white'
-                          : 'px-3 py-1 rounded text-sm font-medium bg-gray-700 text-gray-300 hover:bg-gray-600'}>
+                          ? 'px-3 py-1 rounded-sm text-sm font-medium bg-sca-purple text-white'
+                          : 'px-3 py-1 rounded-sm text-sm font-medium bg-gray-700 text-gray-300 hover:bg-gray-600'}>
                   {d.label}
                 </button>
               ))}
@@ -122,7 +122,7 @@ export default function CalendarPage() {
               <input type="number" min="1" max="31" value={recurrence.dayOfMonth||getEventDayOfMonth()}
                      onChange={(e)=>update({ dayOfMonth: parseInt(e.target.value)||1 })}
                      disabled={!recurrence.dayOfMonth}
-                     className="w-16 bg-gray-800 border border-gray-600 text-gray-100 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-sca-purple disabled:opacity-50"/>
+                     className="w-16 bg-gray-800 border border-gray-600 text-gray-100 rounded-sm px-2 py-1 focus:outline-hidden focus:ring-2 focus:ring-sca-purple disabled:opacity-50"/>
               <span className="text-gray-300">of the month</span>
             </label>
             <label className="flex items-center gap-2">
@@ -132,12 +132,12 @@ export default function CalendarPage() {
               <span className="text-gray-300">On the</span>
               <select value={recurrence.weekOfMonth||getEventWeekOfMonth()} onChange={(e)=>update({ weekOfMonth: parseInt(e.target.value) })}
                       disabled={!recurrence.weekOfMonth}
-                      className="bg-gray-800 border border-gray-600 text-gray-100 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-sca-purple disabled:opacity-50">
+                      className="bg-gray-800 border border-gray-600 text-gray-100 rounded-sm px-2 py-1 focus:outline-hidden focus:ring-2 focus:ring-sca-purple disabled:opacity-50">
                 {weekOfMonthOptions.map(o => (<option key={o.value} value={o.value}>{o.label}</option>))}
               </select>
               <select value={recurrence.dayOfWeek||getEventDayOfWeek()} onChange={(e)=>update({ dayOfWeek: e.target.value })}
                       disabled={!recurrence.weekOfMonth}
-                      className="bg-gray-800 border border-gray-600 text-gray-100 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-sca-purple disabled:opacity-50">
+                      className="bg-gray-800 border border-gray-600 text-gray-100 rounded-sm px-2 py-1 focus:outline-hidden focus:ring-2 focus:ring-sca-purple disabled:opacity-50">
                 {daysOfWeek.map(d => (<option key={d.value} value={d.value}>{d.label}</option>))}
               </select>
             </label>
@@ -150,8 +150,8 @@ export default function CalendarPage() {
               {months.map((m, i) => (
                 <button key={m} type="button" onClick={()=>toggleMonth(i)}
                         className={(recurrence.months||[new Date(eventDate + 'T00:00:00').getMonth()+1]).includes(i+1)
-                          ? 'px-3 py-2 rounded text-sm font-medium bg-sca-purple text-white'
-                          : 'px-3 py-2 rounded text-sm font-medium bg-gray-700 text-gray-300 hover:bg-gray-600'}>
+                          ? 'px-3 py-2 rounded-sm text-sm font-medium bg-sca-purple text-white'
+                          : 'px-3 py-2 rounded-sm text-sm font-medium bg-gray-700 text-gray-300 hover:bg-gray-600'}>
                   {m}
                 </button>
               ))}
@@ -174,7 +174,7 @@ export default function CalendarPage() {
             <input type="number" min="1" max="999" value={recurrence.occurrences||10}
                    onChange={(e)=>onChange({ ...recurrence, occurrences: parseInt(e.target.value)||10 })}
                    disabled={recurrence.endType!=='after_occurrences'}
-                   className="w-20 bg-gray-800 border border-gray-600 text-gray-100 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-sca-purple disabled:opacity-50"/>
+                   className="w-20 bg-gray-800 border border-gray-600 text-gray-100 rounded-sm px-2 py-1 focus:outline-hidden focus:ring-2 focus:ring-sca-purple disabled:opacity-50"/>
             <span className="text-gray-300">occurrences</span>
           </label>
           <label className="flex items-center gap-2">
@@ -185,7 +185,7 @@ export default function CalendarPage() {
             <input type="date" value={recurrence.endDate||''} min={eventDate}
                    onChange={(e)=>onChange({ ...recurrence, endDate: e.target.value })}
                    disabled={recurrence.endType!=='end_date'}
-                   className="bg-gray-800 border border-gray-600 text-gray-100 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-sca-purple disabled:opacity-50"/>
+                   className="bg-gray-800 border border-gray-600 text-gray-100 rounded-sm px-2 py-1 focus:outline-hidden focus:ring-2 focus:ring-sca-purple disabled:opacity-50"/>
           </label>
         </div>
       </div>
@@ -399,7 +399,7 @@ export default function CalendarPage() {
                   <div className="mt-1 space-y-1">
                     {dayEvents.slice(0,3).map((event) => (
                       <div key={event.id}
-                           className={`text-xs -mx-3 px-0 py-1 sm:mx-0 sm:px-1 rounded truncate cursor-pointer transition-colors ${ (event.is_recurring || event.is_recurring_instance) ? 'bg-sca-purple/25 text-sca-gold hover:bg-sca-purple/40' : 'bg-sca-purple/25 text-sca-gold hover:bg-sca-purple/40'}`}
+                           className={`text-xs -mx-3 px-0 py-1 sm:mx-0 sm:px-1 rounded-sm truncate cursor-pointer transition-colors ${ (event.is_recurring || event.is_recurring_instance) ? 'bg-sca-purple/25 text-sca-gold hover:bg-sca-purple/40' : 'bg-sca-purple/25 text-sca-gold hover:bg-sca-purple/40'}`}
                            onClick={(e)=>{ e.stopPropagation(); handleEventClick(event); }}>
                         <div className="flex items-center gap-1">
                           {(event.is_recurring || event.is_recurring_instance) && (<span>⟳</span>)}
@@ -437,46 +437,46 @@ export default function CalendarPage() {
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">Title</label>
                 <input type="text" value={currentEvent.title||''} onChange={(e)=>setCurrentEvent({ ...currentEvent, title: e.target.value })}
-                       className="w-full bg-gray-800 border border-gray-600 text-gray-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sca-purple"/>
+                       className="w-full bg-gray-800 border border-gray-600 text-gray-100 rounded-md px-3 py-2 focus:outline-hidden focus:ring-2 focus:ring-sca-purple"/>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">Description</label>
                 <textarea value={currentEvent.description||''} onChange={(e)=>setCurrentEvent({ ...currentEvent, description: e.target.value })}
                           rows={3}
-                          className="w-full bg-gray-800 border border-gray-600 text-gray-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sca-purple"/>
+                          className="w-full bg-gray-800 border border-gray-600 text-gray-100 rounded-md px-3 py-2 focus:outline-hidden focus:ring-2 focus:ring-sca-purple"/>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">Date</label>
                   <input type="date" value={currentEvent.event_date||''}
                          onChange={(e)=>setCurrentEvent({ ...currentEvent, event_date: e.target.value })}
-                         className="w-full bg-gray-800 border border-gray-600 text-gray-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sca-purple"/>
+                         className="w-full bg-gray-800 border border-gray-600 text-gray-100 rounded-md px-3 py-2 focus:outline-hidden focus:ring-2 focus:ring-sca-purple"/>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">Start Time</label>
                   <input type="time" value={currentEvent.event_time||''}
                          onChange={(e)=>setCurrentEvent({ ...currentEvent, event_time: e.target.value })}
-                         className="w-full bg-gray-800 border border-gray-600 text-gray-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sca-purple"/>
+                         className="w-full bg-gray-800 border border-gray-600 text-gray-100 rounded-md px-3 py-2 focus:outline-hidden focus:ring-2 focus:ring-sca-purple"/>
                 </div>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">End Time (Optional)</label>
                 <input type="time" value={currentEvent.event_end_time||''}
                        onChange={(e)=>setCurrentEvent({ ...currentEvent, event_end_time: e.target.value })}
-                       className="w-full bg-gray-800 border border-gray-600 text-gray-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sca-purple"/>
+                       className="w-full bg-gray-800 border border-gray-600 text-gray-100 rounded-md px-3 py-2 focus:outline-hidden focus:ring-2 focus:ring-sca-purple"/>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">Location</label>
                 <input type="text" value={currentEvent.location||''}
                        onChange={(e)=>setCurrentEvent({ ...currentEvent, location: e.target.value })}
-                       className="w-full bg-gray-800 border border-gray-600 text-gray-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sca-purple"/>
+                       className="w-full bg-gray-800 border border-gray-600 text-gray-100 rounded-md px-3 py-2 focus:outline-hidden focus:ring-2 focus:ring-sca-purple"/>
               </div>
 
               <div className="space-y-4">
                 {!isEditMode && (
                   <label className="flex items-center gap-2">
                     <input type="checkbox" checked={showRecurrenceOptions} onChange={(e)=>setShowRecurrenceOptions(e.target.checked)}
-                           className="rounded border-gray-600 text-sca-purple focus:ring-sca-purple"/>
+                           className="rounded-sm border-gray-600 text-sca-purple focus:ring-sca-purple"/>
                     <span className="text-gray-300">Make this a recurring event</span>
                   </label>
                 )}
@@ -489,11 +489,11 @@ export default function CalendarPage() {
                       </button>
                     </div>
                     {currentEvent.is_recurring_instance && (
-                      <div className="text-sm text-gray-400 bg-gray-800 p-3 rounded border border-gray-600">
+                      <div className="text-sm text-gray-400 bg-gray-800 p-3 rounded-sm border border-gray-600">
                         <p className="mb-2">You're editing a single occurrence of a recurring event.</p>
                         <label className="flex items-center gap-2">
                           <input type="checkbox" checked={currentEvent.update_series||false} onChange={(e)=>setCurrentEvent({ ...currentEvent, update_series: e.target.checked })}
-                                 className="rounded border-gray-600 text-sca-purple focus:ring-sca-purple"/>
+                                 className="rounded-sm border-gray-600 text-sca-purple focus:ring-sca-purple"/>
                           <span>Apply changes to entire series</span>
                         </label>
                       </div>
@@ -503,7 +503,7 @@ export default function CalendarPage() {
                 {isEditMode && !currentEvent.is_recurring && !currentEvent.is_recurring_instance && (
                   <label className="flex items-center gap-2">
                     <input type="checkbox" checked={showRecurrenceOptions} onChange={(e)=>setShowRecurrenceOptions(e.target.checked)}
-                           className="rounded border-gray-600 text-sca-purple focus:ring-sca-purple"/>
+                           className="rounded-sm border-gray-600 text-sca-purple focus:ring-sca-purple"/>
                     <span className="text-gray-300">Make this a recurring event</span>
                   </label>
                 )}
@@ -526,7 +526,7 @@ export default function CalendarPage() {
               <div className="flex gap-3">
                 <button onClick={()=>{ setShowModal(false); setCurrentEvent(null); setIsEditMode(false); setShowRecurrenceOptions(false); }}
                         className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white">Cancel</button>
-                <button onClick={saveEvent} className="px-4 py-2 text-sm font-medium text-black bg-sca-gold hover:bg-yellow-400 rounded">{isEditMode ? 'Save Changes' : 'Create Event'}</button>
+                <button onClick={saveEvent} className="px-4 py-2 text-sm font-medium text-black bg-sca-gold hover:bg-yellow-400 rounded-sm">{isEditMode ? 'Save Changes' : 'Create Event'}</button>
               </div>
             </div>
           </div>

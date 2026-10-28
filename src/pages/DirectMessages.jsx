@@ -663,7 +663,7 @@ const DirectMessages = () => {
                               <div className="bg-gray-900 border border-gray-700 rounded-lg p-2 shadow-xl whitespace-nowrap">
                                 <div className="flex items-center gap-1">
                                   {quickIcons.map(({ key, icon, title }) => (
-                                    <button key={key} type="button" className="px-1.5 py-1 rounded hover:bg-gray-800" title={title} onClick={() => toggleReaction(m.id, key)}>
+                                    <button key={key} type="button" className="px-1.5 py-1 rounded-sm hover:bg-gray-800" title={title} onClick={() => toggleReaction(m.id, key)}>
                                       <FontAwesomeIcon icon={icon} className="w-4 h-4" />
                                     </button>
                                   ))}
@@ -687,14 +687,14 @@ const DirectMessages = () => {
                         </div>
                       )}
 
-                      <div className={`max-w-[85%] px-3 py-2 ${bubbleRadius} shadow-sm ${isOwn ? 'bg-sca-purple text-white' : 'bg-gray-800 text-gray-100'}`}>
+                      <div className={`max-w-[85%] px-3 py-2 ${bubbleRadius} shadow-xs ${isOwn ? 'bg-sca-purple text-white' : 'bg-gray-800 text-gray-100'}`}>
                         {parsed.replyId && (
                           <button type="button" onClick={() => setThreadCenterId(m.id)} className={`mb-1 text-xs rounded-md px-2 py-1 border ${isOwn ? 'bg-white/10 border-white/30 text-white/90' : 'bg-black/20 border-white/10 text-gray-300'}`} title="View replied message">
                             <span className="opacity-80">Replying to {repliedMsg ? repliedMsg.sender_username : 'message'}: {repliedSnippet?.slice(0, 80)}{repliedSnippet && repliedSnippet.length > 80 ? '…' : ''}</span>
                           </button>
                         )}
                         {!isOwn && isFirst && isGroup && (<div className="text-xs font-semibold mb-1 opacity-90">{m.sender_username}</div>)}
-                        <div className={`whitespace-pre-wrap break-words ${isOwn ? 'text-right' : ''}`}>
+                        <div className={`whitespace-pre-wrap wrap-break-word ${isOwn ? 'text-right' : ''}`}>
                           {parsed.text.startsWith('::image::') ? (
                             <img src={parsed.text.replace('::image::','')} alt="attachment" className="max-w-full rounded-lg border border-white/10" />
                           ) : (
@@ -748,7 +748,7 @@ const DirectMessages = () => {
                               <div className="bg-gray-900 border border-gray-700 rounded-lg p-2 shadow-xl whitespace-nowrap">
                                 <div className="flex items-center gap-1">
                                   {quickIcons.map(({ key, icon, title }) => (
-                                    <button key={key} type="button" className="px-1.5 py-1 rounded hover:bg-gray-800" title={title} onClick={() => toggleReaction(m.id, key)}>
+                                    <button key={key} type="button" className="px-1.5 py-1 rounded-sm hover:bg-gray-800" title={title} onClick={() => toggleReaction(m.id, key)}>
                                       <FontAwesomeIcon icon={icon} className="w-4 h-4" />
                                     </button>
                                   ))}
@@ -801,7 +801,7 @@ const DirectMessages = () => {
               <button type="button" onClick={handleAttachClick} className="bg-gray-800 hover:bg-gray-700 text-white rounded-lg px-3">
                 <PaperclipIcon className="w-5 h-5" />
               </button>
-              <input type="text" ref={inputRef} value={messageInput} onChange={(e) => setMessageInput(e.target.value)} placeholder={selectedChat ? `Message ${selectedChat.type === 'group' ? selectedChat.name : selectedChat.username}` : 'Select a chat...'} className="flex-1 min-w-0 bg-gray-800 text-gray-100 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-sca-purple border border-gray-600" disabled={!selectedChat} />
+              <input type="text" ref={inputRef} value={messageInput} onChange={(e) => setMessageInput(e.target.value)} placeholder={selectedChat ? `Message ${selectedChat.type === 'group' ? selectedChat.name : selectedChat.username}` : 'Select a chat...'} className="flex-1 min-w-0 bg-gray-800 text-gray-100 rounded-lg px-4 py-3 focus:outline-hidden focus:ring-2 focus:ring-sca-purple border border-gray-600" disabled={!selectedChat} />
               <button type="submit" className="bg-sca-purple hover:bg-sca-purple/80 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed" disabled={!selectedChat || !messageInput.trim()}>
                 <span className="hidden sm:inline">Send</span>
                 <svg className="w-5 h-5 sm:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
@@ -814,7 +814,7 @@ const DirectMessages = () => {
       {threadCenterId != null && (() => {
         const { items } = buildThread(threadCenterId);
         return (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" onClick={() => setThreadCenterId(null)}>
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs" onClick={() => setThreadCenterId(null)}>
             <div className="bg-gray-900 border border-gray-700 rounded-lg shadow-2xl w-full max-w-2xl max-h-[80vh] overflow-y-auto p-4" onClick={(e) => e.stopPropagation()}>
               <div className="flex items-center justify-between mb-3">
                 <h3 className="text-lg font-semibold">Thread</h3>
@@ -830,7 +830,7 @@ const DirectMessages = () => {
                         <span className="font-medium text-gray-300">{m.sender_username}</span>
                         <span>{formatTs(m.timestamp)}</span>
                       </div>
-                      <div className="whitespace-pre-wrap break-words">{p.text}</div>
+                      <div className="whitespace-pre-wrap wrap-break-word">{p.text}</div>
                     </div>
                   );
                 })}
@@ -844,15 +844,15 @@ const DirectMessages = () => {
         <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4" onClick={() => setIsGroupModalOpen(false)}>
           <div className="bg-gray-900 border border-white/10 rounded-lg p-5 w-full max-w-md" onClick={(e) => e.stopPropagation()}>
             <h3 className="text-lg font-semibold mb-3">{groupModalMode === 'create' ? 'New Group Chat' : 'Edit Group Chat'}</h3>
-            {groupError && (<div className="mb-2 bg-red-500/20 text-red-200 border border-red-500/40 rounded p-2">{groupError}</div>)}
+            {groupError && (<div className="mb-2 bg-red-500/20 text-red-200 border border-red-500/40 rounded-sm p-2">{groupError}</div>)}
             <div className="space-y-3">
               <div>
                 <label className="text-xs text-gray-400">Group name</label>
-                <input value={groupName} onChange={(e) => setGroupName(e.target.value)} placeholder="Project Tigers" className="w-full px-3 py-2 rounded bg-gray-800 border border-white/10" />
+                <input value={groupName} onChange={(e) => setGroupName(e.target.value)} placeholder="Project Tigers" className="w-full px-3 py-2 rounded-sm bg-gray-800 border border-white/10" />
               </div>
               <div>
                 <label className="block text-xs text-gray-400 mb-1">Select members</label>
-                <div className="max-h-48 overflow-y-auto bg-gray-800 border border-white/10 rounded p-2">
+                <div className="max-h-48 overflow-y-auto bg-gray-800 border border-white/10 rounded-sm p-2">
                   {allUsers.length === 0 && <p className="text-gray-400 text-sm">No users found.</p>}
                   {allUsers.map(u => (
                     <label key={u.id} className="flex items-center gap-2 py-1 text-sm">
@@ -870,8 +870,8 @@ const DirectMessages = () => {
               </div>
             </div>
             <div className="mt-4 flex justify-end gap-2">
-              <button onClick={() => setIsGroupModalOpen(false)} className="px-4 py-2 rounded bg-white/10">Cancel</button>
-              <button onClick={saveGroup} disabled={isSavingGroup} className="px-4 py-2 rounded bg-sca-purple disabled:opacity-50">{isSavingGroup ? (groupModalMode === 'create' ? 'Creating…' : 'Saving…') : (groupModalMode === 'create' ? 'Create Group' : 'Save Changes')}</button>
+              <button onClick={() => setIsGroupModalOpen(false)} className="px-4 py-2 rounded-sm bg-white/10">Cancel</button>
+              <button onClick={saveGroup} disabled={isSavingGroup} className="px-4 py-2 rounded-sm bg-sca-purple disabled:opacity-50">{isSavingGroup ? (groupModalMode === 'create' ? 'Creating…' : 'Saving…') : (groupModalMode === 'create' ? 'Create Group' : 'Save Changes')}</button>
             </div>
           </div>
         </div>

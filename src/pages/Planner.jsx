@@ -99,7 +99,7 @@ export default function Planner() {
           <h1 className="text-xl font-semibold">Planner</h1>
           <p className="text-sm text-gray-400">Track and manage team tasks</p>
         </div>
-        <button onClick={()=>setShowModal(true)} className="px-3 py-2 text-sm font-medium text-black bg-sca-gold hover:bg-yellow-400 rounded">Add Task</button>
+        <button onClick={()=>setShowModal(true)} className="px-3 py-2 text-sm font-medium text-black bg-sca-gold hover:bg-yellow-400 rounded-sm">Add Task</button>
       </div>
 
       <div className="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -135,9 +135,9 @@ export default function Planner() {
       <div className="px-4">
         <div className="border border-white/10 rounded-lg p-4 mb-4">
           <div className="flex flex-wrap gap-2">
-            <button onClick={()=>setFilter('pending')} className={`px-3 py-2 rounded text-sm ${filter==='pending' ? 'bg-sca-purple/30 text-sca-gold' : 'bg-gray-800 text-gray-400 hover:text-white'}`}>Pending</button>
-            <button onClick={()=>setFilter('assigned')} className={`px-3 py-2 rounded text-sm ${filter==='assigned' ? 'bg-yellow-600/25 text-yellow-200' : 'bg-gray-800 text-gray-400 hover:text-white'}`}>Assigned to me</button>
-            <button onClick={()=>setFilter('completed')} className={`px-3 py-2 rounded text-sm ${filter==='completed' ? 'bg-green-600/25 text-green-300' : 'bg-gray-800 text-gray-400 hover:text-white'}`}>Completed</button>
+            <button onClick={()=>setFilter('pending')} className={`px-3 py-2 rounded-sm text-sm ${filter==='pending' ? 'bg-sca-purple/30 text-sca-gold' : 'bg-gray-800 text-gray-400 hover:text-white'}`}>Pending</button>
+            <button onClick={()=>setFilter('assigned')} className={`px-3 py-2 rounded-sm text-sm ${filter==='assigned' ? 'bg-yellow-600/25 text-yellow-200' : 'bg-gray-800 text-gray-400 hover:text-white'}`}>Assigned to me</button>
+            <button onClick={()=>setFilter('completed')} className={`px-3 py-2 rounded-sm text-sm ${filter==='completed' ? 'bg-green-600/25 text-green-300' : 'bg-gray-800 text-gray-400 hover:text-white'}`}>Completed</button>
           </div>
         </div>
 
@@ -150,7 +150,7 @@ export default function Planner() {
               <div key={task.id} className="px-6 py-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <input type="checkbox" checked={!!task.completed} onChange={()=>toggleTaskCompletion(task)} className="h-4 w-4 text-sca-purple focus:ring-sca-purple border-gray-600 rounded bg-black" />
+                    <input type="checkbox" checked={!!task.completed} onChange={()=>toggleTaskCompletion(task)} className="h-4 w-4 text-sca-purple focus:ring-sca-purple border-gray-600 rounded-sm bg-black" />
                     <div>
                       <h4 className={`text-sm font-medium ${task.completed ? 'text-gray-500 line-through' : 'text-white'}`}>{task.title}</h4>
                       <p className={`text-sm ${task.completed ? 'text-gray-400' : 'text-gray-500'}`}>{task.description}</p>
@@ -192,19 +192,19 @@ export default function Planner() {
                 <label className="block text-sm font-medium text-gray-300">Title</label>
                 <input type="text" value={editingTask ? editingTask.title : newTask.title}
                        onChange={(e)=>editingTask ? setEditingTask({ ...editingTask, title: e.target.value }) : setNewTask({ ...newTask, title: e.target.value })}
-                       className="mt-1 block w-full bg-gray-900 border border-gray-700 text-gray-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sca-purple"/>
+                       className="mt-1 block w-full bg-gray-900 border border-gray-700 text-gray-100 rounded-md px-3 py-2 focus:outline-hidden focus:ring-2 focus:ring-sca-purple"/>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-300">Description</label>
                 <textarea rows={3} value={editingTask ? editingTask.description : newTask.description}
                           onChange={(e)=>editingTask ? setEditingTask({ ...editingTask, description: e.target.value }) : setNewTask({ ...newTask, description: e.target.value })}
-                          className="mt-1 block w-full bg-gray-900 border border-gray-700 text-gray-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sca-purple"/>
+                          className="mt-1 block w-full bg-gray-900 border border-gray-700 text-gray-100 rounded-md px-3 py-2 focus:outline-hidden focus:ring-2 focus:ring-sca-purple"/>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-300">Priority</label>
                 <select value={editingTask ? editingTask.priority : newTask.priority}
                         onChange={(e)=>editingTask ? setEditingTask({ ...editingTask, priority: e.target.value }) : setNewTask({ ...newTask, priority: e.target.value })}
-                        className="mt-1 block w-full bg-gray-900 border border-gray-700 text-gray-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sca-purple">
+                        className="mt-1 block w-full bg-gray-900 border border-gray-700 text-gray-100 rounded-md px-3 py-2 focus:outline-hidden focus:ring-2 focus:ring-sca-purple">
                   <option value="low">Low</option>
                   <option value="medium">Medium</option>
                   <option value="high">High</option>
@@ -214,14 +214,14 @@ export default function Planner() {
                 <label className="block text-sm font-medium text-gray-300">Due Date</label>
                 <input type="date" value={editingTask ? (editingTask.due_date || '') : newTask.due_date}
                        onChange={(e)=>editingTask ? setEditingTask({ ...editingTask, due_date: e.target.value }) : setNewTask({ ...newTask, due_date: e.target.value })}
-                       className="mt-1 block w-full bg-gray-900 border border-gray-700 text-gray-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sca-purple"/>
+                       className="mt-1 block w-full bg-gray-900 border border-gray-700 text-gray-100 rounded-md px-3 py-2 focus:outline-hidden focus:ring-2 focus:ring-sca-purple"/>
               </div>
               {user?.isAdmin && (
                 <div>
                   <label className="block text-sm font-medium text-gray-300">Assign To</label>
                   <select value={editingTask ? (editingTask.assigned_to ?? '') : newTask.assigned_to}
                           onChange={(e)=>editingTask ? setEditingTask({ ...editingTask, assigned_to: e.target.value ? parseInt(e.target.value) : null }) : setNewTask({ ...newTask, assigned_to: e.target.value })}
-                          className="mt-1 block w-full bg-gray-900 border border-gray-700 text-gray-100 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sca-purple">
+                          className="mt-1 block w-full bg-gray-900 border border-gray-700 text-gray-100 rounded-md px-3 py-2 focus:outline-hidden focus:ring-2 focus:ring-sca-purple">
                     <option value="">Unassigned</option>
                     {users.map(u => (<option key={u.id} value={u.id}>{u.username}</option>))}
                   </select>
@@ -230,7 +230,7 @@ export default function Planner() {
             </div>
             <div className="mt-6 flex justify-end gap-3">
               <button onClick={()=>{ setShowModal(false); setEditingTask(null); }} className="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white">Cancel</button>
-              <button onClick={()=>{ editingTask ? updateTask(editingTask.id, editingTask) : createTask(); }} className="px-4 py-2 text-sm font-medium text-black bg-sca-gold hover:bg-yellow-400 rounded">{editingTask ? 'Update' : 'Create'} Task</button>
+              <button onClick={()=>{ editingTask ? updateTask(editingTask.id, editingTask) : createTask(); }} className="px-4 py-2 text-sm font-medium text-black bg-sca-gold hover:bg-yellow-400 rounded-sm">{editingTask ? 'Update' : 'Create'} Task</button>
             </div>
           </div>
         </div>
