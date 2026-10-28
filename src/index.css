@@ -1,8 +1,12 @@
 @import 'tailwindcss';
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css') layer(base);
+@import './assets/styles/tailwind-v3-colors.css';
 
 @plugin '@tailwindcss/typography';
 
 @theme {
+  --font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --color-dark: #000000;
 
   --color-primary-50: #fef9e7;
@@ -63,6 +67,12 @@
       transform: scale(1);
     }
   }
+}
+
+/* In v3 this @apply followed main.css in the flattened output. Keep it
+   unlayered so main.css's body rule cannot override it in v4's cascade. */
+body {
+  @apply font-sans;
 }
 
 /*

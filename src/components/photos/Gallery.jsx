@@ -54,7 +54,7 @@ const Gallery = ({ id, title, subtitle, year, description }) => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12 gallery-animate">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-3">
-              <span className="bg-linear-to-r from-[hsl(275,60%,20%)] to-[hsl(275,60%,80%)] bg-clip-text text-transparent">
+              <span className="bg-linear-to-r/srgb from-[hsl(275,60%,20%)] to-[hsl(275,60%,80%)] bg-clip-text text-transparent">
                 {title}
               </span>
             </h2>

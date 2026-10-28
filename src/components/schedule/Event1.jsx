@@ -146,7 +146,7 @@ const Event1 = () => {
           {eventData && !loading && !error && (
             <div className="text-center mb-10 reveal-bottom">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-                <span className="bg-linear-to-r from-[hsl(275,60%,20%)] to-[hsl(275,60%,80%)] bg-clip-text text-transparent">
+                <span className="bg-linear-to-r/srgb from-[hsl(275,60%,20%)] to-[hsl(275,60%,80%)] bg-clip-text text-transparent">
                   {eventData.name}
                 </span>
               </h2>
@@ -171,7 +171,7 @@ const Event1 = () => {
             </div>
           ) : eventData ? (
             <div className="modern-card p-8">
-              <div className="mb-8 p-6 bg-linear-to-r from-sca-purple/20 to-sca-gold/10 rounded-lg border border-sca-gold/20">
+              <div className="mb-8 p-6 bg-linear-to-r/srgb from-sca-purple/20 to-sca-gold/10 rounded-lg border border-sca-gold/20">
                 <h3 className="text-xl font-bold text-white mb-4">Event Results</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="bg-white/5 p-4 rounded-lg">
@@ -214,7 +214,7 @@ const Event1 = () => {
                         
                         return (
                           <li key={index} className="flex items-center group">
-                            <div className="h-8 w-8 rounded-full bg-linear-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon mr-3 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12">
+                            <div className="h-8 w-8 rounded-full bg-linear-to-br/srgb from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon mr-3 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12">
                               <i className={`${getWebcastIcon(webcast.type)} text-sca-gold`}></i>
                             </div>
                             <div>

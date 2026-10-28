@@ -37,11 +37,12 @@ const Hero = () => {
     >
       {/* Centered content with team focus */}
       <div className="container mx-auto px-4 lg:px-8 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
+        {/* Keep the logo below the 97px fixed navbar when content exceeds a short viewport. */}
+        <div className="max-w-4xl mx-auto text-center py-[97px]">
           {/* Team Logo with enhanced animation */}
           <div className="mb-6 flex justify-center hero-animate" style={{ transitionDelay: '0.1s' }}>
             <div className="relative">
-              <div className="absolute -inset-6 bg-linear-to-r from-sca-purple/40 to-[#d3b840]/40 rounded-full blur-xl opacity-70 animate-pulse-slow"></div>
+              <div className="absolute -inset-6 bg-linear-to-r/srgb from-sca-purple/40 to-[#d3b840]/40 rounded-full blur-xl opacity-70 animate-pulse-slow"></div>
               <img 
                 src={logoImage} 
                 alt="SCA Constellations Logo"
@@ -52,11 +53,11 @@ const Hero = () => {
             </div>
           </div>
 
-          <h1 className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 sm:mb-8 tracking-tight leading-tight">
-          <span className="block bg-linear-to-r from-sca-purple to-[#d3b840] bg-clip-text text-transparent hero-animate" style={{ transitionDelay: '0.3s' }}>
+          <h1 className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 sm:mb-8 tracking-tight leading-tight xs:leading-none">
+          <span className="block bg-linear-to-r/srgb from-sca-purple to-[#d3b840] bg-clip-text text-transparent hero-animate" style={{ transitionDelay: '0.3s' }}>
               FRC Team 7598
             </span>
-            <span className="block bg-linear-to-r from-sca-purple to-[#d3b840] bg-clip-text text-transparent hero-animate" style={{ transitionDelay: '0.3s' }}>
+            <span className="block bg-linear-to-r/srgb from-sca-purple to-[#d3b840] bg-clip-text text-transparent hero-animate" style={{ transitionDelay: '0.3s' }}>
               SCA Constellations
             </span>
           </h1>

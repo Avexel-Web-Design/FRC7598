@@ -7,14 +7,14 @@ const About = () => {
   return (
     <section
       id="about"
-      className="relative py-20 md:py-28 bg-linear-to-b from-sca-purple/20 via-sca-purple/30 to-sca-purple/10"
+      className="relative py-20 md:py-28 bg-linear-to-b/srgb from-sca-purple/20 via-sca-purple/30 to-sca-purple/10"
     >
       <div className="container mx-auto px-4 md:px-8 relative z-10">
         <div className="max-w-5xl mx-auto">
           {/* Section header with staggered reveal animation */}
           <div className="text-center mb-16 stagger-reveal">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-              <span className="bg-linear-to-r from-sca-purple to-[#d3b840] bg-clip-text text-transparent">
+              <span className="bg-linear-to-r/srgb from-sca-purple to-[#d3b840] bg-clip-text text-transparent">
                 About Our Team
               </span>
             </h2>
@@ -56,12 +56,12 @@ const About = () => {
               <div className="modern-card p-8 md:p-10 h-full flex flex-col">
                 <h3 className="text-2xl font-bold mb-4 text-gradient">Our Journey</h3>
                 
-                <div className="space-y-6 relative grow">
+                <div className="relative grow flex flex-col gap-6 pt-6">
                   {/* Timeline connecting line */}
-                  <div className="absolute left-6 top-6 bottom-6 w-0.5 bg-linear-to-b from-[#d3b840] via-[#d3b840]/50 to-[#d3b840]/20"></div>
+                  <div className="absolute left-6 top-6 bottom-6 w-0.5 bg-linear-to-b/srgb from-[#d3b840] via-[#d3b840]/50 to-[#d3b840]/20"></div>
                   
                   <div className="flex group">
-                    <div className="shrink-0 h-12 w-12 rounded-full bg-linear-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12">
+                    <div className="shrink-0 h-12 w-12 rounded-full bg-linear-to-br/srgb from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12">
                       <span className="font-bold text-[#d3b840] transition-colors duration-300">2018</span>
                     </div>
                     <div className="ml-6 transform hover:-translate-y-1 transition-transform duration-300">
@@ -71,7 +71,7 @@ const About = () => {
                   </div>
 
                   <div className="flex group">
-                    <div className="shrink-0 h-12 w-12 rounded-full bg-linear-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12">
+                    <div className="shrink-0 h-12 w-12 rounded-full bg-linear-to-br/srgb from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12">
                       <span className="font-bold text-[#d3b840] transition-colors duration-300">2019</span>
                     </div>
                     <div className="ml-6 transform hover:-translate-y-1 transition-transform duration-300">
@@ -81,7 +81,7 @@ const About = () => {
                   </div>
 
                   <div className="flex group">
-                    <div className="shrink-0 h-12 w-12 rounded-full bg-linear-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12">
+                    <div className="shrink-0 h-12 w-12 rounded-full bg-linear-to-br/srgb from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12">
                       <span className="font-bold text-[#d3b840] transition-colors duration-300">2024</span>
                     </div>
                     <div className="ml-6 transform hover:-translate-y-1 transition-transform duration-300">
@@ -91,7 +91,7 @@ const About = () => {
                   </div>
 
                   <div className="flex group">
-                    <div className="shrink-0 h-12 w-12 rounded-full bg-linear-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12">
+                    <div className="shrink-0 h-12 w-12 rounded-full bg-linear-to-br/srgb from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12">
                       <span className="font-bold text-[#d3b840] transition-colors duration-300">2025</span>
                     </div>
                     <div className="ml-6 transform hover:-translate-y-1 transition-transform duration-300">
@@ -101,7 +101,7 @@ const About = () => {
                   </div>
 
                   <div className="flex group">
-                    <div className="shrink-0 h-12 w-12 rounded-full bg-linear-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12">
+                    <div className="shrink-0 h-12 w-12 rounded-full bg-linear-to-br/srgb from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12">
                       <span className="font-bold text-[#d3b840] transition-colors duration-300">2026</span>
                     </div>
                     <div className="ml-6 transform hover:-translate-y-1 transition-transform duration-300">

@@ -45,7 +45,7 @@ const Contact = () => {
   return (
     <section
       id="contact"
-      className="relative py-20 md:py-28 bg-linear-to-b from-sca-purple/30 via-sca-purple/20 to-black"
+      className="relative py-20 md:py-28 bg-linear-to-b/srgb from-sca-purple/30 via-sca-purple/20 to-black"
     >
       {/* Background decorative elements */}
       <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
@@ -75,7 +75,7 @@ const Contact = () => {
                 {formSubmitted ? (
                   <div className="glass-panel border border-[#d3b840]/30 rounded-lg p-6 text-center">
                     <div className="relative w-16 h-16 mx-auto mb-4">
-                      <div className="absolute inset-0 bg-linear-to-r from-sca-purple/40 to-[#d3b840]/40 rounded-full blur-xl opacity-70 animate-pulse-slow"></div>
+                      <div className="absolute inset-0 bg-linear-to-r/srgb from-sca-purple/40 to-[#d3b840]/40 rounded-full blur-xl opacity-70 animate-pulse-slow"></div>
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mx-auto text-[#d3b840] relative" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
@@ -168,7 +168,7 @@ const Contact = () => {
                 
                 <div className="space-y-6 lg:space-y-8">
                   <div className="flex items-start group">
-                    <div className="shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-linear-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12 mr-3 sm:mr-4 mt-1">
+                    <div className="shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-linear-to-br/srgb from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12 mr-3 sm:mr-4 mt-1">
                       <i className="fas fa-envelope text-[#d3b840] transition-colors duration-300 text-sm sm:text-base"></i>
                     </div>
                     <div className="min-w-0 flex-1 transform hover:-translate-y-1 transition-transform duration-300">
@@ -185,7 +185,7 @@ const Contact = () => {
                   </div>
                   
                   <div className="flex items-start group">
-                    <div className="shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-linear-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12 mr-3 sm:mr-4 mt-1">
+                    <div className="shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-linear-to-br/srgb from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12 mr-3 sm:mr-4 mt-1">
                       <i className="fas fa-location-dot text-[#d3b840] transition-colors duration-300 text-sm sm:text-base"></i>
                     </div>
                     <div className="min-w-0 flex-1 transform hover:-translate-y-1 transition-transform duration-300">
@@ -204,7 +204,7 @@ const Contact = () => {
                   </div>
                   
                   <div className="flex items-start group">
-                    <div className="shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-linear-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12 mr-3 sm:mr-4 mt-1">
+                    <div className="shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-linear-to-br/srgb from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12 mr-3 sm:mr-4 mt-1">
                       <i className="fas fa-calendar-days text-[#d3b840] transition-colors duration-300 text-sm sm:text-base"></i>
                     </div>
                     <div className="min-w-0 flex-1 transform hover:-translate-y-1 transition-transform duration-300">

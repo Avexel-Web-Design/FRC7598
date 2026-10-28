@@ -76,7 +76,7 @@ const Navbar = () => {
                   onClick={handleNavClick}
                   className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 transform ${
                     isActive(link.path)
-                      ? "bg-linear-to-r from-sca-gold via-sca-gold-light to-sca-gold text-sca-purple-dark shadow-lg shadow-sca-gold/20 scale-105"
+                      ? "bg-linear-to-r/srgb from-sca-gold via-sca-gold-light to-sca-gold text-sca-purple-dark shadow-lg shadow-sca-gold/20 scale-105"
                       : "text-white hover:bg-white/15 hover:shadow-md hover:shadow-sca-gold/10 hover:scale-105 border border-sca-gold/20 hover:border-sca-gold/50"
                   }`}
                 >
@@ -95,7 +95,7 @@ const Navbar = () => {
                 }}
                 className={`p-2.5 text-white rounded-full transition-all duration-300 ${
                   menuOpen 
-                    ? "bg-linear-to-r from-sca-gold to-sca-gold-light text-sca-purple shadow-md shadow-sca-gold/30"
+                    ? "bg-linear-to-r/srgb from-sca-gold to-sca-gold-light text-sca-purple shadow-md shadow-sca-gold/30"
                     : "hover:bg-white/15 hover:shadow-md border border-sca-gold/20 hover:border-sca-gold/50"
                 }`}
                 aria-label="Toggle mobile menu"

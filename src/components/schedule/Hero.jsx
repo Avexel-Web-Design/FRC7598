@@ -24,8 +24,8 @@ const Hero = () => {
       style={{ margin: 0, padding: 0 }}
     >
       <div className="container mx-auto text-center relative z-10">
-        <h1 className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-5 sm:mb-6 tracking-tight leading-tight">
-          <span className="block bg-linear-to-r from-[hsl(49,70%,20%)] to-[hsl(49,70%,70%)] bg-clip-text text-transparent hero-animate" style={{ transitionDelay: '0.3s' }}>
+        <h1 className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-5 sm:mb-6 tracking-tight leading-tight xs:leading-none">
+          <span className="block bg-linear-to-r/srgb from-[hsl(49,70%,20%)] to-[hsl(49,70%,70%)] bg-clip-text text-transparent hero-animate" style={{ transitionDelay: '0.3s' }}>
               2026 Season Performance
           </span>
         </h1>

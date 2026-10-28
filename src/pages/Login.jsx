@@ -70,7 +70,7 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2.5 rounded-full bg-linear-to-r from-sca-gold to-sca-gold-light text-sca-purple-dark font-semibold shadow-lg shadow-sca-gold/20 disabled:opacity-70"
+            className="w-full py-2.5 rounded-full bg-linear-to-r/srgb from-sca-gold to-sca-gold-light text-sca-purple-dark font-semibold shadow-lg shadow-sca-gold/20 disabled:opacity-70"
           >
             {loading ? 'Signing in…' : 'Sign In'}
           </button>

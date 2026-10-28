@@ -77,7 +77,7 @@ const Worlds = () => {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-10 reveal-bottom">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-              <span className="bg-linear-to-r from-[hsl(275,60%,20%)] to-[hsl(275,60%,80%)] bg-clip-text text-transparent">
+              <span className="bg-linear-to-r/srgb from-[hsl(275,60%,20%)] to-[hsl(275,60%,80%)] bg-clip-text text-transparent">
                 {eventData ? `${seasonPerformance.division} Division` : "Archimedes Division"}
               </span>
             </h2>
@@ -101,7 +101,7 @@ const Worlds = () => {
             </div>
           ) : eventData ? (
             <div className="modern-card p-8 reveal-bottom">
-              <div className="mb-8 p-6 bg-linear-to-r from-sca-purple/20 to-sca-gold/10 rounded-lg border border-sca-gold/20">
+              <div className="mb-8 p-6 bg-linear-to-r/srgb from-sca-purple/20 to-sca-gold/10 rounded-lg border border-sca-gold/20">
                 <h3 className="text-xl font-bold text-white mb-4">Event Results</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="bg-white/5 p-4 rounded-lg">
@@ -138,7 +138,7 @@ const Worlds = () => {
                   <h3 className="text-xl font-bold text-white mb-4">Watch Live</h3>
                   <ul className="space-y-3 text-gray-300">
                     <li className="flex items-center group">
-                      <div className="h-8 w-8 rounded-full bg-linear-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon mr-3 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12">
+                      <div className="h-8 w-8 rounded-full bg-linear-to-br/srgb from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon mr-3 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12">
                         <i className="fas fa-gamepad text-sca-gold"></i>
                       </div>
                       <div>
@@ -171,7 +171,7 @@ const Worlds = () => {
           ) : (
             <div className="modern-card p-8 reveal-bottom">
               {/* Qualification dependent notice */}
-              <div className="bg-linear-to-r from-[#d3b840]/20 to-sca-purple/20 p-3 rounded-lg mb-6 border border-[#d3b840]/30">
+              <div className="bg-linear-to-r/srgb from-[#d3b840]/20 to-sca-purple/20 p-3 rounded-lg mb-6 border border-[#d3b840]/30">
                 <p className="text-center text-gray-200 font-medium">
                   <span className="text-sca-gold">⚠</span> Qualification Dependent
                 </p>
@@ -183,7 +183,7 @@ const Worlds = () => {
                 The event is typically held in Houston, Texas in late April.
               </p>
               
-              <div className="bg-linear-to-r from-sca-purple/20 to-[#d3b840]/20 p-4 rounded-lg mb-6">
+              <div className="bg-linear-to-r/srgb from-sca-purple/20 to-[#d3b840]/20 p-4 rounded-lg mb-6">
                 <p className="text-center text-gray-300">
                   Stay tuned for information on our qualification and performance at the 2025 FIRST Championship!
                 </p>
@@ -200,7 +200,7 @@ const Worlds = () => {
                 <h3 className="text-xl font-bold text-white mb-4">Watch Live</h3>
                 <ul className="space-y-3 text-gray-300">
                   <li className="flex items-center group">
-                    <div className="h-8 w-8 rounded-full bg-linear-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon mr-3 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12">
+                    <div className="h-8 w-8 rounded-full bg-linear-to-br/srgb from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon mr-3 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12">
                       <i className="fas fa-gamepad text-sca-gold"></i>
                     </div>
                     <div>

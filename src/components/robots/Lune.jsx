@@ -30,7 +30,7 @@ const Lune = () => {
           {/* Section header */}
           <div className="text-center mb-16 lune-animate">
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-              <span className="bg-linear-to-r from-[hsl(49,70%,20%)] to-[hsl(49,70%,70%)] bg-clip-text text-transparent">
+              <span className="bg-linear-to-r/srgb from-[hsl(49,70%,20%)] to-[hsl(49,70%,70%)] bg-clip-text text-transparent">
                 Lune: Our 2025 Robot
               </span>
             </h2>
@@ -52,7 +52,7 @@ const Lune = () => {
                     decoding="async"
                     className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
+                  <div className="absolute inset-0 bg-linear-to-t/srgb from-black/60 to-transparent"></div>
                 </div>
               </div>
 
@@ -128,7 +128,7 @@ const Lune = () => {
 
             {/* Competition performance */}
             <div className="mt-12 flex justify-center lune-animate" style={{ transitionDelay: '0.8s' }}>
-              <div className="bg-linear-to-r from-sca-purple/20 to-sca-gold/20 backdrop-blur-xs p-6 rounded-xl border border-white/10 text-center max-w-2xl hover:from-sca-purple/30 hover:to-sca-gold/30 hover:border-white/20 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
+              <div className="bg-linear-to-r/srgb from-sca-purple/20 to-sca-gold/20 backdrop-blur-xs p-6 rounded-xl border border-white/10 text-center max-w-2xl hover:from-sca-purple/30 hover:to-sca-gold/30 hover:border-white/20 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
                 <h4 className="text-xl font-bold text-white mb-2">2025 Season Achievements</h4>
                 <p className="text-gray-300 mb-4">
                   Lune led our team to the Championship at the Traverse City District Event, primarily through exceptional defense throughout qualification and playoff matches.

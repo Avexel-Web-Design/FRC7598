@@ -73,7 +73,7 @@ const MobileMenu = ({ isOpen, closeMenu, links, currentPath }) => {
                 to={link.path}
                 className={`py-3.5 px-5 rounded-full transition-all duration-300 transform ${
                   isActive(link.path)
-                    ? "bg-linear-to-r from-sca-gold via-sca-gold-light to-sca-gold text-sca-purple-dark font-medium shadow-md shadow-sca-gold/20 scale-[1.02]"
+                    ? "bg-linear-to-r/srgb from-sca-gold via-sca-gold-light to-sca-gold text-sca-purple-dark font-medium shadow-md shadow-sca-gold/20 scale-[1.02]"
                     : "text-white hover:bg-white/10 border border-sca-gold/20 hover:border-sca-gold/50 hover:shadow-md hover:shadow-sca-gold/10 hover:translate-x-1"
                 }`}
                 onClick={closeMenu}
