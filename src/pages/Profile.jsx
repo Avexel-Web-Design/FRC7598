@@ -129,7 +129,7 @@ export default function Profile() {
           </div>
           <div className="px-6 py-6">
             <div className="flex items-center space-x-6 mb-6">
-              <div className="flex-shrink-0 relative group">
+              <div className="shrink-0 relative group">
                 <div
                   className="h-20 w-20 rounded-full flex items-center justify-center text-white font-bold text-3xl transition-opacity relative overflow-hidden cursor-pointer"
                   style={{ backgroundColor: avatarColor }}
@@ -171,7 +171,7 @@ export default function Profile() {
                       type="text"
                       value={newUsername}
                       onChange={(e) => setNewUsername(e.target.value)}
-                      className="p-1 border border-gray-600 rounded bg-black text-gray-100 flex-grow focus:outline-none"
+                      className="p-1 border border-gray-600 rounded-sm bg-black text-gray-100 grow focus:outline-hidden"
                     />
                   ) : (
                     <span className="font-medium text-white">{profile?.username}</span>
@@ -197,10 +197,10 @@ export default function Profile() {
             </div>
 
             {passwordSuccess && (
-              <div className="mb-4 bg-green-500/25 border border-green-600 text-green-400 px-4 py-3 rounded">{passwordSuccess}</div>
+              <div className="mb-4 bg-green-500/25 border border-green-600 text-green-400 px-4 py-3 rounded-sm">{passwordSuccess}</div>
             )}
             {passwordError && (
-              <div className="mb-4 bg-red-500/25 border border-red-600 text-red-500 px-4 py-3 rounded">{passwordError}</div>
+              <div className="mb-4 bg-red-500/25 border border-red-600 text-red-500 px-4 py-3 rounded-sm">{passwordError}</div>
             )}
 
             <div className="border-t border-gray-700 pt-6">
@@ -215,11 +215,11 @@ export default function Profile() {
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-400">New Password</label>
-                    <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} className="mt-1 block w-full bg-black border-gray-600 text-gray-100 rounded-md shadow-sm focus:outline-none" placeholder="Enter new password" />
+                    <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} className="mt-1 block w-full bg-black border-gray-600 text-gray-100 rounded-md shadow-xs focus:outline-hidden" placeholder="Enter new password" />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-400">Confirm Password</label>
-                    <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="mt-1 block w-full bg-black border-gray-600 text-gray-100 rounded-md shadow-sm focus:outline-none" placeholder="Confirm new password" />
+                    <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className="mt-1 block w-full bg-black border-gray-600 text-gray-100 rounded-md shadow-xs focus:outline-hidden" placeholder="Confirm new password" />
                   </div>
                   <div className="flex space-x-3">
                     <button onClick={updatePassword} className="px-4 py-2 text-sm font-medium text-white bg-sca-purple hover:bg-sca-purple/80 rounded-md">Update Password</button>

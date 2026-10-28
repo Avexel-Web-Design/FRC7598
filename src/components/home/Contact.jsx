@@ -45,18 +45,18 @@ const Contact = () => {
   return (
     <section
       id="contact"
-      className="relative py-20 md:py-28 bg-gradient-to-b from-[#471a67]/30 via-[#471a67]/20 to-black"
+      className="relative py-20 md:py-28 bg-linear-to-b from-sca-purple/30 via-sca-purple/20 to-black"
     >
       {/* Background decorative elements */}
       <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
-      <div className="absolute top-0 left-0 w-full h-64 bg-[#471a67]/20 blur-3xl -z-10"></div>
+      <div className="absolute top-0 left-0 w-full h-64 bg-sca-purple/20 blur-3xl -z-10"></div>
 
       <div className="container mx-auto px-4 md:px-8 relative z-10">
         <div className="max-w-6xl mx-auto">
           {/* Section header with staggered reveal */}
           <div className="text-center mb-16 stagger-reveal">
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">
-              <span className="text-[#471a67]">
+              <span className="text-sca-purple">
                 Contact Us
               </span>
             </h2>
@@ -70,12 +70,12 @@ const Contact = () => {
             {/* Contact form with modern card styling */}
             <div className="lg:col-span-3 reveal">
               <div className="modern-card p-4 sm:p-6 md:p-8">
-                <h3 className="text-xl sm:text-2xl font-bold text-[#471a67] mb-6">Get in Touch</h3>
+                <h3 className="text-xl sm:text-2xl font-bold text-sca-purple mb-6">Get in Touch</h3>
                 
                 {formSubmitted ? (
                   <div className="glass-panel border border-[#d3b840]/30 rounded-lg p-6 text-center">
                     <div className="relative w-16 h-16 mx-auto mb-4">
-                      <div className="absolute inset-0 bg-gradient-to-r from-[#471a67]/40 to-[#d3b840]/40 rounded-full blur-xl opacity-70 animate-pulse-slow"></div>
+                      <div className="absolute inset-0 bg-linear-to-r from-sca-purple/40 to-[#d3b840]/40 rounded-full blur-xl opacity-70 animate-pulse-slow"></div>
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mx-auto text-[#d3b840] relative" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
@@ -97,7 +97,7 @@ const Contact = () => {
                           value={formData.name}
                           onChange={handleChange}
                           required
-                          className="w-full bg-[#471a67]/10 border border-[#d3b840]/20 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-[#d3b840]/60 focus:bg-[#471a67]/20 transition-colors"
+                          className="w-full bg-sca-purple/10 border border-[#d3b840]/20 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:outline-hidden focus:ring-0 focus:border-[#d3b840]/60 focus:bg-sca-purple/20 transition-colors"
                           placeholder="John Doe"
                         />
                       </div>
@@ -112,7 +112,7 @@ const Contact = () => {
                           value={formData.email}
                           onChange={handleChange}
                           required
-                          className="w-full bg-[#471a67]/10 border border-[#d3b840]/20 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-[#d3b840]/60 focus:bg-[#471a67]/20 transition-colors"
+                          className="w-full bg-sca-purple/10 border border-[#d3b840]/20 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:outline-hidden focus:ring-0 focus:border-[#d3b840]/60 focus:bg-sca-purple/20 transition-colors"
                           placeholder="john@example.com"
                         />
                       </div>
@@ -129,7 +129,7 @@ const Contact = () => {
                         value={formData.subject}
                         onChange={handleChange}
                         required
-                        className="w-full bg-[#471a67]/10 border border-[#d3b840]/20 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-[#d3b840]/60 focus:bg-[#471a67]/20 transition-colors"
+                        className="w-full bg-sca-purple/10 border border-[#d3b840]/20 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:outline-hidden focus:ring-0 focus:border-[#d3b840]/60 focus:bg-sca-purple/20 transition-colors"
                         placeholder="How can we help?"
                       />
                     </div>
@@ -145,7 +145,7 @@ const Contact = () => {
                         onChange={handleChange}
                         required
                         rows="8"
-                        className="w-full h-32 sm:h-40 lg:h-48 bg-[#471a67]/10 border border-[#d3b840]/20 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-[#d3b840]/60 focus:bg-[#471a67]/20 transition-colors resize-none"
+                        className="w-full h-32 sm:h-40 lg:h-48 bg-sca-purple/10 border border-[#d3b840]/20 rounded-lg py-3 px-4 text-white placeholder-gray-500 focus:outline-hidden focus:ring-0 focus:border-[#d3b840]/60 focus:bg-sca-purple/20 transition-colors resize-none"
                         placeholder="Tell us about your inquiry..."
                       ></textarea>
                     </div>
@@ -164,28 +164,28 @@ const Contact = () => {
             {/* Contact info with modern styling */}
             <div className="lg:col-span-2 reveal">
               <div className="modern-card p-4 sm:p-6 md:p-8 h-full">
-                <h3 className="text-xl sm:text-2xl font-bold text-[#471a67] mb-6">Team Information</h3>
+                <h3 className="text-xl sm:text-2xl font-bold text-sca-purple mb-6">Team Information</h3>
                 
                 <div className="space-y-6 lg:space-y-8">
                   <div className="flex items-start group">
-                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12 mr-3 sm:mr-4 mt-1">
+                    <div className="shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-linear-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12 mr-3 sm:mr-4 mt-1">
                       <i className="fas fa-envelope text-[#d3b840] transition-colors duration-300 text-sm sm:text-base"></i>
                     </div>
                     <div className="min-w-0 flex-1 transform hover:-translate-y-1 transition-transform duration-300">
                       <h4 className="text-base sm:text-lg font-medium text-white mb-1">Email Us</h4>
                       <button 
                         onClick={copyEmailToClipboard}
-                        className="hover:text-[#e4ce67] transition-colors flex items-center text-sm sm:text-base contact-email"
+                        className="hover:text-sca-gold-light transition-colors flex items-center text-sm sm:text-base contact-email"
                       >
                         kbrandt@saintcatherineacademy.org
-                        <i className={`ml-2 ${emailCopied ? 'fas fa-check text-green-400' : 'fas fa-copy text-[#d3b840]'} flex-shrink-0`}></i>
-                        {emailCopied && <span className="text-xs text-green-400 ml-2 flex-shrink-0">Copied!</span>}
+                        <i className={`ml-2 ${emailCopied ? 'fas fa-check text-green-400' : 'fas fa-copy text-[#d3b840]'} shrink-0`}></i>
+                        {emailCopied && <span className="text-xs text-green-400 ml-2 shrink-0">Copied!</span>}
                       </button>
                     </div>
                   </div>
                   
                   <div className="flex items-start group">
-                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12 mr-3 sm:mr-4 mt-1">
+                    <div className="shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-linear-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12 mr-3 sm:mr-4 mt-1">
                       <i className="fas fa-location-dot text-[#d3b840] transition-colors duration-300 text-sm sm:text-base"></i>
                     </div>
                     <div className="min-w-0 flex-1 transform hover:-translate-y-1 transition-transform duration-300">
@@ -204,7 +204,7 @@ const Contact = () => {
                   </div>
                   
                   <div className="flex items-start group">
-                    <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12 mr-3 sm:mr-4 mt-1">
+                    <div className="shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-linear-to-br from-sca-purple-light to-sca-purple-dark flex items-center justify-center shadow-neon z-10 transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(211,184,64,0.7)] group-hover:rotate-12 mr-3 sm:mr-4 mt-1">
                       <i className="fas fa-calendar-days text-[#d3b840] transition-colors duration-300 text-sm sm:text-base"></i>
                     </div>
                     <div className="min-w-0 flex-1 transform hover:-translate-y-1 transition-transform duration-300">
@@ -243,7 +243,7 @@ const Contact = () => {
 
       {/* Modern decorative elements */}
       <div 
-        className="absolute top-1/4 left-0 w-64 h-64 bg-gradient-radial from-[#471a67]/20 to-transparent rounded-full filter blur-3xl animate-pulse-slow" 
+        className="absolute top-1/4 left-0 w-64 h-64 bg-gradient-radial from-sca-purple/20 to-transparent rounded-full filter blur-3xl animate-pulse-slow"
         aria-hidden="true"
       ></div>
       <div 

@@ -73,7 +73,7 @@ const Monogram = ({
       <div className="absolute inset-0 bg-gradient-radial from-white/10 to-transparent opacity-40"></div>
 
       {/* Glowing animated ring */}
-      <div className="absolute inset-[-1px] border border-white/20 rounded-full"></div>
+      <div className="absolute -inset-px border border-white/20 rounded-full"></div>
       <div className="absolute inset-[-2px] border border-white/10 rounded-full animate-pulse-slow"></div>
 
       {/* Initials text */}

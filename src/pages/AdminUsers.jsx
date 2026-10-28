@@ -123,7 +123,7 @@ export default function AdminUsers() {
           <button onClick={() => setShowCreate(true)} className="px-4 py-2 rounded-md bg-sca-purple text-white hover:bg-sca-purple/80">Add User</button>
         </div>
 
-        {error && (<div className="mb-4 bg-red-500/20 text-red-200 border border-red-500/40 rounded p-3">{error}</div>)}
+        {error && (<div className="mb-4 bg-red-500/20 text-red-200 border border-red-500/40 rounded-sm p-3">{error}</div>)}
 
   <div className="hidden md:block bg-black border border-white/10 rounded-lg overflow-hidden">
           <div className="px-6 py-3 border-b border-white/10">All Users</div>
@@ -185,9 +185,9 @@ export default function AdminUsers() {
                 </span>
               </div>
               <div className="mt-3 grid grid-cols-3 gap-2 text-xs">
-                <button onClick={() => openEdit(u)} className="px-3 py-2 rounded bg-white/5">Edit</button>
-                <button onClick={() => toggleAdmin(u)} disabled={u.id === user?.id} className={`px-3 py-2 rounded ${u.id === user?.id ? 'bg-white/5 text-gray-500' : 'bg-blue-900/40 text-blue-300'}`}>{u.is_admin ? 'Remove' : 'Make'} Admin</button>
-                <button onClick={() => deleteUser(u)} disabled={u.id === user?.id} className={`px-3 py-2 rounded ${u.id === user?.id ? 'bg-white/5 text-gray-500' : 'bg-red-900/40 text-red-300'}`}>Delete</button>
+                <button onClick={() => openEdit(u)} className="px-3 py-2 rounded-sm bg-white/5">Edit</button>
+                <button onClick={() => toggleAdmin(u)} disabled={u.id === user?.id} className={`px-3 py-2 rounded-sm ${u.id === user?.id ? 'bg-white/5 text-gray-500' : 'bg-blue-900/40 text-blue-300'}`}>{u.is_admin ? 'Remove' : 'Make'} Admin</button>
+                <button onClick={() => deleteUser(u)} disabled={u.id === user?.id} className={`px-3 py-2 rounded-sm ${u.id === user?.id ? 'bg-white/5 text-gray-500' : 'bg-red-900/40 text-red-300'}`}>Delete</button>
               </div>
             </div>
           ))}
@@ -198,18 +198,18 @@ export default function AdminUsers() {
         <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4" onClick={() => setShowCreate(false)}>
           <div className="bg-gray-900 border border-white/10 rounded-lg p-5 w-full max-w-md" onClick={(e) => e.stopPropagation()}>
             <h3 className="text-lg font-semibold mb-3">Add New User</h3>
-            {error && (<div className="mb-2 bg-red-500/20 text-red-200 border border-red-500/40 rounded p-2">{error}</div>)}
+            {error && (<div className="mb-2 bg-red-500/20 text-red-200 border border-red-500/40 rounded-sm p-2">{error}</div>)}
             <div className="space-y-3">
-              <input value={createForm.fullName} onChange={(e) => setCreateForm({ ...createForm, fullName: e.target.value })} placeholder="Full name" className="w-full px-3 py-2 rounded bg-gray-800 border border-white/10" />
-              <input value={createForm.password} onChange={(e) => setCreateForm({ ...createForm, password: e.target.value })} placeholder="Password" type="password" className="w-full px-3 py-2 rounded bg-gray-800 border border-white/10" />
+              <input value={createForm.fullName} onChange={(e) => setCreateForm({ ...createForm, fullName: e.target.value })} placeholder="Full name" className="w-full px-3 py-2 rounded-sm bg-gray-800 border border-white/10" />
+              <input value={createForm.password} onChange={(e) => setCreateForm({ ...createForm, password: e.target.value })} placeholder="Password" type="password" className="w-full px-3 py-2 rounded-sm bg-gray-800 border border-white/10" />
               <label className="flex items-center gap-2 text-sm">
                 <input type="checkbox" checked={createForm.is_admin} onChange={(e) => setCreateForm({ ...createForm, is_admin: e.target.checked })} />
                 <span>Admin</span>
               </label>
             </div>
             <div className="mt-4 flex justify-end gap-2">
-              <button onClick={() => setShowCreate(false)} className="px-4 py-2 rounded bg-white/10">Cancel</button>
-              <button onClick={createUser} className="px-4 py-2 rounded bg-sca-purple">Create</button>
+              <button onClick={() => setShowCreate(false)} className="px-4 py-2 rounded-sm bg-white/10">Cancel</button>
+              <button onClick={createUser} className="px-4 py-2 rounded-sm bg-sca-purple">Create</button>
             </div>
           </div>
         </div>
@@ -219,15 +219,15 @@ export default function AdminUsers() {
         <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4" onClick={() => setEditUser(null)}>
           <div className="bg-gray-900 border border-white/10 rounded-lg p-5 w-full max-w-md" onClick={(e) => e.stopPropagation()}>
             <h3 className="text-lg font-semibold mb-3">Edit User: {editUser.username}</h3>
-            {editError && (<div className="mb-2 bg-red-500/20 text-red-200 border border-red-500/40 rounded p-2">{editError}</div>)}
+            {editError && (<div className="mb-2 bg-red-500/20 text-red-200 border border-red-500/40 rounded-sm p-2">{editError}</div>)}
             <div className="space-y-3">
               <div>
                 <label className="text-xs text-gray-400">Full name</label>
-                <input value={editForm.fullName} onChange={(e) => setEditForm({ ...editForm, fullName: e.target.value })} className="w-full px-3 py-2 rounded bg-gray-800 border border-white/10" />
+                <input value={editForm.fullName} onChange={(e) => setEditForm({ ...editForm, fullName: e.target.value })} className="w-full px-3 py-2 rounded-sm bg-gray-800 border border-white/10" />
               </div>
               <div>
                 <label className="text-xs text-gray-400">New password (optional)</label>
-                <input value={editForm.password} onChange={(e) => setEditForm({ ...editForm, password: e.target.value })} type="password" className="w-full px-3 py-2 rounded bg-gray-800 border border-white/10" />
+                <input value={editForm.password} onChange={(e) => setEditForm({ ...editForm, password: e.target.value })} type="password" className="w-full px-3 py-2 rounded-sm bg-gray-800 border border-white/10" />
               </div>
               <label className="flex items-center gap-2 text-sm">
                 <input type="checkbox" checked={editForm.is_admin} onChange={(e) => setEditForm({ ...editForm, is_admin: e.target.checked })} disabled={editUser.id === user?.id} />
@@ -235,8 +235,8 @@ export default function AdminUsers() {
               </label>
             </div>
             <div className="mt-4 flex justify-end gap-2">
-              <button onClick={() => setEditUser(null)} className="px-4 py-2 rounded bg-white/10">Cancel</button>
-              <button onClick={submitEdit} className="px-4 py-2 rounded bg-sca-purple">Update</button>
+              <button onClick={() => setEditUser(null)} className="px-4 py-2 rounded-sm bg-white/10">Cancel</button>
+              <button onClick={submitEdit} className="px-4 py-2 rounded-sm bg-sca-purple">Update</button>
             </div>
           </div>
         </div>

@@ -24,7 +24,7 @@ const Hero = () => {
 
   return (
     <section
-      className="relative min-h-[100vh] w-full flex items-center justify-center overflow-hidden pt-28 sm:pt-32 md:pt-28 pb-8 sm:pb-12 hero-animate"
+      className="relative min-h-screen w-full flex items-center justify-center overflow-hidden pt-28 sm:pt-32 md:pt-28 pb-8 sm:pb-12 hero-animate"
       aria-label="Hero section"
       style={{ 
         margin: 0,
@@ -41,7 +41,7 @@ const Hero = () => {
           {/* Team Logo with enhanced animation */}
           <div className="mb-6 flex justify-center hero-animate" style={{ transitionDelay: '0.1s' }}>
             <div className="relative">
-              <div className="absolute -inset-6 bg-gradient-to-r from-[#471a67]/40 to-[#d3b840]/40 rounded-full blur-xl opacity-70 animate-pulse-slow"></div>
+              <div className="absolute -inset-6 bg-linear-to-r from-sca-purple/40 to-[#d3b840]/40 rounded-full blur-xl opacity-70 animate-pulse-slow"></div>
               <img 
                 src={logoImage} 
                 alt="SCA Constellations Logo"
@@ -53,10 +53,10 @@ const Hero = () => {
           </div>
 
           <h1 className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 sm:mb-8 tracking-tight leading-tight">
-          <span className="block bg-gradient-to-r from-[#471a67] to-[#d3b840] bg-clip-text text-transparent hero-animate" style={{ transitionDelay: '0.3s' }}>
+          <span className="block bg-linear-to-r from-sca-purple to-[#d3b840] bg-clip-text text-transparent hero-animate" style={{ transitionDelay: '0.3s' }}>
               FRC Team 7598
             </span>
-            <span className="block bg-gradient-to-r from-[#471a67] to-[#d3b840] bg-clip-text text-transparent hero-animate" style={{ transitionDelay: '0.3s' }}>
+            <span className="block bg-linear-to-r from-sca-purple to-[#d3b840] bg-clip-text text-transparent hero-animate" style={{ transitionDelay: '0.3s' }}>
               SCA Constellations
             </span>
           </h1>

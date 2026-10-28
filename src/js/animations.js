@@ -56,10 +56,10 @@ const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
   if (window.scrollY > 50) {
     navbar.classList.add('bg-black/80', 'backdrop-blur-md');
-    navbar.classList.remove('backdrop-blur-sm');
+    navbar.classList.remove('backdrop-blur-xs');
   } else {
     navbar.classList.remove('bg-black/80', 'backdrop-blur-md');
-    navbar.classList.add('backdrop-blur-sm');
+    navbar.classList.add('backdrop-blur-xs');
   }
 });
 
@@ -167,10 +167,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.addEventListener('scroll', () => {
       if (window.scrollY > 50) {
-          navbar.classList.add('bg-black/75', 'backdrop-blur-sm');
+          navbar.classList.add('bg-black/75', 'backdrop-blur-xs');
           navbar.classList.remove('bg-transparent');
       } else {
-          navbar.classList.remove('bg-black/75', 'backdrop-blur-sm');
+          navbar.classList.remove('bg-black/75', 'backdrop-blur-xs');
           navbar.classList.add('bg-transparent');
       }
   });
@@ -275,10 +275,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
         if (window.scrollY > 100) {
-            navbar.classList.add('bg-black/90', 'backdrop-blur-sm');
+            navbar.classList.add('bg-black/90', 'backdrop-blur-xs');
             navbar.classList.remove('bg-transparent');
         } else {
-            navbar.classList.remove('bg-black/90', 'backdrop-blur-sm');
+            navbar.classList.remove('bg-black/90', 'backdrop-blur-xs');
             navbar.classList.add('bg-transparent');
         }
     });

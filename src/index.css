@@ -1,6 +1,96 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@plugin '@tailwindcss/typography';
+
+@theme {
+  --color-dark: #000000;
+
+  --color-primary-50: #fef9e7;
+  --color-primary-100: #fcf3cf;
+  --color-primary-200: #f9e79f;
+  --color-primary-300: #f7da70;
+  --color-primary-400: #d3b840;
+  --color-primary-500: #aa9433;
+  --color-primary-600: #8c7a2a;
+  --color-primary-700: #6d5f21;
+  --color-primary-800: #4e4418;
+  --color-primary-900: #2f290f;
+  --color-primary-950: #171407;
+
+  --color-secondary-50: #f5f3ff;
+  --color-secondary-100: #ede9fe;
+  --color-secondary-200: #ddd6fe;
+  --color-secondary-300: #c4b5fd;
+  --color-secondary-400: #8b5cf6;
+  --color-secondary-500: #7c3aed;
+  --color-secondary-600: #6d28d9;
+  --color-secondary-700: #5b21b6;
+  --color-secondary-800: #4c1d95;
+  --color-secondary-900: #4a1d96;
+  --color-secondary-950: #2e1065;
+
+  --color-sca-purple: #471a67;
+  --color-sca-gold: #d3b840;
+  --color-sca-purple-light: #652b90;
+  --color-sca-purple-dark: #35134d;
+  --color-sca-gold-light: #e4ce67;
+  --color-sca-gold-dark: #aa9433;
+
+  --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
+
+  --animate-spin-slow: spin 12s linear infinite;
+  --animate-spin-slow-reverse: spin 15s linear infinite reverse;
+  --animate-pulse-slow: pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-bounce-slow: bounce 2s infinite;
+  --animate-fade-in: fadeIn 0.7s ease-in forwards;
+  --animate-scale-in: scaleIn 0.4s ease-out;
+
+  --breakpoint-xs: 30rem;
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes scaleIn {
+    0% {
+      transform: scale(0.9);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+}
+
+/*
+  Preserve the v3 border, placeholder, and button defaults during migration.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--color-gray-400);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+@utility container {
+  @apply max-w-[1280px] mx-auto;
+}
 
 @layer base {
   html {
@@ -54,7 +144,7 @@
 
   /* Custom focus styles */
   :focus-visible {
-    @apply outline-none ring-2 ring-sca-gold ring-offset-2 ring-offset-dark;
+    @apply outline-hidden ring-2 ring-sca-gold ring-offset-2 ring-offset-dark;
   }
 
   /* Hide scrollbar for Chrome, Safari and Opera */
@@ -69,32 +159,28 @@
   }
 }
 
-/* Remove unintended padding/margins on root elements */
-html, 
-body, 
-#root {
-  margin: 0 !important;
-  padding: 0 !important;
-}
+@layer utilities {
+  /* Remove unintended padding/margins on root elements */
+  html,
+  body,
+  #root {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
 
-/* Fix the weird padding bug on the entire website edge - all sides */
-#root > div, 
-main.relative,
-main > div,
-section {
-  padding: 0 !important;
-  margin: 0 !important;
-}
+  /* Fix the weird padding bug on the entire website edge - all sides */
+  #root > div,
+  main.relative,
+  main > div,
+  section {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
 
-/* Container class should retain its auto margins */
-.container {
-  margin-left: auto !important;
-  margin-right: auto !important;
-}
-
-@layer components {
+  /* Container class should retain its auto margins */
   .container {
-    @apply max-w-[1280px] mx-auto;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
 }
 
