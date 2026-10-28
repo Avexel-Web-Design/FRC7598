@@ -40,8 +40,6 @@
   --color-sca-gold-light: #e4ce67;
   --color-sca-gold-dark: #aa9433;
 
-  --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
-
   --animate-spin-slow: spin 12s linear infinite;
   --animate-spin-slow-reverse: spin 15s linear infinite reverse;
   --animate-pulse-slow: pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
@@ -96,6 +94,12 @@ body {
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
+}
+
+/* v4 gradient stops require a position; keep the v3 sRGB radial glow. */
+@utility bg-gradient-radial {
+  --tw-gradient-position: in srgb;
+  background-image: radial-gradient(var(--tw-gradient-stops));
 }
 
 @utility container {
