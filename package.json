@@ -34,7 +34,7 @@
         "@tailwindcss/postcss": "^4.3.3",
         "@vitejs/plugin-react": "^6.1.2",
         "gh-pages": "^6.3.0",
-        "oxlint": "^1.89.0",
+        "oxlint": "^1.90.0",
         "postcss": "^8.5.32",
         "shapefile": "^0.6.6",
         "tailwindcss": "^4.3.3",
