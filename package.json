@@ -30,7 +30,7 @@
         "@capacitor/assets": "^3.0.5",
         "@capacitor/cli": "^8.6.0",
         "@cloudflare/workers-types": "^5.20261029.1",
-        "@oxlint/plugins": "^1.89.0",
+        "@oxlint/plugins": "^1.90.0",
         "@tailwindcss/postcss": "^4.3.3",
         "@vitejs/plugin-react": "^6.1.2",
         "gh-pages": "^6.3.0",
