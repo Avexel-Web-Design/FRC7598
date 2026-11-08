@@ -37,7 +37,7 @@
         "oxlint": "^1.90.0",
         "postcss": "^8.5.32",
         "shapefile": "^0.6.6",
-        "tailwindcss": "^4.3.3",
+        "tailwindcss": "^4.3.4",
         "typescript": "^7.0.2",
         "vite": "^8.3.5",
         "wrangler": "^4.156.0"
