@@ -15,7 +15,7 @@
         "@tailwindcss/forms": "^0.5.10",
         "@tailwindcss/typography": "^0.5.16",
         "framer-motion": "^14.13.0",
-        "hono": "^4.13.16",
+        "hono": "^4.13.19",
         "lucide-react": "^1.72.0",
         "react": "^19.3.1",
         "react-dom": "^19.3.1",
